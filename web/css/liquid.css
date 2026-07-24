@@ -1,0 +1,286 @@
+/* ================================================================
+   liquid.css — liquid metal morphism layer
+   Layers on top of main.css to add:
+     * chrome / iridescent gradients
+     * frosted-glass panels with backdrop blur
+     * animated liquid-blob backgrounds
+     * cursor-following light gradients
+     * text-mask iridescent shimmer
+   Loaded AFTER main.css so its selectors override where needed.
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;800;900&display=swap');
+
+:root {
+  --font-body:    'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --font-display: 'Orbitron', var(--font-mono);
+
+  --iridescent:  linear-gradient(135deg,
+                    #00E5FF 0%,
+                    #7B2CBF 25%,
+                    #FF3EA5 50%,
+                    #FFD700 75%,
+                    #00FF66 100%);
+  --chrome:      linear-gradient(180deg,
+                    #f8f8fc 0%,
+                    #d0d0e0 20%,
+                    #8a8aa0 45%,
+                    #4a4a5a 55%,
+                    #d0d0e0 80%,
+                    #f8f8fc 100%);
+  --glass-tint:  rgba(20, 22, 32, 0.55);
+  --glass-hi:    rgba(255, 255, 255, 0.08);
+}
+
+html, body { font-family: var(--font-body); }
+
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0.02em; }
+h1 { font-weight: 900; }
+h2 { font-weight: 800; font-size: 2.25rem; }
+h3 { font-weight: 700; }
+nav .brand { font-family: var(--font-display); font-weight: 800; }
+
+/* ------------------------------------------------------------ hero 3D bg */
+#hero { position: relative; overflow: hidden; }
+#hero-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+}
+#hero > *:not(#hero-canvas):not(.hero-fallback) { position: relative; z-index: 2; }
+
+.hero-fallback {
+  position: absolute; inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.28) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(123, 44, 191, 0.28) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(255, 215, 0, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 50% 10%, rgba(0, 255, 102, 0.15) 0%, transparent 40%);
+  filter: blur(60px) saturate(1.4);
+  animation: liquidDrift 22s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes liquidDrift {
+  0%,100% { transform: scale(1)   translate(0, 0); }
+  33%     { transform: scale(1.1) translate(3%, -2%); }
+  66%     { transform: scale(0.95) translate(-2%, 3%); }
+}
+
+/* Hide the CSS fallback once the 3D canvas is active */
+body.webgl-on .hero-fallback { opacity: 0.35; transition: opacity 1.2s ease; }
+
+/* ------------------------------------------------------ iridescent text */
+#hero h1 {
+  background: var(--iridescent);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  animation: iridescentShift 12s ease-in-out infinite;
+  text-shadow: 0 0 60px rgba(0, 229, 255, 0.15);
+}
+
+@keyframes iridescentShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* --------------------------------------------------------- glass panels */
+.era, .pillar, .matchup, .relic, .stack-item, .mint-form, .chapter-card {
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-hi);
+  backdrop-filter: blur(24px) saturate(1.35);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 24px 48px -18px rgba(0, 0, 0, 0.55),
+    0 0 60px -12px rgba(0, 229, 255, 0.12);
+}
+
+/* Iridescent sheen sweep on hover for interactive cards */
+.era, .relic, .matchup, .chapter-card { transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
+.era::before, .relic::before, .matchup::before, .chapter-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(130deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(0, 229, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.06) 55%,
+    transparent 70%);
+  background-size: 250% 250%;
+  background-position: 0% 0%;
+  pointer-events: none;
+  transition: background-position 0.9s ease;
+}
+.era:hover::before, .relic:hover::before, .matchup:hover::before, .chapter-card:hover::before {
+  background-position: 100% 100%;
+}
+.era:hover, .relic:hover, .matchup:hover, .chapter-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 229, 255, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 30px 60px -18px rgba(0, 0, 0, 0.65),
+    0 0 80px -8px rgba(0, 229, 255, 0.22);
+}
+
+/* --------------------------------------------------------- chrome pills */
+.pill {
+  background: var(--chrome);
+  background-size: 100% 100%;
+  color: #12121a !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 4px 10px -2px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------- chrome buttons */
+.btn.primary {
+  background: var(--iridescent);
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  color: #12121a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 20px -6px rgba(0, 229, 255, 0.5);
+}
+.btn.primary:hover {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 12px 28px -6px rgba(123, 44, 191, 0.6);
+}
+.btn.ghost {
+  background: var(--glass-tint);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #d0f0ff;
+}
+.btn.ghost:hover {
+  border-color: #00FF66;
+  background: rgba(0, 255, 102, 0.08);
+  color: #f0ffe5;
+}
+
+/* --------------------------------------------------------- section titles */
+section h2 {
+  background: linear-gradient(90deg, #f0f0f0 0%, #a0ddff 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+
+/* --------------------------------------------------------- stories page */
+body.stories-body #hero {
+  padding-top: 6rem; padding-bottom: 4rem;
+  text-align: left;
+  background: radial-gradient(ellipse at 30% 20%, rgba(255, 62, 165, 0.12) 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 80%, rgba(0, 229, 255, 0.12) 0%, transparent 55%);
+}
+body.stories-body #hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); text-align: left; }
+body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
+
+.chapters {
+  display: flex; flex-direction: column; gap: 2rem;
+  max-width: 900px; margin: 0 auto; padding: 2rem 0;
+}
+.chapter-card {
+  padding: 2.5rem 2.5rem 2rem;
+}
+.chapter-header {
+  display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--glass-hi);
+}
+.chapter-num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.5rem;
+  background: var(--iridescent);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  line-height: 1;
+}
+.chapter-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #f0f0f0;
+}
+.chapter-year {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #a0a0b0;
+  letter-spacing: 0.1em;
+}
+.chapter-body p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #d5d5e0;
+  margin-bottom: 1rem;
+}
+.chapter-body p em { color: #f0f0f0; font-style: italic; }
+.chapter-tag {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #a0ddff;
+}
+.chapter-tag strong { color: #00FF66; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }
+
+/* Fade-in on scroll for chapters */
+.chapter-card { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.chapter-card.reveal { opacity: 1; transform: translateY(0); }
+
+/* --------------------------------------------------------- outro block */
+.stories-outro {
+  max-width: 780px;
+  margin: 4rem auto 2rem;
+  padding: 3rem;
+  text-align: center;
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-hi);
+  backdrop-filter: blur(24px) saturate(1.35);
+  border-radius: 20px;
+}
+.stories-outro h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  background: var(--iridescent);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stories-outro p { color: #c0c0c8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
+.stories-outro .btn-row { justify-content: center; }
+
+/* --------------------------------------------------------- nav active */
+nav ul li a.active { color: #00FF66; }
+
+/* --------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-fallback,
+  #hero h1,
+  .era, .relic, .matchup, .chapter-card {
+    animation: none !important;
+    transition: none !important;
+  }
+  .btn.primary { background-position: 50% 50% !important; }
+}

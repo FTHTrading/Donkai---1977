@@ -8,7 +8,18 @@
   <meta property="og:title" content="Donkai Network — Chain ID 1977">
   <meta property="og:description" content="Proof-of-Stubbornness Layer-1. Post-quantum. LPS-1 provenance. Real BFT wrapped in satirical framing.">
   <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/liquid.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -21,6 +32,7 @@
       <li><a href="#mint">Mint</a></li>
       <li><a href="#arena">Arena</a></li>
       <li><a href="#museum">Museum</a></li>
+      <li><a href="stories.html">Stories</a></li>
       <li><a href="#stack">Stack</a></li>
       <li><a href="https://github.com/FTHTrading/Donkai---1977" target="_blank" rel="noopener">Repo →</a></li>
     </ul>
@@ -28,6 +40,8 @@
 </header>
 
 <section id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-fallback" aria-hidden="true"></div>
   <h1>DONKAI NETWORK</h1>
   <p class="chain-id">Chain <span>1977</span> · Proof-of-Stubbornness Layer-1 · Post-Quantum</p>
   <p class="tagline">A blockchain that prices human obstinacy directly on-chain.</p>
@@ -41,7 +55,7 @@
   </div>
   <div class="hero-cta">
     <a href="#mint" class="btn primary">Mint a Relic</a>
-    <a href="#stack" class="btn ghost">Read the Stack</a>
+    <a href="stories.html" class="btn ghost">Read the Six Chapters</a>
   </div>
 </section>
 
@@ -274,5 +288,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script type="module" src="js/liquid-scene.js"></script>
 </body>
 </html>
