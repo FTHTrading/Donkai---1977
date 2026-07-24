@@ -1,0 +1,17 @@
+[package]
+name        = "donkai-node"
+description = "Donkai Network Layer-1 reference node (Chain ID 1977)."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+donkai-lps1        = { workspace = true }
+donkai-consensus   = { workspace = true }
+donkai-policyguard = { workspace = true }
+donkai-pqc         = { workspace = true }
+donkai-ipfs        = { workspace = true }
+hex                = { workspace = true }

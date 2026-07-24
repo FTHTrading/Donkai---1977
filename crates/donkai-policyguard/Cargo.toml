@@ -1,0 +1,13 @@
+[package]
+name        = "donkai-policyguard"
+description = "Deterministic multi-signature adjudication for AI agent actions (ML-DSA verified)."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+donkai-pqc = { workspace = true }
+serde      = { workspace = true }

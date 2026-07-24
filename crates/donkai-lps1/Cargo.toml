@@ -1,0 +1,15 @@
+[package]
+name        = "donkai-lps1"
+description = "LPS-1 paragraph-level SHA-256 Merkle provenance + 58-check audit manifest."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+sha2       = { workspace = true }
+serde      = { workspace = true }
+serde_json = { workspace = true }
+hex        = { workspace = true }

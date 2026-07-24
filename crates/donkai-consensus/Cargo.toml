@@ -1,0 +1,12 @@
+[package]
+name        = "donkai-consensus"
+description = "Proof-of-Stubbornness + Asinine Fault Tolerance (strict 2/3 BFT)."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+serde = { workspace = true }

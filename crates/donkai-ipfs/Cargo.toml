@@ -1,0 +1,15 @@
+[package]
+name        = "donkai-ipfs"
+description = "Native CIDv1 (raw + dag-pb/UnixFS) computation + blocking Kubo RPC pin client."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+sha2          = { workspace = true }
+data-encoding = { workspace = true }
+thiserror     = { workspace = true }
+reqwest       = { workspace = true }

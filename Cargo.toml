@@ -1,0 +1,50 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/donkai-node",
+    "crates/donkai-lps1",
+    "crates/donkai-consensus",
+    "crates/donkai-policyguard",
+    "crates/donkai-pqc",
+    "crates/donkai-ipfs",
+]
+default-members = ["crates/donkai-node"]
+
+[workspace.package]
+version      = "0.1.0"
+edition      = "2021"
+rust-version = "1.80"
+authors      = ["Donkai Core Engineering <dev@donkai.org>"]
+license      = "MIT OR Apache-2.0"
+repository   = "https://github.com/donkai-org/donkai-core"
+
+[workspace.dependencies]
+sha2            = "0.10"
+serde           = { version = "1", features = ["derive"] }
+serde_json      = "1"
+hex             = "0.4"
+data-encoding   = "2.6"
+thiserror       = "1"
+pqcrypto-mldsa  = "0.1.2"
+pqcrypto-mlkem  = "0.1.1"
+pqcrypto-traits = "0.3"
+reqwest         = { version = "0.12", default-features = false, features = ["blocking", "multipart", "rustls-tls"] }
+
+# Internal crates
+donkai-lps1        = { path = "crates/donkai-lps1" }
+donkai-consensus   = { path = "crates/donkai-consensus" }
+donkai-policyguard = { path = "crates/donkai-policyguard" }
+donkai-pqc         = { path = "crates/donkai-pqc" }
+donkai-ipfs        = { path = "crates/donkai-ipfs" }
+
+[profile.release]
+opt-level     = 3
+lto           = "fat"
+codegen-units = 1
+strip         = true
+panic         = "abort"
+
+[profile.dev]
+opt-level       = 0
+debug           = true
+overflow-checks = true

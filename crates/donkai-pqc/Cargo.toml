@@ -1,0 +1,14 @@
+[package]
+name        = "donkai-pqc"
+description = "Post-quantum crypto wrappers: ML-DSA-87 (FIPS 204) + ML-KEM-1024 (FIPS 203) via pqcrypto-*."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+pqcrypto-mldsa  = { workspace = true }
+pqcrypto-mlkem  = { workspace = true }
+pqcrypto-traits = { workspace = true }
