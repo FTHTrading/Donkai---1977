@@ -4,3 +4,10 @@ Cargo.lock.bak
 .DS_Store
 .idea/
 .vscode/
+
+# Foundry / Solidity
+/contracts/lib/
+/contracts/out/
+/contracts/cache/
+/contracts/broadcast/
+/contracts/.gas-snapshot.tmp
