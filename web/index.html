@@ -8,6 +8,7 @@
   <meta property="og:title" content="Donkai Network — Chain ID 1977">
   <meta property="og:description" content="Proof-of-Stubbornness Layer-1. Post-quantum. LPS-1 provenance. Real BFT wrapped in satirical framing.">
   <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/main.css">
@@ -25,10 +26,11 @@
 
 <header>
   <nav>
-    <a href="#hero" class="brand">DONKAI · 1977</a>
+    <a href="#hero" class="brand brand-mark" aria-label="Donkai · 1977"><img src="img/donkai-mark.svg" alt="Donkai · 1977"></a>
     <ul>
       <li><a href="#eras">Eras</a></li>
       <li><a href="#how">How</a></li>
+      <li><a href="#ownership">Ownership</a></li>
       <li><a href="#mint">Mint</a></li>
       <li><a href="#arena">Arena</a></li>
       <li><a href="#museum">Museum</a></li>
@@ -150,6 +152,43 @@
   </div>
 </section>
 
+<section id="ownership">
+  <h2>Ownership Through LPS-1</h2>
+  <p class="section-lead">Traditional NFTs bind a wallet to a token ID. Donkai binds a wallet to a <em>document</em>. The LPS-1 Merkle root of your text <strong>is</strong> your ownership token — cryptographic proof that this exact string of characters, in this exact order, was minted by you and no one else.</p>
+  <div class="ownership-grid">
+    <article class="ownership-step">
+      <div class="step-num">1</div>
+      <h3>You Write</h3>
+      <p>Story, receipt, provenance chain, personal artifact. Anything that can be split into paragraphs by a blank line.</p>
+    </article>
+    <article class="ownership-step">
+      <div class="step-num">2</div>
+      <h3>Paragraph Hash</h3>
+      <p>Each <code>\n\n</code>-separated block becomes a SHA-256 leaf. Fifty paragraphs, fifty leaves. One paragraph, one leaf.</p>
+    </article>
+    <article class="ownership-step">
+      <div class="step-num">3</div>
+      <h3>Merkle Tree</h3>
+      <p>Leaves pair upward, hash by hash, until a single 32-byte root emerges. One root per document, forever.</p>
+    </article>
+    <article class="ownership-step">
+      <div class="step-num">4</div>
+      <h3>On-Chain Claim</h3>
+      <p><code>DonkaiTimelineRegistry.mintRelic(...)</code> binds the root to your address. Same document = same root = same tokenId. Duplicate mints revert.</p>
+    </article>
+    <article class="ownership-step">
+      <div class="step-num">5</div>
+      <h3>Provenance Forever</h3>
+      <p>Anyone with the original document can regenerate the exact root and verify your claim in under a second. Change one character and the root shatters.</p>
+    </article>
+    <article class="ownership-step">
+      <div class="step-num">6</div>
+      <h3>Ownership Certificate</h3>
+      <p>Every mint produces a portable, screenshot-able certificate — the root, the CID, the owner, the chain, the block. Preview yours at the <a href="#mint">Mint Desk</a> below.</p>
+    </article>
+  </div>
+</section>
+
 <section id="mint">
   <h2>Mint a Relic</h2>
   <p class="section-lead">Any wallet can mint a historical Relic NFT — a photo of your original Pet Rock, a receipt for horse armor, a physical roll of Skee-Ball tickets from 1994. The preview below runs the LPS-1 Merkle root and raw CIDv1 derivations <strong>in your browser</strong>, using the same algorithms as the Rust crates. The output is byte-for-byte identical to what <code>donkai-lps1</code> and <code>donkai-ipfs</code> produce on the chain.</p>
@@ -187,6 +226,24 @@
     </div>
     <p class="mint-note">On-chain minting will be wired to <code>DonkaiTimelineRegistry.mintRelic()</code> in the next release. For now, take the derived root and CID to any wallet that speaks Donkai devnet 1977. Duplicate roots are rejected on-chain — same document, same relic.</p>
   </form>
+  <div class="ownership-cert" id="ownership-cert" hidden>
+    <div class="cert-frame">
+      <div class="cert-header">
+        <div class="cert-title">DONKAI · OWNERSHIP CERTIFICATE</div>
+        <div class="cert-sub">Chain ID 1977 · LPS-1 Cryptographic Provenance</div>
+      </div>
+      <dl class="cert-body">
+        <dt>Title</dt>              <dd id="cert-title">—</dd>
+        <dt>Era</dt>                <dd id="cert-era">—</dd>
+        <dt>LPS-1 Merkle Root</dt>  <dd class="mono" id="cert-root">—</dd>
+        <dt>IPFS CIDv1</dt>         <dd class="mono" id="cert-cid">—</dd>
+        <dt>Registry</dt>           <dd class="mono">DonkaiTimelineRegistry v1</dd>
+        <dt>Chain</dt>              <dd class="mono">1977 (Donkai devnet)</dd>
+        <dt>Preview generated</dt>  <dd class="mono" id="cert-time">—</dd>
+      </dl>
+      <div class="cert-seal">L · P · S · 1</div>
+    </div>
+  </div>
 </section>
 
 <section id="arena">

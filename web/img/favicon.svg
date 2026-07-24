@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="D">
+  <defs>
+    <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#f4f4f8"/>
+      <stop offset="45%"  stop-color="#a0a4ae"/>
+      <stop offset="55%"  stop-color="#7c7c88"/>
+      <stop offset="100%" stop-color="#d8d8de"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#14141c"/>
+      <stop offset="100%" stop-color="#0a0a0f"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#bg)"
+        stroke="#3a3a48" stroke-width="1"/>
+  <text x="32" y="46" font-family="Orbitron, ui-monospace, monospace"
+        font-weight="900" font-size="36" fill="url(#c)" text-anchor="middle">D</text>
+</svg>

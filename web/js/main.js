@@ -230,6 +230,12 @@ const DonkaiApp = (() => {
       ]);
       document.getElementById('mint-root').value = root;
       document.getElementById('mint-ipfs').value = cid;
+      renderCertificate({
+        title:    (form.title.value || '').trim(),
+        eraLabel: form.era.options[form.era.selectedIndex]?.text || '—',
+        root,
+        cid
+      });
     });
     const reset = document.getElementById('mint-reset');
     if (reset) {
@@ -237,8 +243,23 @@ const DonkaiApp = (() => {
         form.reset();
         document.getElementById('mint-root').value = '';
         document.getElementById('mint-ipfs').value = '';
+        const cert = document.getElementById('ownership-cert');
+        if (cert) cert.hidden = true;
       });
     }
+  }
+
+  // ---------- ownership certificate ----------
+  function renderCertificate({ title, eraLabel, root, cid }) {
+    const cert = document.getElementById('ownership-cert');
+    if (!cert) return;
+    document.getElementById('cert-title').textContent = title || '—';
+    document.getElementById('cert-era').textContent   = eraLabel || '—';
+    document.getElementById('cert-root').textContent  = root;
+    document.getElementById('cert-cid').textContent   = cid;
+    document.getElementById('cert-time').textContent  = new Date().toISOString();
+    cert.hidden = false;
+    cert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   // ---------- utils ----------

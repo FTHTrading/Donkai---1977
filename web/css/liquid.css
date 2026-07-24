@@ -1,11 +1,9 @@
 /* ================================================================
-   liquid.css — liquid metal morphism layer
-   Layers on top of main.css to add:
-     * chrome / iridescent gradients
+   liquid.css — pure liquid metal morphism layer (NO neons)
+     * chrome / iridescent-in-metal-shades gradients only
      * frosted-glass panels with backdrop blur
-     * animated liquid-blob backgrounds
-     * cursor-following light gradients
-     * text-mask iridescent shimmer
+     * animated chrome shine text on hero
+     * cursor-following light gradients (metal-tinted)
    Loaded AFTER main.css so its selectors override where needed.
    ================================================================ */
 
@@ -16,28 +14,48 @@
   --font-mono:    'JetBrains Mono', ui-monospace, Consolas, monospace;
   --font-display: 'Orbitron', var(--font-mono);
 
-  --iridescent:  linear-gradient(135deg,
-                    #00E5FF 0%,
-                    #7B2CBF 25%,
-                    #FF3EA5 50%,
-                    #FFD700 75%,
-                    #00FF66 100%);
+  /* liquid metal scale — chrome / pearl / mercury tones */
+  --lm-white:      #f4f4f8;
+  --lm-platinum:   #d8d8de;
+  --lm-silver:     #b8b8c2;
+  --lm-mercury:    #a0a4ae;
+  --lm-steel:      #7c7c88;
+  --lm-graphite:   #4a4a56;
+
+  /* subtle iridescent tints — barely-there color shifts on chrome */
+  --lm-rosegold:   #d4b8b0;
+  --lm-iceblue:    #c8d4e0;
+  --lm-champagne:  #e0d8c8;
+
+  /* chrome gradient — real polished chrome (peak highlight at 50%) */
   --chrome:      linear-gradient(180deg,
-                    #f8f8fc 0%,
-                    #d0d0e0 20%,
-                    #8a8aa0 45%,
-                    #4a4a5a 55%,
-                    #d0d0e0 80%,
-                    #f8f8fc 100%);
-  --glass-tint:  rgba(20, 22, 32, 0.55);
-  --glass-hi:    rgba(255, 255, 255, 0.08);
+                    #f4f4f8   0%,
+                    #d8d8de  25%,
+                    #7c7c88  50%,
+                    #a0a4ae  55%,
+                    #d8d8de  80%,
+                    #f4f4f8 100%);
+
+  /* iridescent — ALL LIGHT STOPS so text stays readable */
+  --iridescent:  linear-gradient(135deg,
+                    #f4f4f8   0%,
+                    #ffffff  20%,
+                    #e0d8c8  35%,
+                    #d4b8b0  50%,
+                    #c8d4e0  65%,
+                    #ffffff  80%,
+                    #f4f4f8 100%);
+
+  --glass-tint:  rgba(22, 24, 34, 0.62);
+  --glass-hi:    rgba(255, 255, 255, 0.10);
 }
 
-html, body { font-family: var(--font-body); }
+html, body { font-family: var(--font-body); font-size: 17px; }
+p, li      { font-size: 1rem; }
 
 h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0.02em; }
 h1 { font-weight: 900; }
-h2 { font-weight: 800; font-size: 2.25rem; }
+h2 { font-weight: 800; font-size: 2.35rem; }
 h3 { font-weight: 700; }
 nav .brand { font-family: var(--font-display); font-weight: 800; }
 
@@ -56,11 +74,11 @@ nav .brand { font-family: var(--font-display); font-weight: 800; }
   position: absolute; inset: 0;
   z-index: 1;
   background:
-    radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.28) 0%, transparent 40%),
-    radial-gradient(circle at 80% 60%, rgba(123, 44, 191, 0.28) 0%, transparent 40%),
-    radial-gradient(circle at 50% 90%, rgba(255, 215, 0, 0.18) 0%, transparent 40%),
-    radial-gradient(circle at 50% 10%, rgba(0, 255, 102, 0.15) 0%, transparent 40%);
-  filter: blur(60px) saturate(1.4);
+    radial-gradient(circle at 20% 30%, rgba(216, 216, 222, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 80% 60%, rgba(200, 212, 224, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(224, 216, 200, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 10%, rgba(212, 184, 176, 0.18) 0%, transparent 45%);
+  filter: blur(64px) saturate(1.2);
   animation: liquidDrift 22s ease-in-out infinite;
   pointer-events: none;
 }
@@ -72,17 +90,26 @@ nav .brand { font-family: var(--font-display); font-weight: 800; }
 }
 
 /* Hide the CSS fallback once the 3D canvas is active */
-body.webgl-on .hero-fallback { opacity: 0.35; transition: opacity 1.2s ease; }
+body.webgl-on .hero-fallback { opacity: 0.4; transition: opacity 1.2s ease; }
 
-/* ------------------------------------------------------ iridescent text */
+/* ------------------------------------------------ iridescent hero title */
+/* Uses ONLY light stops — no dark colors clipped to text.
+   Readability first: heading always visible against the dark hero bg. */
 #hero h1 {
-  background: var(--iridescent);
+  background: linear-gradient(135deg,
+    #f4f4f8   0%,
+    #ffffff  22%,
+    #e6e4ea  42%,
+    #ffffff  62%,
+    #f4f4f8  82%,
+    #ffffff 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
-  animation: iridescentShift 12s ease-in-out infinite;
-  text-shadow: 0 0 60px rgba(0, 229, 255, 0.15);
+  filter: drop-shadow(0 2px 14px rgba(200, 212, 224, 0.22))
+          drop-shadow(0 0 40px rgba(240, 240, 244, 0.10));
+  animation: iridescentShift 14s ease-in-out infinite;
 }
 
 @keyframes iridescentShift {
@@ -91,30 +118,33 @@ body.webgl-on .hero-fallback { opacity: 0.35; transition: opacity 1.2s ease; }
 }
 
 /* --------------------------------------------------------- glass panels */
-.era, .pillar, .matchup, .relic, .stack-item, .mint-form, .chapter-card {
+.era, .pillar, .matchup, .relic, .stack-item, .mint-form, .chapter-card,
+.ownership-step, .cert-frame {
   background: var(--glass-tint);
   border: 1px solid var(--glass-hi);
-  backdrop-filter: blur(24px) saturate(1.35);
-  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
   border-radius: 18px;
   position: relative;
   overflow: hidden;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
     0 24px 48px -18px rgba(0, 0, 0, 0.55),
-    0 0 60px -12px rgba(0, 229, 255, 0.12);
+    0 0 60px -12px rgba(200, 212, 224, 0.08);
 }
 
-/* Iridescent sheen sweep on hover for interactive cards */
-.era, .relic, .matchup, .chapter-card { transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
-.era::before, .relic::before, .matchup::before, .chapter-card::before {
+/* Chrome-shine sweep on hover for interactive cards */
+.era, .relic, .matchup, .chapter-card, .ownership-step {
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.era::before, .relic::before, .matchup::before, .chapter-card::before, .ownership-step::before {
   content: '';
   position: absolute; inset: 0;
   background: linear-gradient(130deg,
     transparent 30%,
     rgba(255, 255, 255, 0.06) 45%,
-    rgba(0, 229, 255, 0.08) 50%,
+    rgba(216, 216, 222, 0.10) 50%,
     rgba(255, 255, 255, 0.06) 55%,
     transparent 70%);
   background-size: 250% 250%;
@@ -122,23 +152,23 @@ body.webgl-on .hero-fallback { opacity: 0.35; transition: opacity 1.2s ease; }
   pointer-events: none;
   transition: background-position 0.9s ease;
 }
-.era:hover::before, .relic:hover::before, .matchup:hover::before, .chapter-card:hover::before {
+.era:hover::before, .relic:hover::before, .matchup:hover::before,
+.chapter-card:hover::before, .ownership-step:hover::before {
   background-position: 100% 100%;
 }
-.era:hover, .relic:hover, .matchup:hover, .chapter-card:hover {
+.era:hover, .relic:hover, .matchup:hover, .chapter-card:hover, .ownership-step:hover {
   transform: translateY(-4px);
-  border-color: rgba(0, 229, 255, 0.35);
+  border-color: rgba(216, 216, 222, 0.38);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
     0 30px 60px -18px rgba(0, 0, 0, 0.65),
-    0 0 80px -8px rgba(0, 229, 255, 0.22);
+    0 0 80px -8px rgba(216, 216, 222, 0.18);
 }
 
 /* --------------------------------------------------------- chrome pills */
-.pill {
+.pill, .step-num {
   background: var(--chrome);
-  background-size: 100% 100%;
-  color: #12121a !important;
+  color: #14141c !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(0, 0, 0, 0.35),
@@ -147,37 +177,37 @@ body.webgl-on .hero-fallback { opacity: 0.35; transition: opacity 1.2s ease; }
 
 /* --------------------------------------------------------- chrome buttons */
 .btn.primary {
-  background: var(--iridescent);
-  background-size: 200% 100%;
-  background-position: 0% 50%;
-  transition: background-position 0.5s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  color: #12121a;
+  background: var(--chrome);
+  color: #14141c;
+  font-weight: 700;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 8px 20px -6px rgba(0, 229, 255, 0.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 8px 20px -6px rgba(216, 216, 222, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 .btn.primary:hover {
-  background-position: 100% 50%;
   transform: translateY(-2px);
+  filter: brightness(1.08) contrast(1.05);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    0 12px 28px -6px rgba(123, 44, 191, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 12px 28px -6px rgba(216, 216, 222, 0.4);
 }
 .btn.ghost {
   background: var(--glass-tint);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 229, 255, 0.4);
-  color: #d0f0ff;
+  border: 1px solid rgba(216, 216, 222, 0.4);
+  color: #e6e6ea;
 }
 .btn.ghost:hover {
-  border-color: #00FF66;
-  background: rgba(0, 255, 102, 0.08);
-  color: #f0ffe5;
+  border-color: #f4f4f8;
+  background: rgba(216, 216, 222, 0.08);
+  color: #ffffff;
 }
 
 /* --------------------------------------------------------- section titles */
 section h2 {
-  background: linear-gradient(90deg, #f0f0f0 0%, #a0ddff 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #c8d4e0 50%, #e0d8c8 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
@@ -187,8 +217,8 @@ section h2 {
 body.stories-body #hero {
   padding-top: 6rem; padding-bottom: 4rem;
   text-align: left;
-  background: radial-gradient(ellipse at 30% 20%, rgba(255, 62, 165, 0.12) 0%, transparent 55%),
-              radial-gradient(ellipse at 70% 80%, rgba(0, 229, 255, 0.12) 0%, transparent 55%);
+  background: radial-gradient(ellipse at 30% 20%, rgba(212, 184, 176, 0.12) 0%, transparent 55%),
+              radial-gradient(ellipse at 70% 80%, rgba(200, 212, 224, 0.12) 0%, transparent 55%);
 }
 body.stories-body #hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); text-align: left; }
 body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
@@ -197,9 +227,7 @@ body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
   display: flex; flex-direction: column; gap: 2rem;
   max-width: 900px; margin: 0 auto; padding: 2rem 0;
 }
-.chapter-card {
-  padding: 2.5rem 2.5rem 2rem;
-}
+.chapter-card { padding: 2.5rem 2.5rem 2rem; }
 .chapter-header {
   display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 1rem;
   padding-bottom: 1rem;
@@ -217,36 +245,41 @@ body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.4rem;
-  color: #f0f0f0;
+  color: #f0f0f4;
 }
 .chapter-year {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: #a0a0b0;
+  font-size: 0.85rem;
+  color: #c0c0c8;
   letter-spacing: 0.1em;
 }
 .chapter-body p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: #d5d5e0;
+  font-size: 1.08rem;
+  line-height: 1.78;
+  color: #e0e0e6;
   margin-bottom: 1rem;
 }
-.chapter-body p em { color: #f0f0f0; font-style: italic; }
+.chapter-body p em { color: #ffffff; font-style: italic; }
 .chapter-tag {
   display: flex; align-items: center; gap: 0.5rem;
   margin-top: 1.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(0, 229, 255, 0.06);
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: rgba(200, 212, 224, 0.06);
+  border: 1px solid rgba(200, 212, 224, 0.2);
   border-radius: 8px;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: #a0ddff;
+  font-size: 0.88rem;
+  color: #c8d4e0;
 }
-.chapter-tag strong { color: #00FF66; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }
+.chapter-tag strong {
+  color: #e0d8c8;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+}
 
-/* Fade-in on scroll for chapters */
+/* Fade-in on scroll for chapter cards */
 .chapter-card { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .chapter-card.reveal { opacity: 1; transform: translateY(0); }
 
@@ -258,7 +291,7 @@ body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
   text-align: center;
   background: var(--glass-tint);
   border: 1px solid var(--glass-hi);
-  backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.2);
   border-radius: 20px;
 }
 .stories-outro h3 {
@@ -268,19 +301,107 @@ body.stories-body #hero .sub { text-align: left; margin: 1.5rem 0 0; }
   background: var(--iridescent);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.stories-outro p { color: #c0c0c8; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
+.stories-outro p { color: #d5d5dc; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; }
 .stories-outro .btn-row { justify-content: center; }
 
-/* --------------------------------------------------------- nav active */
-nav ul li a.active { color: #00FF66; }
+/* --------------------------------------------------------- ownership grid */
+.ownership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.ownership-step { padding: 1.75rem; }
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.25rem; height: 2.25rem; border-radius: 999px;
+  font-family: var(--font-display); font-weight: 900; font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+}
+.ownership-step h3 { font-size: 1.15rem; margin-bottom: 0.6rem; color: #f0f0f4; }
+.ownership-step p  { color: #d0d0d8; font-size: 0.98rem; line-height: 1.6; }
+.ownership-step code {
+  background: rgba(200, 212, 224, 0.09);
+  color: #e6e6ea;
+  padding: 0.1em 0.4em; border-radius: 3px;
+  font-family: var(--font-mono); font-size: 0.85em;
+}
+.ownership-step a { color: #e0d8c8; }
+.ownership-step a:hover { color: #ffffff; }
+
+/* --------------------------------------------------------- ownership cert */
+.ownership-cert { margin-top: 2rem; }
+.cert-frame {
+  padding: 2rem 2.5rem;
+  background:
+    linear-gradient(135deg, rgba(28,28,38,0.85) 0%, rgba(20,20,28,0.85) 100%),
+    var(--chrome);
+  background-blend-mode: overlay;
+  border: 1px solid rgba(216, 216, 222, 0.35);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 0 60px rgba(216,216,222,0.05),
+    0 20px 40px -10px rgba(0,0,0,0.55);
+  position: relative;
+}
+.cert-frame::after {
+  content: '';
+  position: absolute; inset: 6px;
+  border: 1px solid rgba(216,216,222,0.15);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.cert-header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1rem;
+               border-bottom: 1px dashed rgba(216,216,222,0.2); }
+.cert-title {
+  font-family: var(--font-display); font-weight: 900; font-size: 1.15rem;
+  letter-spacing: 0.15em;
+  background: var(--iridescent);
+  background-size: 200% 200%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cert-sub {
+  font-family: var(--font-mono); font-size: 0.78rem; color: #c0c0c8;
+  letter-spacing: 0.1em; margin-top: 0.35rem;
+}
+.cert-body { display: grid; grid-template-columns: minmax(140px, auto) 1fr; gap: 0.6rem 1.25rem; margin-bottom: 1.25rem; }
+.cert-body dt {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  color: #c0c0c8; text-transform: uppercase; letter-spacing: 0.08em;
+  align-self: center;
+}
+.cert-body dd {
+  color: #f0f0f4; font-size: 0.95rem; margin: 0;
+  overflow-wrap: anywhere;
+}
+.cert-body dd.mono { font-family: var(--font-mono); font-size: 0.85rem; color: #e6e6ea; }
+.cert-seal {
+  text-align: center;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 0.9rem; letter-spacing: 0.35em;
+  padding: 0.6rem;
+  background: rgba(216,216,222,0.05);
+  border: 1px solid rgba(216,216,222,0.15);
+  border-radius: 6px;
+  color: #d8d8de;
+}
+
+/* --------------------------------------------------------- nav brand */
+nav .brand.brand-mark img {
+  height: 26px; width: auto; display: block;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+}
+nav .brand.brand-mark { padding: 0.1rem 0; }
+nav ul li a { font-size: 0.95rem; }
+nav ul li a.active { color: #f0f0f4; text-shadow: 0 0 12px rgba(216,216,222,0.35); }
 
 /* --------------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .hero-fallback,
   #hero h1,
-  .era, .relic, .matchup, .chapter-card {
+  .era, .relic, .matchup, .chapter-card, .ownership-step {
     animation: none !important;
     transition: none !important;
   }
-  .btn.primary { background-position: 50% 50% !important; }
+  .btn.primary { transform: none !important; }
 }

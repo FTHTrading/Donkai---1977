@@ -1,16 +1,19 @@
 :root {
-  --bg:         #0a0a0c;
-  --bg-elev:    #12121a;
-  --bg-card:    #1a1a24;
-  --text:       #f0f0f0;
-  --text-dim:   #a0a0b0;
-  --neon:       #00FF66;
-  --cyan:       #00E5FF;
-  --amber:      #FFD700;
-  --purple:     #7B2CBF;
-  --border:     #2a2a3a;
-  --border-hi:  #3a3a55;
-  --danger:     #ff5566;
+  --bg:         #0a0a0f;
+  --bg-elev:    #14141c;
+  --bg-card:    #1c1c26;
+  --text:       #f0f0f4;
+  --text-dim:   #c0c0c8;      /* bumped from #a0a0b0 for readability (6.9:1 vs bg) */
+
+  /* Legacy color variable names — aliased to LIQUID METAL palette (no neons). */
+  --neon:       #f4f4f8;      /* was electric green; now bright chrome white */
+  --cyan:       #c8d4e0;      /* was electric cyan;  now iceblue */
+  --amber:      #e0d8c8;      /* was gold;           now champagne */
+  --purple:     #d4b8b0;      /* was purple;         now rosegold */
+
+  --border:     #2a2a34;
+  --border-hi:  #3a3a48;
+  --danger:     #d4b8b0;
 
   --font-body:  'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono:  'JetBrains Mono', 'Cascadia Code', Consolas, ui-monospace, monospace;

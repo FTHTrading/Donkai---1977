@@ -75,11 +75,12 @@ function boot(canvas) {
   const positionAttr = geometry.attributes.position;
   const basePositions = new Float32Array(positionAttr.array);
 
-  // ---- accent neon point lights (add glow, reflect on chrome) ----
-  const l1 = new THREE.PointLight(0x00E5FF, 24, 12, 2); l1.position.set(3.2,  2.2,  4.0);
-  const l2 = new THREE.PointLight(0xFF3EA5, 22, 12, 2); l2.position.set(-3.0, -2.4, 3.6);
-  const l3 = new THREE.PointLight(0xFFD700, 18, 10, 2); l3.position.set(0.5,  3.8, -3.0);
-  const l4 = new THREE.PointLight(0x00FF66, 16,  9, 2); l4.position.set(-1.5, 3.0, -1.5);
+  // ---- metal-tinted point lights: iceblue / rosegold / champagne / platinum ----
+  // Just enough warm/cool bias to activate iridescence without introducing neon color.
+  const l1 = new THREE.PointLight(0xc8d4e0, 22, 12, 2); l1.position.set(3.2,  2.2,  4.0);
+  const l2 = new THREE.PointLight(0xd4b8b0, 20, 12, 2); l2.position.set(-3.0, -2.4, 3.6);
+  const l3 = new THREE.PointLight(0xe0d8c8, 18, 10, 2); l3.position.set(0.5,  3.8, -3.0);
+  const l4 = new THREE.PointLight(0xd8d8de, 16,  9, 2); l4.position.set(-1.5, 3.0, -1.5);
   scene.add(l1, l2, l3, l4);
 
   // ---- pointer parallax ----
