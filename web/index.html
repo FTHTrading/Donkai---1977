@@ -9,6 +9,52 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    .category-filter-nav {
+      display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .cat-btn {
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-dim); padding: 0.45rem 1rem; border-radius: 20px;
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .cat-btn:hover, .cat-btn.active {
+      border-color: var(--memory-violet); color: var(--pearl); background: rgba(168, 85, 247, 0.15);
+      box-shadow: 0 0 14px var(--memory-violet-glow);
+    }
+
+    /* Full Dilemmas Grid */
+    .dilemmas-catalog-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .dilemma-mini-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.6rem; cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .dilemma-mini-card:hover {
+      border-color: var(--memory-violet); transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px var(--memory-violet-glow);
+    }
+    .dilemma-mini-card.active-topic {
+      border-color: var(--synaptic-cyan);
+      box-shadow: 0 0 18px var(--synaptic-cyan-glow);
+    }
+
+    /* Purpose Manifesto Box */
+    .purpose-manifesto {
+      background: linear-gradient(180deg, #0e0f18 0%, #07080c 100%);
+      border: 1px solid var(--border-hi); border-radius: 14px;
+      padding: 3.5rem 2.5rem; margin: 4rem 0; position: relative; overflow: hidden;
+    }
+    .purpose-manifesto::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--memory-violet), var(--synaptic-cyan), var(--mnemonic-gold));
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -30,26 +76,36 @@
   </header>
 
   <main>
-    <!-- HERO RECALL SECTION -->
+    <!-- HERO RECALL ARENA -->
     <div class="recall-hero">
-      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.5rem;">
-        <span class="badge frequency">528Hz Cognitive Frequency</span>
-        <span class="badge cyan">Decentralized Recall</span>
+      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.6rem;">
+        <span class="badge frequency">528Hz Memory Frequency</span>
+        <span class="badge cyan">Decentralized Human Recall</span>
         <span class="badge gold">LPS-1 On-Chain Standard</span>
       </div>
       
       <h1>WHAT DO YOU REMEMBER?</h1>
       
       <p class="lead-sub">
-        Right or wrong, what you remember is real human testimony. Vote on history's most debated Mandela Effect memory divergences and seal your recollection directly into an immutable cryptographic ledger.
+        Right or wrong, what you remember is authentic human testimony. Vote on the world's most debated Mandela Effect memory divergences and seal your recollection directly into an immutable cryptographic ledger.
       </p>
+
+      <!-- Category Filter Tabs -->
+      <div class="category-filter-nav">
+        <button class="cat-btn active" onclick="filterCategory('all')">All Divergences (16+)</button>
+        <button class="cat-btn" onclick="filterCategory('Cinema & Pop Culture')">Cinema & Pop Culture</button>
+        <button class="cat-btn" onclick="filterCategory('Brand & Iconography')">Brand & Iconography</button>
+        <button class="cat-btn" onclick="filterCategory('Books & Literature')">Books & Literature</button>
+        <button class="cat-btn" onclick="filterCategory('Sci-Fi & Film')">Sci-Fi & Film</button>
+        <button class="cat-btn" onclick="filterCategory('Arcade & 1977-Era Computing')">1977 Arcade Era</button>
+      </div>
 
       <!-- Quick Topic Switcher Pills -->
       <div class="topic-pills-bar" id="topicPills">
-        <!-- Injected via JavaScript -->
+        <!-- Injected via JS -->
       </div>
 
-      <!-- INTERACTIVE DILEMMA ARENA -->
+      <!-- MAIN INTERACTIVE DILEMMA ARENA -->
       <div class="dilemma-arena" id="dilemmaArena">
         <div class="dilemma-header">
           <div>
@@ -57,7 +113,7 @@
             <span class="badge" id="topicYear" style="margin-left:0.4rem;">1980</span>
           </div>
           <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);" id="totalRecallsText">
-            14,280 Community Recalls
+            1,420 Community Recalls
           </div>
         </div>
 
@@ -65,7 +121,7 @@
           What does Darth Vader say to Luke Skywalker in Empire Strikes Back?
         </div>
 
-        <!-- Option A vs Option B -->
+        <!-- Option A vs Option B Grid -->
         <div class="options-grid">
           <button class="option-btn opt-a" id="btnOptA" onclick="castVote('A')">
             <div>
@@ -87,17 +143,17 @@
         <!-- Live Split Bar -->
         <div class="result-bar-wrap">
           <div class="result-split-bar">
-            <div class="split-seg-a" id="splitSegA" style="width: 64%;">64% RECALL A</div>
-            <div class="split-seg-b" id="splitSegB" style="width: 36%;">36% RECALL B</div>
+            <div class="split-seg-a" id="splitSegA" style="width: 67%;">67% RECALL A</div>
+            <div class="split-seg-b" id="splitSegB" style="width: 33%;">33% RECALL B</div>
           </div>
         </div>
 
         <!-- Epistemic Context Note -->
         <div style="background:var(--bg-elev); border-left:3px solid var(--memory-violet); padding:1rem 1.2rem; border-radius:0 6px 6px 0; text-align:left; font-size:0.9rem; color:var(--text-dim); line-height:1.6;" id="topicContext">
-          Millions worldwide remember the line starting with "Luke", widely reinforced through decades of pop culture, whereas original film prints preserve "No, I am your father."
+          Widely cited in pop culture across 40 years, yet original theatrical audio tracks preserve "No, I am your father."
         </div>
 
-        <!-- Cryptographic On-Chain Receipt Box (Shown after click) -->
+        <!-- Cryptographic On-Chain Receipt Box -->
         <div class="receipt-anchor-box" id="receiptBox">
           <div class="receipt-title">
             <span>&#10003; LPS-1 MEMORY COMMITMENT GENERATED</span>
@@ -110,7 +166,7 @@
             0x8fd5e8f23644ec8680b24c13eb4e44b7cc299d8ca0b1c2d3e4f506172839405a
           </div>
           <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
-            <a href="record.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">View in 7-Tier Ledger &rarr;</a>
+            <a href="record.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">View 7-Tier Record Ledger &rarr;</a>
             <a href="atlas.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">Explore Global Drift Atlas &rarr;</a>
           </div>
         </div>
@@ -118,102 +174,133 @@
         <!-- Carousel Navigation -->
         <div class="topic-nav">
           <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="prevDilemma()">&larr; Previous Dilemma</button>
-          <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted);" id="topicCounter">1 of 6</span>
+          <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted);" id="topicCounter">1 of 16</span>
           <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="nextDilemma()">Next Dilemma &rarr;</button>
         </div>
       </div>
     </div>
 
-    <!-- CORE PROTOCOL FOUNDATION -->
-    <section style="padding-top: 1rem;">
-      <div style="text-align:center; margin-bottom:3rem;">
-        <span class="badge frequency">THE DONK AI AXIOM</span>
-        <h2 style="font-size:2.2rem; margin-top:0.6rem;">How We Preserve Human Memory</h2>
-        <p style="color:var(--text-dim); max-width:700px; margin:0.5rem auto 0 auto; font-size:1.05rem;">
-          Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support. Stake &ne; Truth.
-        </p>
-      </div>
-
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.8rem;">
-        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
-          <div class="badge frequency" style="margin-bottom:1rem;">01 &bull; SUBJECTIVE VALUE</div>
-          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Every Memory Matters</h3>
-          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
-            Whether a recollection matches physical archives or diverges into collective drift, personal testimony is an authentic cognitive signal that deserves preservation.
-          </p>
-        </div>
-
-        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
-          <div class="badge cyan" style="margin-bottom:1rem;">02 &bull; BLIND INDEPENDENCE</div>
-          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Zero Social Priming</h3>
-          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
-            Our 2-phase commit-reveal protocol seals witness recall before exposing underlying records, eliminating bandwagon bias and social conformity.
-          </p>
-        </div>
-
-        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
-          <div class="badge gold" style="margin-bottom:1rem;">03 &bull; NO TOKENIZED TRUTH</div>
-          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Truth Is Not For Sale</h3>
-          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
-            We ban prediction markets and token voting on human memory. Financial stake cannot author, alter, or decide historical support.
-          </p>
-        </div>
-
-        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
-          <div class="badge supported" style="margin-bottom:1rem;">04 &bull; ON-CHAIN PROVENANCE</div>
-          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">LPS-1 Merkle Roots</h3>
-          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
-            Every remembrance statement, evidence hash, and peer review assessment is cryptographically anchored to EVM contracts and content-addressed storage.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXHIBITS PREVIEW STRIP -->
-    <section style="background:var(--bg-elev); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:4rem 2rem;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
+    <!-- FULL DILEMMAS EXPLORER CATALOG -->
+    <section style="padding-top: 0;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
         <div>
-          <span class="badge gold">1977 CULTURAL ARCHIVES</span>
-          <h2 style="font-size:2rem; margin-top:0.4rem;">The 1977 Cultural Memory Museum</h2>
-          <p style="color:var(--text-dim); margin-bottom:0;">Explore physical artifact photography and oral records from the foundation era.</p>
+          <span class="badge cyan">COMPLETE CATALOG</span>
+          <h2 style="font-size:2rem; margin-top:0.4rem;">Explore All Memory Divergences</h2>
+          <p style="color:var(--text-dim); margin-bottom:0;">Click any card to load the dilemma and cast your cryptographic on-chain vote.</p>
         </div>
-        <a href="museum.html" class="btn btn-primary">Enter Museum &rarr;</a>
+        <button class="btn btn-secondary" onclick="document.getElementById('submitDilemmaSection').scrollIntoView({behavior:'smooth'})">
+          + Propose New Memory Dilemma
+        </button>
       </div>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
-        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-          <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" style="width:100%; height:180px; object-fit:cover;">
-          <div style="padding:1.2rem;">
-            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
-            <h4 style="color:var(--pearl); font-size:1.05rem;">1978 Space Invaders Token</h4>
-          </div>
-        </a>
-
-        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-          <img src="img/cinema_marquee_1977.jpg" alt="1977 Cinema Marquee" style="width:100%; height:180px; object-fit:cover;">
-          <div style="padding:1.2rem;">
-            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
-            <h4 style="color:var(--pearl); font-size:1.05rem;">May 1977 Theatrical Marquee</h4>
-          </div>
-        </a>
-
-        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-          <img src="img/pirate_radio_cassette_1981.jpg" alt="1981 Pirate Radio" style="width:100%; height:180px; object-fit:cover;">
-          <div style="padding:1.2rem;">
-            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
-            <h4 style="color:var(--pearl); font-size:1.05rem;">London 1981 Pirate Radio Tape</h4>
-          </div>
-        </a>
-
-        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
-          <img src="img/tokyo_synth_1977.jpg" alt="Tokyo Synth" style="width:100%; height:180px; object-fit:cover;">
-          <div style="padding:1.2rem;">
-            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
-            <h4 style="color:var(--pearl); font-size:1.05rem;">Tokyo 1977 PS-3300 Synth</h4>
-          </div>
-        </a>
+      <div class="dilemmas-catalog-grid" id="catalogGrid">
+        <!-- Injected via JS -->
       </div>
     </section>
+
+    <!-- WHY WE ARE DOING IT: THE TRUE PURPOSE MANIFESTO -->
+    <section style="padding-top: 1rem;">
+      <div class="purpose-manifesto">
+        <div style="max-width:880px; margin:0 auto; text-align:left;">
+          <span class="badge frequency" style="margin-bottom:0.8rem;">PROTOCOL MANIFESTO</span>
+          <h2 style="font-size:2.4rem; color:var(--pearl); margin-bottom:1rem; line-height:1.2;">
+            Why We Are Doing This: The Purpose of DONK AI
+          </h2>
+          
+          <p style="font-size:1.1rem; color:var(--text); line-height:1.7; margin-bottom:1.8rem;">
+            We live at the dawn of the synthetic age. As generative AI models synthesize billions of texts, images, and videos daily, digital archives are quietly overwritten, edited, and flattened. The risk of <strong>digital amnesia</strong>—where what humans actually saw, felt, and remembered is silently erased—is the defining cultural challenge of our century.
+          </p>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.8rem; margin:2rem 0;">
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
+              <h4 style="color:var(--memory-violet); font-size:1.1rem; margin-bottom:0.5rem;">1. Memory Is Not a Bug</h4>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Your subjective recollection is genuine human cognitive data. Whether your memory matches the physical museum archive or reflects a collective cultural schema, it deserves an immutable sovereign record.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
+              <h4 style="color:var(--synaptic-cyan); font-size:1.1rem; margin-bottom:0.5rem;">2. Defense Against Retro-Edits</h4>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Centralized cloud databases can retroactively alter film dialogue, brand logos, and historic speeches with a single server commit. LPS-1 anchors cryptographic time-stamped proof of what humanity experienced.
+              </p>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
+              <h4 style="color:var(--mnemonic-gold); font-size:1.1rem; margin-bottom:0.5rem;">3. Stake Does Not Equal Truth</h4>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                We reject speculative prediction markets and token wagering on human trauma. Historical support is bounded through transparent peer review and blind corroboration, not financial capital.
+              </p>
+            </div>
+          </div>
+
+          <div style="text-align:center; margin-top:2.5rem;">
+            <a href="protocol.html" class="btn btn-primary" style="margin-right:1rem;">Read Complete Protocol Charter &rarr;</a>
+            <a href="museum.html" class="btn btn-secondary">Visit 1977 Cultural Museum</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SUBMIT A NEW DILEMMA SECTION -->
+    <section id="submitDilemmaSection" style="padding-top:1rem;">
+      <div class="form-card">
+        <span class="badge cyan" style="margin-bottom:0.6rem;">COMMUNITY PROPOSAL</span>
+        <h2 style="font-size:2rem; margin-bottom:0.6rem;">Propose a Memory Divergence</h2>
+        <p style="color:var(--text-dim); margin-bottom:2rem; font-size:0.95rem;">
+          Notice a widespread memory divergence that isn't cataloged yet? Submit the dilemma below to generate an on-chain proposal commitment root.
+        </p>
+
+        <form id="customDilemmaForm" onsubmit="submitCustomDilemma(event)">
+          <div class="form-group">
+            <label>Dilemma Topic Title</label>
+            <input type="text" id="propTitle" class="form-input" placeholder="e.g. Curious George's Tail" required>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
+            <div class="form-group">
+              <label>Topic Category</label>
+              <select id="propCategory" class="form-select" required>
+                <option value="Cinema & Pop Culture">Cinema & Pop Culture</option>
+                <option value="Brand & Iconography">Brand & Iconography</option>
+                <option value="Books & Literature">Books & Literature</option>
+                <option value="Sci-Fi & Film">Sci-Fi & Film</option>
+                <option value="Arcade & 1977-Era Computing">Arcade & Early Tech</option>
+                <option value="Music & Performance">Music & Performance</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Era / Year</label>
+              <input type="text" id="propYear" class="form-input" placeholder="e.g. 1977 or 1990s" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>The Core Divergence Question</label>
+            <input type="text" id="propQuestion" class="form-input" placeholder="e.g. Does Curious George have a monkey tail?" required>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
+            <div class="form-group">
+              <label>Option A (Popular Memory)</label>
+              <input type="text" id="propOptA" class="form-input" placeholder="e.g. Yes, he has a tail" required>
+            </div>
+            <div class="form-group">
+              <label>Option B (Archival Record)</label>
+              <input type="text" id="propOptB" class="form-input" placeholder="e.g. No, he has no tail" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Context & Archival Notes</label>
+            <textarea id="propContext" class="form-textarea" placeholder="Describe where people remember this vs what the physical archival records show..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width:100%;">Seal & Submit Memory Dilemma &rarr;</button>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -230,15 +317,75 @@
 
   <script src="js/mandela-engine.js"></script>
   <script>
+    let currentCategoryFilter = 'all';
+
+    function renderCatalog() {
+      const grid = document.getElementById('catalogGrid');
+      grid.innerHTML = '';
+      const allTopics = window.MandelaEngine.getAllTopics();
+      const filtered = currentCategoryFilter === 'all' 
+        ? allTopics 
+        : allTopics.filter(t => t.category === currentCategoryFilter);
+
+      filtered.forEach((topic) => {
+        const pcts = window.MandelaEngine.getPercentages(topic);
+        const card = document.createElement('div');
+        card.className = `dilemma-mini-card ${topic.id === window.MandelaEngine.getCurrentTopic().id ? 'active-topic' : ''}`;
+        card.onclick = () => {
+          window.MandelaEngine.setTopicById(topic.id);
+          renderTopic();
+          document.getElementById('dilemmaArena').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        card.innerHTML = `
+          <div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.6rem;">
+              <span class="badge cyan" style="font-size:0.7rem;">${topic.category}</span>
+              <span class="badge" style="font-size:0.7rem;">${topic.year}</span>
+            </div>
+            <h3 style="color:var(--pearl); font-size:1.15rem; margin-bottom:0.6rem;">${topic.title || topic.question}</h3>
+            <p style="font-size:0.85rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">${topic.question}</p>
+          </div>
+          <div>
+            <div class="result-bar-wrap" style="margin-bottom:0.5rem;">
+              <div class="result-split-bar" style="height:22px;">
+                <div class="split-seg-a" style="width:${pcts.pctA}%; font-size:0.7rem; padding-left:0.5rem;">${pcts.pctA}% A</div>
+                <div class="split-seg-b" style="width:${pcts.pctB}%; font-size:0.7rem; padding-right:0.5rem;">${pcts.pctB}% B</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-family:var(--font-mono); color:var(--text-muted);">
+              <span>${pcts.total.toLocaleString()} Recalls</span>
+              <span style="color:var(--memory-violet);">Vote &rarr;</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterCategory(cat) {
+      currentCategoryFilter = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'all' && btn.innerText.includes('All')));
+      });
+      renderPills();
+      renderCatalog();
+    }
+
     function renderPills() {
       const pillsContainer = document.getElementById('topicPills');
       pillsContainer.innerHTML = '';
-      MANDELA_TOPICS.forEach((t, idx) => {
+      const allTopics = window.MandelaEngine.getAllTopics();
+      const filtered = currentCategoryFilter === 'all' 
+        ? allTopics 
+        : allTopics.filter(t => t.category === currentCategoryFilter);
+
+      filtered.forEach((t) => {
         const btn = document.createElement('button');
-        btn.className = `topic-pill ${idx === window.MandelaEngine.currentTopicIndex ? 'active' : ''}`;
-        btn.innerText = t.id.replace(/-/g, ' ').toUpperCase();
+        btn.className = `topic-pill ${t.id === window.MandelaEngine.getCurrentTopic().id ? 'active' : ''}`;
+        btn.innerText = (t.title || t.id.replace(/-/g, ' ')).toUpperCase();
         btn.onclick = () => {
-          window.MandelaEngine.currentTopicIndex = idx;
+          window.MandelaEngine.setTopicById(t.id);
           renderTopic();
         };
         pillsContainer.appendChild(btn);
@@ -264,7 +411,9 @@
       document.getElementById('splitSegB').style.width = `${pcts.pctB}%`;
       document.getElementById('splitSegB').innerText = `${pcts.pctB}% RECALL B`;
 
-      document.getElementById('topicCounter').innerText = `${window.MandelaEngine.currentTopicIndex + 1} of ${MANDELA_TOPICS.length}`;
+      const allTopics = window.MandelaEngine.getAllTopics();
+      const currentIdx = allTopics.findIndex(t => t.id === topic.id);
+      document.getElementById('topicCounter').innerText = `${currentIdx + 1} of ${allTopics.length}`;
 
       const userVote = window.MandelaEngine.getVote(topic.id);
       const btnA = document.getElementById('btnOptA');
@@ -282,6 +431,7 @@
       }
 
       renderPills();
+      renderCatalog();
     }
 
     async function castVote(choice) {
@@ -298,6 +448,24 @@
     function prevDilemma() {
       window.MandelaEngine.prevTopic();
       renderTopic();
+    }
+
+    async function submitCustomDilemma(event) {
+      event.preventDefault();
+      const title = document.getElementById('propTitle').value;
+      const category = document.getElementById('propCategory').value;
+      const year = document.getElementById('propYear').value;
+      const question = document.getElementById('propQuestion').value;
+      const optA = document.getElementById('propOptA').value;
+      const optB = document.getElementById('propOptB').value;
+      const context = document.getElementById('propContext').value;
+
+      const newTopic = await window.MandelaEngine.submitCustomDilemma(title, category, year, question, optA, optB, context);
+      alert(`Memory Dilemma '${title}' successfully anchored under LPS-1! Switching to your dilemma.`);
+      document.getElementById('customDilemmaForm').reset();
+      window.MandelaEngine.setTopicById(newTopic.id);
+      renderTopic();
+      document.getElementById('dilemmaArena').scrollIntoView({ behavior: 'smooth' });
     }
 
     window.addEventListener('DOMContentLoaded', () => {
