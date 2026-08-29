@@ -212,14 +212,18 @@
       </div>
 
       <!-- Free Writing Textarea with Realistic Model Example -->
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:0.4rem; flex-wrap:wrap; gap:0.5rem;">
         <label for="journeyProseInput" style="font-weight:600; color:var(--pearl); font-size:0.95rem;">What do you remember?</label>
         <div style="display:flex; align-items:center; gap:0.8rem;">
-          <span id="draftSaveStatus" style="font-size:0.75rem; color:var(--synaptic-cyan); font-family:var(--font-mono);">✓ Draft saved locally on this device</span>
-          <button type="button" onclick="clearDraft()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; text-decoration:underline;">Clear draft</button>
+          <span id="draftSaveStatus" style="font-size:0.75rem; color:var(--synaptic-cyan); font-family:var(--font-mono);">✓ Draft saved locally in this browser (unencrypted)</span>
+          <button type="button" onclick="openClearDraftModal()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; text-decoration:underline;">Clear draft</button>
         </div>
       </div>
       
+      <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.6rem;">
+        This draft is stored locally on this device and is not yet encrypted or submitted. Avoid using a shared or public device for private memories.
+      </div>
+
       <!-- Suggestion Banner if text exists -->
       <div id="starterSuggestionBanner" style="display:none; background:rgba(168,85,247,0.12); border:1px solid var(--memory-violet-glow); border-radius:6px; padding:0.6rem 0.9rem; margin-bottom:0.6rem; font-size:0.82rem; color:var(--pearl); justify-content:space-between; align-items:center;">
         <span>Suggested opening: <strong id="suggestedStarterText"></strong></span>
@@ -309,19 +313,19 @@
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="public-pseudonymous" checked style="margin-right:0.5rem;">
           <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Public Pseudonymous</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Your record can be visible publicly under a pseudonymous identity. Do not include private details you do not want published.</span>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Visible publicly under a pseudonymous identity. Do not include private details you do not want publicly available. Public records may be copied by others.</span>
         </label>
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="reviewer-only" style="margin-right:0.5rem;">
-          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Your record stays encrypted and is shared only with reviewers you authorize.</span>
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only (Controlled Pilot)</strong>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Your record is intended to be shared only with authorized reviewers. Access depends on the encryption and reviewer-sharing model shown before submission.</span>
         </label>
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="sovereign-vault" style="margin-right:0.5rem;">
           <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Sovereign Vault</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Only you can open this record. If you lose your recovery method, DONK AI may not be able to restore access.</span>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Only you can open this record using your chosen recovery method. If you lose your key, passkey access, or recovery material, DONK AI may not be able to restore access.</span>
         </label>
       </div>
 
@@ -371,18 +375,42 @@
         </div>
       </div>
 
+      <!-- Pre-Submission Mandatory Consent Checkpoint -->
+      <div class="spine-glass-panel" style="background:rgba(0,0,0,0.5); margin-bottom:1.5rem; padding:1.2rem;">
+        <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--synaptic-cyan); text-transform:uppercase; display:block; margin-bottom:0.8rem;">Pre-Submission Consent Checkpoint</span>
+        <div style="display:flex; flex-direction:column; gap:0.6rem; font-size:0.82rem; color:var(--text-dim);">
+          <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer;">
+            <input type="checkbox" id="chkConsent1" style="margin-top:0.2rem; accent-color:var(--synaptic-cyan);">
+            <span>I am submitting my own recollection, not a claim that has been proven true.</span>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer;">
+            <input type="checkbox" id="chkConsent2" style="margin-top:0.2rem; accent-color:var(--synaptic-cyan);">
+            <span>I have chosen the visibility setting for this version of my record.</span>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer;">
+            <input type="checkbox" id="chkConsent3" style="margin-top:0.2rem; accent-color:var(--synaptic-cyan);">
+            <span>I will not include intimate images, active legal accusations, sensitive medical details, or private information about another person.</span>
+          </label>
+          <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer;">
+            <input type="checkbox" id="chkConsent4" style="margin-top:0.2rem; accent-color:var(--synaptic-cyan);">
+            <span>I understand that a cryptographic signature proves I authorized a record commitment; it does not prove that the memory is historically true.</span>
+          </label>
+        </div>
+      </div>
+
       <!-- Collapsible Technical Accordion -->
       <button class="accordion-toggle" onclick="toggleAccordion('techSec3')">
         <span>+ View EIP-712 structured data parameters</span>
       </button>
       <div id="techSec3" class="accordion-content">
         Domain: { name: "DONK AI Human Remembrance Protocol", version: "1", chainId: 1977, verifyingContract: "0x1977000000000000000000000000000000000001" }<br>
-        PrimaryType: "CreateRemembrance" &bull; StatementRoot: 0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f
+        PrimaryType: "CreateRemembrance" &bull; StatementRoot: 0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f<br>
+        On-chain anchoring status: Planned / demonstration environment
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-top:1.5rem;">
         <button class="btn btn-secondary btn-sm" data-goto-stage="2">&larr; Back</button>
-        <button class="btn btn-primary" onclick="openEIP712Modal()">Sign Record Commitment &rarr;</button>
+        <button class="btn btn-primary" onclick="proceedToSignModal()">Sign Record Commitment &rarr;</button>
       </div>
     </div>
 
@@ -521,6 +549,20 @@
     </div>
   </div>
 
+  <!-- Clear Draft Confirmation Modal -->
+  <div id="clearDraftModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:440px;">
+      <h3 style="font-size:1.2rem; color:var(--memory-crimson); margin-bottom:0.6rem;">Clear this local draft?</h3>
+      <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:1.4rem; line-height:1.5;">
+        This removes the unsent recollection from this browser. It cannot be restored unless you saved or submitted it elsewhere.
+      </p>
+      <div style="display:flex; justify-content:flex-end; gap:0.8rem;">
+        <button class="btn btn-secondary btn-sm" onclick="closeClearDraftModal()">Keep draft</button>
+        <button class="btn btn-primary btn-sm" style="background:var(--memory-crimson); border-color:var(--memory-crimson);" onclick="executeClearDraft()">Clear permanently</button>
+      </div>
+    </div>
+  </div>
+
   <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
     <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
       DONK AI &bull; The Human Remembrance Protocol. Preserving provenance without confusing emotional memory with settled historical fact.
@@ -583,16 +625,19 @@
     }
 
     function saveDraft() {
+      const now = new Date();
       const draft = {
         prose: document.getElementById('journeyProseInput').value,
         era: document.getElementById('ctxEra').value,
         place: document.getElementById('ctxPlace').value,
-        savedAt: new Date().toISOString()
+        savedAt: now.toISOString(),
+        expiresAt: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000).toISOString()
       };
       localStorage.setItem('donkai_remembrance_draft', JSON.stringify(draft));
       const status = document.getElementById('draftSaveStatus');
       if (status) {
-        status.innerText = '✓ Draft saved locally on this device';
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        status.innerText = `✓ Draft saved locally (${timeStr})`;
       }
     }
 
@@ -601,21 +646,52 @@
       if (!raw) return;
       try {
         const draft = JSON.parse(raw);
+        if (draft.expiresAt && new Date(draft.expiresAt) < new Date()) {
+          localStorage.removeItem('donkai_remembrance_draft');
+          return;
+        }
         if (draft.prose) document.getElementById('journeyProseInput').value = draft.prose;
         if (draft.era) document.getElementById('ctxEra').value = draft.era;
         if (draft.place) document.getElementById('ctxPlace').value = draft.place;
+        if (draft.savedAt) {
+          const timeStr = new Date(draft.savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          const status = document.getElementById('draftSaveStatus');
+          if (status) status.innerText = `✓ Draft restored from local device (${timeStr})`;
+        }
       } catch (e) {}
     }
 
-    function clearDraft() {
-      if (confirm('Are you sure you want to clear your current local draft?')) {
-        localStorage.removeItem('donkai_remembrance_draft');
-        document.getElementById('journeyProseInput').value = '';
-        document.getElementById('ctxEra').value = '';
-        document.getElementById('ctxPlace').value = '';
-        const status = document.getElementById('draftSaveStatus');
-        if (status) status.innerText = 'Draft cleared';
+    function openClearDraftModal() {
+      document.getElementById('clearDraftModal').classList.add('active');
+    }
+
+    function closeClearDraftModal() {
+      document.getElementById('clearDraftModal').classList.remove('active');
+    }
+
+    function executeClearDraft() {
+      localStorage.removeItem('donkai_remembrance_draft');
+      document.getElementById('journeyProseInput').value = '';
+      document.getElementById('ctxEra').value = '';
+      document.getElementById('ctxPlace').value = '';
+      document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('active'));
+      const status = document.getElementById('draftSaveStatus');
+      if (status) status.innerText = 'Local draft removed from this browser';
+      closeClearDraftModal();
+    }
+
+    function proceedToSignModal() {
+      const c1 = document.getElementById('chkConsent1').checked;
+      const c2 = document.getElementById('chkConsent2').checked;
+      const c3 = document.getElementById('chkConsent3').checked;
+      const c4 = document.getElementById('chkConsent4').checked;
+
+      if (!c1 || !c2 || !c3 || !c4) {
+        alert('Please review and check all 4 pre-submission consent items before authorizing this record commitment.');
+        return;
       }
+
+      openEIP712Modal();
     }
 
     function selectTag(el) {
