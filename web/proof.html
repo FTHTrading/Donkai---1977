@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proof Explorer & LPS-1 Validator — DONK AI</title>
-  <meta name="description" content="Independent client-side validator for LPS-1 Living Provenance Standard Merkle commitments and inclusion proofs.">
+  <meta name="description" content="Independent client-side validator for LPS-1 Living Provenance Standard Merkle commitments, EIP-712 typed digests, and inclusion proofs.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=1.0.2">
 </head>
 <body>
   <header>
@@ -18,69 +18,73 @@
         <span class="brand-badge">LPS-1 PROTOCOL</span>
       </a>
       <ul>
-        <li><a href="index.html">Overview</a></li>
-        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="index.html">Record a Memory</a></li>
         <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="record.html">7-Tier Ledger</a></li>
         <li><a href="corroborate.html">Blind Corroboration</a></li>
         <li><a href="proof.html" class="active">Proof Explorer</a></li>
-        <li><a href="assembly.html">Assembly</a></li>
         <li><a href="protocol.html">Protocol Docs</a></li>
       </ul>
+      <a href="index.html" class="identity-pill">
+        <span class="dot"></span>
+        <span>Gateway Active</span>
+      </a>
     </nav>
   </header>
 
   <main>
     <section>
       <div style="text-align:center; margin-bottom: 3rem;">
-        <span class="badge provenance" style="margin-bottom:0.6rem;">INDEPENDENT CLIENT-SIDE VERIFIER</span>
-        <h1>LPS-1 Proof Explorer</h1>
-        <p class="section-lead" style="margin: 0 auto;">
-          Verify submission provenance and Merkle roots entirely in your local browser without relying on any centralized server or oracle.
+        <span class="badge frequency" style="margin-bottom:0.6rem;">INDEPENDENT CLIENT-SIDE VERIFIER</span>
+        <h1 style="font-family:var(--font-mono); font-size:2.6rem; color:var(--pearl); margin-bottom:0.6rem;">LPS-1 Proof Explorer</h1>
+        <p style="color:var(--text-dim); max-width:700px; margin:0 auto; font-size:1.05rem;">
+          Verify submission provenance, canonical statement roots, and EIP-712 typed structured digests entirely in your browser without trusting any centralized server or oracle.
         </p>
       </div>
 
-      <div class="form-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
-          <label for="jsonInput" style="font-weight:600; color:var(--pearl);">Input JSON Record or Manifest</label>
-          <button class="btn btn-secondary" onclick="loadSampleVector()" style="font-size:0.8rem; padding:0.3rem 0.7rem;">Load 1977 Sample Vector</button>
+      <div class="wizard-box" style="margin:0 auto; max-width:860px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; flex-wrap:wrap; gap:0.6rem;">
+          <label style="font-weight:600; color:var(--pearl); font-size:0.95rem;">Input W3C Verifiable Credential Manifest or JSON Record</label>
+          <button class="btn btn-secondary" onclick="loadSampleVector()" style="font-size:0.8rem; padding:0.35rem 0.8rem;">Load 1977 Sample Vector</button>
         </div>
 
-        <textarea id="jsonInput" class="form-textarea" style="font-family:var(--font-mono); font-size:0.85rem; min-height:220px;" placeholder='{"type":"donkai.remembrance.v1","narrative":"..."}'></textarea>
+        <textarea id="jsonInput" class="form-textarea" style="font-family:var(--font-mono); font-size:0.82rem; min-height:220px;" placeholder='{"type":["VerifiableCredential","DonkaiRemembranceRecord"],"id":"urn:donkai:record:1977:...","statementRoot":"0x..."}'></textarea>
 
-        <div style="margin-top: 1.5rem; display:flex; gap: 1rem;">
-          <button class="btn btn-primary" onclick="verifyInput()" style="flex:1;">Recompute LPS-1 Root & Validate</button>
+        <div style="margin-top: 1.5rem; display:flex; gap: 1rem; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="verifyInput()" style="flex:1;">Recompute LPS-1 Root & Validate &rarr;</button>
           <button class="btn btn-secondary" onclick="document.getElementById('jsonInput').value = '';">Clear</button>
         </div>
 
         <!-- Verification Output -->
         <div id="verifyReport" style="display:none; margin-top:2rem; padding:1.8rem; background:var(--bg-elev); border:1px solid var(--border-hi); border-radius:8px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
-            <h3 style="color:var(--pearl); margin:0;">LPS-1 Verification Result</h3>
-            <span id="badgeStatus" class="badge supported">VERIFIED INTEGRITY</span>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.5rem;">
+            <h3 style="color:var(--pearl); margin:0; font-size:1.2rem;">LPS-1 Verification Result</h3>
+            <span id="badgeStatus" class="badge supported">&#10003; VERIFIED CRYPTOGRAPHIC ROOT</span>
           </div>
 
-          <table class="meta-table">
+          <table class="epistemic-table">
             <tr>
-              <td>Domain-Separated Leaf Hash</td>
-              <td id="resHash" style="color:var(--accent-green);">0x...</td>
+              <td style="font-weight:600; color:var(--pearl);">Computed Statement Root</td>
+              <td id="resHash" style="color:var(--memory-emerald); font-family:var(--font-mono); word-break:break-all;">0x...</td>
             </tr>
             <tr>
-              <td>Canonical Size</td>
-              <td id="resSize">0 bytes</td>
+              <td style="font-weight:600; color:var(--pearl);">Canonical Payload Size</td>
+              <td id="resSize" style="font-family:var(--font-mono);">0 bytes</td>
             </tr>
             <tr>
-              <td>Deterministic JSON</td>
-              <td>Lexicographically sorted keys &bull; Unicode NFC normalized</td>
+              <td style="font-weight:600; color:var(--pearl);">Canonicalization Standard</td>
+              <td style="color:var(--text-dim);">Unicode NFC Normalization &bull; LF Newlines &bull; Lexicographical Key Sorting</td>
             </tr>
             <tr>
-              <td>Ledger Match Status</td>
-              <td id="resMatch" style="color:var(--accent-green);">Matches On-Chain Anchor #MEM-1977-0001</td>
+              <td style="font-weight:600; color:var(--pearl);">EIP-712 Verifier Scope</td>
+              <td style="color:var(--synaptic-cyan); font-family:var(--font-mono);">Chain ID: 1977 (DONK AI LPS-1 Registry)</td>
             </tr>
           </table>
 
           <div style="margin-top:1.5rem;">
             <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.4rem; font-family:var(--font-mono);">CANONICAL NORMALIZED BYTES:</div>
-            <pre id="canonPreview" style="background:#090a0f; padding:1rem; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:#cbd5e1; overflow-x:auto; white-space:pre-wrap;"></pre>
+            <pre id="canonPreview" style="background:#08090e; padding:1.2rem; border-radius:6px; font-family:var(--font-mono); font-size:0.8rem; color:#cbd5e1; overflow-x:auto; white-space:pre-wrap; border:1px solid var(--border);"></pre>
           </div>
         </div>
       </div>
@@ -89,11 +93,12 @@
 
   <footer>
     <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol (1977.donkai.org)</div>
       <ul class="footer-links">
         <li><a href="protocol.html">Protocol Charter</a></li>
-        <li><a href="atlas.html">Atlas</a></li>
-        <li><a href="remember.html">Record a Memory</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="record.html">7-Tier Ledger</a></li>
       </ul>
     </div>
   </footer>
@@ -101,26 +106,19 @@
   <script src="js/lps1.js"></script>
   <script>
     const sampleRecord = {
-      "type": "donkai.remembrance.v1",
-      "language": "en-US",
-      "authoringMode": "human-authored",
-      "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge. When you dropped the token, the machine emitted a distinct two-tone descending beep that you could hear across the entire arcade floor.",
-      "eventDate": {
-        "start": "1978-07-01",
-        "end": "1978-08-15",
-        "certainty": "approximate"
-      },
-      "location": {
-        "label": "Austin, Texas, United States",
-        "precision": "city"
-      },
-      "culturalContext": [
-        "arcade",
-        "1977-era",
-        "space-invaders",
-        "local-history"
+      "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://donkai.org/lps-1/v1"
       ],
-      "authorAttestation": "I confirm this is my own independent recollection."
+      "type": ["VerifiableCredential", "DonkaiRemembranceRecord"],
+      "id": "urn:donkai:record:1977:8f4c91a0",
+      "canonicalLanguage": "en-US",
+      "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge. When you dropped the token, the machine emitted a distinct two-tone descending beep that you could hear across the entire arcade floor.",
+      "eventTimeframe": "Summer 1978",
+      "location": "Austin, Texas, United States",
+      "sourceAwareness": "direct-experience",
+      "confidenceLevel": "vivid-but-uncertain",
+      "accessPolicy": "public-pseudonymous"
     };
 
     function loadSampleVector() {
