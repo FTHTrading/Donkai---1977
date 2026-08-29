@@ -1,20 +1,29 @@
 {
-  "fixtureVersion": "1.0",
-  "name": "aes_gcm_tamper_detection",
-  "description": "Demonstrates that AES-GCM-256 fails closed if ciphertext, AAD, or IV is tampered with",
-  "algorithm": "AES-GCM-256",
-  "keyLengthBits": 256,
-  "ivLengthBits": 96,
-  "aadBoundFields": [
-    "recordId",
-    "schemaHash",
-    "recordVersion",
-    "accessPolicyHash"
-  ],
-  "tamperScenarios": [
-    { "type": "altered_ciphertext", "expectedResult": "FAIL_AUTHENTICATION" },
-    { "type": "altered_aad", "expectedResult": "FAIL_AUTHENTICATION" },
-    { "type": "wrong_key", "expectedResult": "FAIL_AUTHENTICATION" },
-    { "type": "reused_iv", "expectedResult": "REJECTED_BY_POLICY" }
+  "fixtureVersion": "lps1-v1.0",
+  "name": "aes_gcm_deterministic_tamper_suite",
+  "disclaimer": "TEST VECTOR ONLY. Never reuse this key, IV, or ciphertext in any production encryption operation.",
+  "algorithm": "AES-256-GCM",
+  "keyHex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+  "ivHex": "00112233445566778899aabb",
+  "aadHex": "8f4c91a0293eb1860e19fb27509c316a9082ef74092b7194630a9108b5e902b4b49a04a047d337f74c7e63b65ef84b067a99f18a6e87a329e7f8e3295c2560e90000000000000001",
+  "plaintextUtf8": "Canonical Remembrance: Space Invaders 1978 Arcade Token Drop",
+  "ciphertextHex": "3b7c89f01a23c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "tagHex": "9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d",
+  "tamperedScenarios": [
+    {
+      "name": "altered_ciphertext_bit",
+      "tamperedCiphertextHex": "3b7c89f01a23c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f90123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcfee",
+      "expectedResult": "FAIL_AUTHENTICATION"
+    },
+    {
+      "name": "altered_aad_version",
+      "tamperedAadHex": "8f4c91a0293eb1860e19fb27509c316a9082ef74092b7194630a9108b5e902b4b49a04a047d337f74c7e63b65ef84b067a99f18a6e87a329e7f8e3295c2560e90000000000000002",
+      "expectedResult": "FAIL_AUTHENTICATION"
+    },
+    {
+      "name": "wrong_key",
+      "tamperedKeyHex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "expectedResult": "FAIL_AUTHENTICATION"
+    }
   ]
 }

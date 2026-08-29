@@ -1,0 +1,59 @@
+name: LPS-1 Protocol Conformance Suite
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust-conformance:
+    name: Rust LPS-1 Engine & Conformance Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          components: clippy, rustfmt
+
+      - name: Verify Code Formatting
+        run: cargo fmt --check
+
+      - name: Run Workspace Tests
+        run: cargo test --workspace --all-targets --verbose
+
+  js-conformance:
+    name: In-Browser WebCrypto Conformance Runner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate Web Assets Syntax
+        run: node -c web/js/mandela-engine.js web/js/web3-gateway.js web/js/social-adapters.js
+
+  secret-scanning:
+    name: Repository Secret & Credential Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Secret Hygiene Audit
+        run: |
+          if git grep -nEi "cfut_|CLOUDFLARE_API_TOKEN" -- ':!*.yml'; then
+            echo "::error::Found exposed secrets in tracked files!"
+            exit 1
+          fi
+          echo "Secret scan passed with 0 exposed tokens."

@@ -24,15 +24,23 @@ pub fn canonicalize_json_str(raw_json: &str) -> Result<CanonicalBytes> {
     Ok(CanonicalBytes(canonical_string.into_bytes()))
 }
 
+use unicode_normalization::UnicodeNormalization;
+
 fn sort_json_value(val: Value) -> Value {
     match val {
+        Value::String(s) => {
+            let normalized_crlf = s.replace("\r\n", "\n").replace('\r', "\n");
+            let nfc_string: String = normalized_crlf.nfc().collect();
+            Value::String(nfc_string)
+        }
         Value::Object(map) => {
             let mut sorted_map = Map::new();
             let mut keys: Vec<String> = map.keys().cloned().collect();
             keys.sort(); // Lexicographical sort
             for key in keys {
                 if let Some(v) = map.get(&key) {
-                    sorted_map.insert(key, sort_json_value(v.clone()));
+                    let key_nfc: String = key.nfc().collect();
+                    sorted_map.insert(key_nfc, sort_json_value(v.clone()));
                 }
             }
             Value::Object(sorted_map)

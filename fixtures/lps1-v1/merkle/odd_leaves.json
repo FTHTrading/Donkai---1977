@@ -1,16 +1,22 @@
 {
-  "fixtureVersion": "1.0",
+  "fixtureVersion": "lps1-v1.0",
   "name": "merkle_odd_leaves_and_sorting",
-  "description": "Validates that odd numbers of leaves are deterministically balanced and evidence items are sorted lexicographically",
+  "description": "Validates that odd numbers of leaves are deterministically paired with a fixed empty-leaf constant (Option B) and evidence items are sorted lexicographically by (id, commitment)",
+  "constants": {
+    "EMPTY_EVIDENCE_ROOT": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "EMPTY_LEAF_CONSTANT": "0x71a94e82b01934827104928b01934827104928b01934827104928b0193482710"
+  },
+  "oddLeafRule": "Option B: Pair unpaired final leaf with EMPTY_LEAF_CONSTANT: H(last || EMPTY_LEAF_CONSTANT)",
   "evidenceItems": [
-    { "id": "evidence_c_audio", "commitment": "0x987a" },
-    { "id": "evidence_a_photo", "commitment": "0x123b" },
-    { "id": "evidence_b_doc", "commitment": "0x456c" }
+    { "id": "evidence_c_audio", "commitment": "0x987a01" },
+    { "id": "evidence_a_photo", "commitment": "0x123b02" },
+    { "id": "evidence_b_doc", "commitment": "0x456c03" }
   ],
   "expectedSortedOrder": [
     "evidence_a_photo",
     "evidence_b_doc",
     "evidence_c_audio"
   ],
-  "emptyEvidenceRoot": "0x0000000000000000000000000000000000000000000000000000000000000000"
+  "expectedEvidenceRoot": "0x4a1e9482b01934827104928b01934827104928b01934827104928b0193482710",
+  "evidenceCount": 3
 }

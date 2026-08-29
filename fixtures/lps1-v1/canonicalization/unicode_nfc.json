@@ -1,17 +1,29 @@
 {
-  "fixtureVersion": "1.0",
-  "name": "unicode_nfc_normalization",
-  "description": "Validates that decomposed Unicode characters (e + acute) normalize to precomposed NFC before hashing",
-  "inputs": {
-    "precomposed": {
-      "language": "fr-FR",
-      "narrative": "café arcade"
+  "fixtureVersion": "lps1-v1.0",
+  "name": "unicode_nfc_and_line_endings",
+  "description": "Validates that decomposed Unicode characters normalize to precomposed NFC, CRLF line endings normalize to LF, and keys are lexicographically sorted",
+  "testCases": [
+    {
+      "name": "french_accent_equivalence",
+      "precomposed": { "language": "fr-FR", "narrative": "café arcade" },
+      "decomposed": { "language": "fr-FR", "narrative": "cafe\u0301 arcade" },
+      "expectedCanonicalJson": "{\"language\":\"fr-FR\",\"narrative\":\"café arcade\"}"
     },
-    "decomposed": {
-      "language": "fr-FR",
-      "narrative": "cafe\u0301 arcade"
+    {
+      "name": "crlf_to_lf_normalization",
+      "crlfInput": { "language": "en-US", "narrative": "Line 1\r\nLine 2\r\nLine 3" },
+      "lfInput": { "language": "en-US", "narrative": "Line 1\nLine 2\nLine 3" },
+      "expectedCanonicalJson": "{\"language\":\"en-US\",\"narrative\":\"Line 1\\nLine 2\\nLine 3\"}"
+    },
+    {
+      "name": "arabic_combining_marks",
+      "input": { "language": "ar-EG", "narrative": "القَاهِرَة 1978" },
+      "expectedCanonicalJson": "{\"language\":\"ar-EG\",\"narrative\":\"القَاهِرَة 1978\"}"
+    },
+    {
+      "name": "japanese_kanji_kana",
+      "input": { "language": "ja-JP", "narrative": "1977年 秋葉原" },
+      "expectedCanonicalJson": "{\"language\":\"ja-JP\",\"narrative\":\"1977年 秋葉原\"}"
     }
-  },
-  "expectedCanonicalJson": "{\"language\":\"fr-FR\",\"narrative\":\"café arcade\"}",
-  "expectedLeafHash": "0xbbf09bc7f03541ef494bfd0a5198083818e38d7890f57630fa9fc1f369eeceb1"
+  ]
 }
