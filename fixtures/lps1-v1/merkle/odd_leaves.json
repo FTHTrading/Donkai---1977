@@ -1,0 +1,16 @@
+{
+  "fixtureVersion": "1.0",
+  "name": "merkle_odd_leaves_and_sorting",
+  "description": "Validates that odd numbers of leaves are deterministically balanced and evidence items are sorted lexicographically",
+  "evidenceItems": [
+    { "id": "evidence_c_audio", "commitment": "0x987a" },
+    { "id": "evidence_a_photo", "commitment": "0x123b" },
+    { "id": "evidence_b_doc", "commitment": "0x456c" }
+  ],
+  "expectedSortedOrder": [
+    "evidence_a_photo",
+    "evidence_b_doc",
+    "evidence_c_audio"
+  ],
+  "emptyEvidenceRoot": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}

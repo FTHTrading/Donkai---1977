@@ -1,0 +1,25 @@
+{
+  "fixtureVersion": "1.0",
+  "name": "eip712_create_remembrance_digest",
+  "description": "Calculates EIP-712 domain separator, struct hash, and digest for CreateRemembrance",
+  "domain": {
+    "name": "DONK AI Human Remembrance Protocol",
+    "version": "1",
+    "chainId": 1977,
+    "verifyingContract": "0x1977000000000000000000000000000000000001"
+  },
+  "primaryType": "CreateRemembrance",
+  "message": {
+    "recordId": "0x8f4c91a0293eb1860e19fb27509c316a9082ef74092b7194630a9108b5e902b4",
+    "statementRoot": "0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f",
+    "evidenceRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "metadataRoot": "0x8f0d14bc72a19340e2908f97816027a0210bfa9795039f99e3a6c01905389e71",
+    "accessPolicyHash": "0x31aa4e9c01729051ebfa2967119052601934b0716c02456e01a89b0495e8103c",
+    "schemaHash": "0xb49a04a047d337f74c7e63b65ef84b067a99f18a6e87a329e7f8e3295c2560e9",
+    "createdAt": 1787988180,
+    "deadline": 1788592980,
+    "authorNonce": "0"
+  },
+  "expectedSigner": "0x71C8360437cd9f779Ef986E06a029B854497A912",
+  "expectedVerification": true
+}

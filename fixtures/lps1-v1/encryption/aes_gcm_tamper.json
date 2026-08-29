@@ -1,0 +1,20 @@
+{
+  "fixtureVersion": "1.0",
+  "name": "aes_gcm_tamper_detection",
+  "description": "Demonstrates that AES-GCM-256 fails closed if ciphertext, AAD, or IV is tampered with",
+  "algorithm": "AES-GCM-256",
+  "keyLengthBits": 256,
+  "ivLengthBits": 96,
+  "aadBoundFields": [
+    "recordId",
+    "schemaHash",
+    "recordVersion",
+    "accessPolicyHash"
+  ],
+  "tamperScenarios": [
+    { "type": "altered_ciphertext", "expectedResult": "FAIL_AUTHENTICATION" },
+    { "type": "altered_aad", "expectedResult": "FAIL_AUTHENTICATION" },
+    { "type": "wrong_key", "expectedResult": "FAIL_AUTHENTICATION" },
+    { "type": "reused_iv", "expectedResult": "REJECTED_BY_POLICY" }
+  ]
+}
