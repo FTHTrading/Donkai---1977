@@ -3,458 +3,184 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Record MEM-1977-0001 — Living Provenance Ledger — DONK AI</title>
-  <meta name="description" content="Complete 7-tier living provenance record: Memory Statement, Historical Context, Evidence & Provenance, Independent Corroboration, Review Status, Record History, Protocol Integrity.">
+  <title>7-Tier Living Provenance Ledger — DONK AI</title>
+  <meta name="description" content="Explore the 7-tier memory spine: What was remembered, Historical context, Submitted material, Independent recollections, Review outcome, Record evolution, and Cryptographic proof.">
+  <link rel="stylesheet" href="css/main.css?v=2.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.2">
-  <style>
-    .proof-tree-container {
-      background: #0b0c13;
-      border: 1px solid var(--border-hi);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .artifact-preview-card {
-      display: flex; gap: 1.5rem; background: var(--bg-elev);
-      padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border);
-      margin-bottom: 1rem; align-items: center; flex-wrap: wrap;
-    }
-    .artifact-thumb {
-      width: 160px; height: 105px; object-fit: cover; border-radius: 6px;
-      border: 1px solid var(--border-hi); flex-shrink: 0;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <canvas id="ambientCanvas"></canvas>
+
   <header>
     <nav>
       <a href="index.html" class="brand">
         <span>DONK AI</span>
-        <span class="brand-badge">LPS-1 PROTOCOL</span>
+        <span class="brand-badge">7-TIER LEDGER</span>
       </a>
       <ul>
-        <li><a href="index.html">Record a Memory</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="index.html">Journey</a></li>
+        <li><a href="museum.html">Museum</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
         <li><a href="record.html" class="active">7-Tier Ledger</a></li>
-        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="corroborate.html">Memory Chamber</a></li>
         <li><a href="proof.html">Proof Explorer</a></li>
-        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="protocol.html">Charter</a></li>
       </ul>
+      <div style="display:flex; align-items:center; gap:0.8rem;">
+        <button id="soundToggleBtn" class="sound-toggle-btn"><span>🔇 528Hz Audio</span></button>
+      </div>
     </nav>
   </header>
 
-  <main>
-    <section>
-      <!-- Top Meta Banner -->
-      <div style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-          <div>
-            <span class="badge provenance">RECORD MEM-1977-0001</span>
-            <span class="badge supported" style="margin-left:0.5rem;">HISTORICALLY SUPPORTED</span>
-            <span class="badge" style="margin-left:0.5rem;">LPS-1 v2.0 MANIFEST</span>
+  <!-- Hero -->
+  <section class="hero-cinema" style="min-height:35vh; padding: 3rem 1.5rem 1.5rem;">
+    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); letter-spacing:0.08em; text-transform:uppercase;">The Provenance Spine</span>
+    <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); color:var(--pearl); margin:0.4rem 0 0.8rem; font-weight:800;">7-Tier Living Provenance Ledger</h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:680px; margin:0 auto;">
+      A single explorable spine separating what was remembered, what was submitted, what was corroborated, and what was proven.
+    </p>
+  </section>
+
+  <!-- The 7-Tier Vertical Memory Spine -->
+  <section style="max-width:900px; margin: 0 auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div class="memory-spine">
+
+      <!-- Tier 1: What Was Remembered -->
+      <div class="spine-node">
+        <div class="spine-dot"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet);">TIER 01 &bull; CANONICAL RECOLLECTION</span>
+            <span class="badge supported">✓ AUTHOR COMMITTED</span>
           </div>
-          <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
-            <a href="corroborate.html?memoryId=MEM-1977-0001" class="btn btn-secondary" style="font-size:0.85rem;">Submit Blind Corroboration</a>
-            <a href="proof.html?recordId=1" class="btn btn-secondary" style="font-size:0.85rem;">Inspect Inclusion Proof</a>
-            <button class="btn btn-primary" onclick="exportManifest()" style="font-size:0.85rem;">Export JSON Manifest</button>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">What Was Remembered</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            First-person narrative normalized into Unicode NFC UTF-8 bytes before client-side encryption.
+          </p>
+          <div style="background:rgba(0,0,0,0.4); padding:0.6rem 0.9rem; border-radius:6px; font-size:0.8rem; color:var(--text-muted); border-left:2px solid var(--memory-violet);">
+            <strong>Does not prove:</strong> That the depicted event occurred exactly as remembered.
           </div>
-        </div>
-        <h1 style="margin-top:1rem; font-size:2.3rem;">Space Invaders 1978 Arcade Token & Coin Slot Tone</h1>
-        <div style="color:var(--text-muted); font-size:0.88rem; font-family:var(--font-mono); margin-top:0.4rem;">
-          Committed by 0x7391...F82c &bull; Chain Timestamp: 1978-ERA-ANCHOR (Block #1,977) &bull; Visibility: Public
         </div>
       </div>
 
-      <!-- Epistemic Guardrail Notice -->
-      <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-hi); border-radius:8px; padding:1.2rem 1.5rem; margin-bottom:2.5rem;">
-        <div style="font-size:0.82rem; font-family:var(--font-mono); color:var(--chrome); text-transform:uppercase; margin-bottom:0.3rem;">
-          Protocol Epistemic Declaration
+      <!-- Tier 2: Historical Context -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--synaptic-cyan);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan);">TIER 02 &bull; ERA &amp; GEOGRAPHY</span>
+            <span class="badge supported">✓ TIME-BOUND</span>
+          </div>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Historical Context</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            Location: Austin, Texas, USA &bull; Timeframe: Summer 1978 &bull; Cultural Anchor: Space Invaders Launch.
+          </p>
+          <div style="background:rgba(0,0,0,0.4); padding:0.6rem 0.9rem; border-radius:6px; font-size:0.8rem; color:var(--text-muted); border-left:2px solid var(--synaptic-cyan);">
+            <strong>Does not prove:</strong> That official institutional archives have cataloged this location.
+          </div>
         </div>
-        <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6; margin:0;">
-          This ledger preserves submission provenance, original testimony, evidence links, and peer review records. It does not by itself determine whether a subjective recollection is universally objective. Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support.
-        </p>
       </div>
 
-      <!-- Complete 7-Tier Record Grid -->
-      <div class="record-grid">
-
-        <!-- 1. MEMORY STATEMENT -->
-        <div class="record-panel panel-col-12">
-          <div class="panel-num">LEVEL 01 &bull; CANONICAL HUMAN REMEMBRANCE</div>
-          <h3>
-            <span>1. Memory Statement</span>
-            <span class="badge provenance">Submission Provenance Verified</span>
-          </h3>
-
-          <div class="narrative-box">
-            "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge. When you dropped the token, the machine emitted a distinct two-tone descending beep that you could hear across the entire arcade floor."
+      <!-- Tier 3: Submitted Material -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--mnemonic-gold);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--mnemonic-gold);">TIER 03 &bull; EVIDENCE BUNDLE</span>
+            <span class="badge supported">✓ 3 ARTIFACTS ATTACHED</span>
           </div>
-
-          <table class="meta-table">
-            <tr>
-              <td>Original Language</td>
-              <td>en-US (English - United States) &mdash; Canonical Source Text</td>
-            </tr>
-            <tr>
-              <td>Authorship Mode</td>
-              <td>Human-authored (Direct human testimony &bull; AI authoring strictly prohibited)</td>
-            </tr>
-            <tr>
-              <td>Author Identity Status</td>
-              <td>Pseudonymous (EVM Signer: 0x73912903ab8c...f82c &bull; Verified Human Pass #0x1977)</td>
-            </tr>
-            <tr>
-              <td>Applicable Timeframe</td>
-              <td>1978-07-01 to 1978-08-15 (Certainty: Approximate)</td>
-            </tr>
-            <tr>
-              <td>Submission Timestamp</td>
-              <td>2026-08-29T06:36:00Z (RFC 3339 UTC)</td>
-            </tr>
-            <tr>
-              <td>LPS-1 Leaf Root</td>
-              <td>0xb081e19cbc9e655067a5cb7253fddbc37cca5e81f01c72dc615572b0a4d7d43e</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- 2. HISTORICAL CONTEXT -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 02 &bull; CONTEXTUAL RESEARCH & METADATA</div>
-          <h3>
-            <span>2. Historical Context</span>
-            <span class="badge">Context Manifest v1</span>
-          </h3>
-
-          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
-            <em>Contextual research is documented as separate from the author's primary testimony:</em>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Submitted Material &amp; Evidence</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            32-byte unsigned big-endian sorted evidence roots (solid brass token photograph, newspaper clip, audio recording).
           </p>
-
-          <table class="meta-table">
-            <tr>
-              <td>Topic Category</td>
-              <td>Arcade & Early Computing (1977 Foundation Era)</td>
-            </tr>
-            <tr>
-              <td>Location Precision</td>
-              <td>Austin, Texas, United States (Precision: City Level)</td>
-            </tr>
-            <tr>
-              <td>Cultural Keywords</td>
-              <td>arcade, space-invaders, token-economy, coin-op, 1978</td>
-            </tr>
-            <tr>
-              <td>Historical Era Context</td>
-              <td>Midway arcade release window in North America following Taito's Japan launch.</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- 3. EVIDENCE & PROVENANCE -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 03 &bull; SOURCE ARTIFACTS & CUSTODY</div>
-          <h3>
-            <span>3. Evidence & Provenance</span>
-            <span class="badge supported">2 Source Items Cataloged</span>
-          </h3>
-
-          <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:1rem;">
-            Source attachments are cryptographically hashed and distinct from editorial studies:
-          </p>
-
-          <!-- Source Item 1 -->
-          <div class="artifact-preview-card">
-            <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" class="artifact-thumb">
-            <div style="flex:1;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
-                <strong style="color:var(--pearl); font-size:0.9rem;">1978 Solid Brass Arcade Token</strong>
-                <span class="badge source-artifact">Source Artifact</span>
-              </div>
-              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); line-height:1.5;">
-                Hash: sha256:95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2<br>
-                Custody: Author-provided physical scan &bull; Access: Public<br>
-                AI Disclosure: None (Direct unedited high-res flatbed scan)
-              </div>
-              <div class="img-disclosure-banner">
-                <span>&#9432;</span> Visual photo scan of physical token provided by author.
-              </div>
-            </div>
-          </div>
-
-          <!-- Source Item 2 -->
-          <div style="background:var(--bg-elev); padding:0.9rem; border-radius:6px; border-left:3px solid var(--accent-gold);">
-            <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
-              <strong style="color:var(--pearl);">Austin Statesman Arcade Ad (July 1978)</strong>
-              <span class="badge supported">Subsequent Documentation</span>
-            </div>
-            <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); word-break:break-all;">
-              SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855<br>
-              Storage: ipfs://bafkreihdwdcefgh4dqkjv67uzcmw7ojee6xedvi25myqbpj555nd55eei4<br>
-              AI Disclosure: OCR transcription assisted for search indexing
-            </div>
+          <div style="background:rgba(0,0,0,0.4); padding:0.6rem 0.9rem; border-radius:6px; font-size:0.8rem; color:var(--text-muted); border-left:2px solid var(--mnemonic-gold);">
+            <strong>Does not prove:</strong> That editorial illustrations represent pristine forensic evidence.
           </div>
         </div>
-
-        <!-- 4. INDEPENDENT CORROBORATION -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 04 &bull; BLIND INDEPENDENT WITNESSES</div>
-          <h3>
-            <span>4. Independent Corroboration</span>
-            <span class="badge">42 Blind Accounts</span>
-          </h3>
-
-          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:1rem;">
-            Contributors sealed recollections against neutral discovery prompts before viewing the original testimony.
-          </p>
-
-          <div style="background:var(--bg-elev); padding:1rem; border-radius:6px; margin-bottom:1rem;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem; font-size:0.85rem;">
-              <span style="color:var(--text-muted);">Verified Blind Submissions:</span>
-              <strong style="color:var(--pearl);">42 Accounts</strong>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem; font-size:0.85rem;">
-              <span style="color:var(--text-muted);">Geographic Distribution:</span>
-              <span>Texas (78%), California (14%), Midwest (8%)</span>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-              <span style="color:var(--text-muted);">Language Breakdown:</span>
-              <span>en-US (38), es-US (4)</span>
-            </div>
-          </div>
-
-          <div style="font-size:0.88rem;">
-            <strong style="color:var(--pearl);">Areas of Overlap:</strong>
-            <ul style="margin: 0.4rem 0 0.8rem 1.2rem; color:var(--text-dim); line-height:1.6;">
-              <li>86% recalled the brass coin with custom grooved ridges.</li>
-              <li>71% recalled the high-decibel attract-mode beep at coin insertion.</li>
-            </ul>
-
-            <strong style="color:var(--pearl);">Areas of Material Disagreement:</strong>
-            <ul style="margin: 0.4rem 0 0 1.2rem; color:var(--text-dim); line-height:1.6;">
-              <li>3 accounts recalled token cost as 25&cent;; 5 recalled 2-for-50&cent; promo.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 5. REVIEW STATUS -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 05 &bull; BOUNDED PEER EVALUATION</div>
-          <h3>
-            <span>5. Review Status</span>
-            <span class="badge supported">Historically Supported</span>
-          </h3>
-
-          <div style="background:rgba(124, 216, 168, 0.08); border:1px solid rgba(124, 216, 168, 0.3); padding:1rem; border-radius:6px; margin-bottom:1rem;">
-            <strong style="color:var(--accent-green); font-size:0.92rem;">Classification: Historically Supported</strong>
-            <p style="font-size:0.88rem; color:var(--text); margin-top:0.4rem; line-height:1.5;">
-              Evaluated under DONK AI Rubric v0.1. Validated contemporaneous brass tokens from July 1978 combined with newspaper records confirm the arcade's installation timeline and token mechanics.
-            </p>
-          </div>
-
-          <table class="meta-table">
-            <tr>
-              <td>Review Methodology</td>
-              <td>DONK AI Bounded Historical Support Rubric v0.1.0</td>
-            </tr>
-            <tr>
-              <td>Reviewer Role</td>
-              <td>Institutional Archival Peer Review &bull; Conflict: None Disclosed</td>
-            </tr>
-            <tr>
-              <td>Written Rationale Hash</td>
-              <td>0x41a87b...882e (Signed review assessment)</td>
-            </tr>
-            <tr>
-              <td>Appeal Status</td>
-              <td>Open for review &bull; 90-day appeal window active</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- 6. RECORD HISTORY & VERSIONS -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 06 &bull; VERSION GRAPH & DERIVATIVES</div>
-          <h3>
-            <span>6. Record History</span>
-            <span class="badge provenance">Append-Only Graph</span>
-          </h3>
-
-          <ul style="margin-left:1.2rem; font-size:0.88rem; color:var(--text-dim); line-height:1.8;">
-            <li><strong>v1.0 (2026-08-29):</strong> Initial human remembrance committed by 0x7391...F82c.</li>
-            <li><strong>v1.1 (2026-08-29):</strong> Physical token artifact scan attached (CID: bafkreievar...).</li>
-            <li><strong>v1.2 (2026-08-29):</strong> Signed Japanese translation derivative attached (Attested by 2 translators).</li>
-            <li><strong>Status:</strong> Active &bull; Zero retractions logged.</li>
-          </ul>
-        </div>
-
-        <!-- 7. PROTOCOL INTEGRITY & EPISTEMIC MATRIX -->
-        <div class="record-panel panel-col-6">
-          <div class="panel-num">LEVEL 07 &bull; PROTOCOL INTEGRITY</div>
-          <h3>
-            <span>7. Protocol Integrity</span>
-            <span class="badge supported">Cryptographically Sealed</span>
-          </h3>
-
-          <table class="meta-table">
-            <tr>
-              <td>Content Identifier (CID)</td>
-              <td>bafkreievarwibdtcaxhe7ntzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyi</td>
-            </tr>
-            <tr>
-              <td>Merkle Bundle Root</td>
-              <td>0xb081e19cbc9e655067a5cb7253fddbc37cca5e81f01c72dc615572b0a4d7d43e</td>
-            </tr>
-            <tr>
-              <td>Anchor Transaction</td>
-              <td>0x8fd5e8f23644ec8680b24c13eb4e44b7cc299d8c (EVM Chain 1977)</td>
-            </tr>
-            <tr>
-              <td>Manifest Format</td>
-              <td>LPS-1 v2.0 JSON-LD Compatible</td>
-            </tr>
-          </table>
-        </div>
-
-        <!-- WHAT THIS PROVES VS WHAT IT DOES NOT MEAN -->
-        <div class="record-panel panel-col-12" style="margin-top:1rem;">
-          <div class="panel-num">EPISTEMIC BOUNDARY MATRIX</div>
-          <h3>
-            <span>What This Record Proves & What It Does Not Establish</span>
-            <span class="badge provenance">Epistemic Standard</span>
-          </h3>
-
-          <table class="epistemic-table">
-            <thead>
-              <tr>
-                <th style="width: 25%;">Status Indicator</th>
-                <th style="width: 37%;">What It Proves</th>
-                <th style="width: 38%;">What It Does NOT Mean</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Content Hash Verified</strong></td>
-                <td class="proves-col">The digital file exactly matches the 32-byte hash committed at submission.</td>
-                <td class="not-means-col">Does not prove the depicted object is historically authentic or that the photo was taken at the claimed date.</td>
-              </tr>
-              <tr>
-                <td><strong>CID Recorded</strong></td>
-                <td class="proves-col">The content-addressed payload resolves to the committed byte sequence when available.</td>
-                <td class="not-means-col">Does not guarantee eternal availability or that the content is universally accepted as truth.</td>
-              </tr>
-              <tr>
-                <td><strong>Merkle Inclusion Verified</strong></td>
-                <td class="proves-col">The item was cryptographically included in the signed record bundle.</td>
-                <td class="not-means-col">Does not prove the testimony is complete, unconflicted, or legally dispositive.</td>
-              </tr>
-              <tr>
-                <td><strong>Submission Signed</strong></td>
-                <td class="proves-col">A designated signing identity committed this specific canonical record no later than the block timestamp.</td>
-                <td class="not-means-col">Does not establish that the author's memory is accurate or free from cognitive bias.</td>
-              </tr>
-              <tr>
-                <td><strong>Historical Support Assigned</strong></td>
-                <td class="proves-col">Reviewers evaluated submitted artifacts and witness accounts against Rubric v0.1.</td>
-                <td class="not-means-col">Does not mean the classification is beyond appeal, universally complete, or an absolute truth verdict.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- INTERACTIVE LPS-1 MERKLE TREE VISUALIZER -->
-        <div class="record-panel panel-col-12" style="margin-top:1rem;">
-          <div class="panel-num">CRYPTOGRAPHIC VERIFICATION TREE</div>
-          <h3>
-            <span>LPS-1 Merkle Commitment & Inclusion Proof Tree</span>
-            <span class="badge provenance">Live Canvas</span>
-          </h3>
-          <p style="font-size:0.9rem; color:var(--text-dim);">
-            Click any node in the interactive Merkle DAG to inspect leaf hashes, inclusion siblings, and domain-separated root computation.
-          </p>
-
-          <div class="proof-tree-container">
-            <svg id="recordMerkleSvg" style="width:100%; height:320px;"></svg>
-          </div>
-        </div>
-
       </div>
-    </section>
-  </main>
 
-  <footer>
-    <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
-      <ul class="footer-links">
-        <li><a href="protocol.html">Charter</a></li>
-        <li><a href="atlas.html">Atlas</a></li>
-        <li><a href="museum.html">Museum</a></li>
-        <li><a href="proof.html">Proof Explorer</a></li>
-      </ul>
+      <!-- Tier 4: Independent Recollections -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--memory-crimson);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-crimson);">TIER 04 &bull; BLIND WITNESS CORROBORATION</span>
+            <span class="badge supported">✓ 4 INDEPENDENT RECALLS</span>
+          </div>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Independent Recollections</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            Witnesses committed their recollections before seeing the author's narrative or answer choices.
+          </p>
+          <div style="background:rgba(0,0,0,0.4); padding:0.6rem 0.9rem; border-radius:6px; font-size:0.8rem; color:var(--text-muted); border-left:2px solid var(--memory-crimson);">
+            <strong>Does not prove:</strong> That independent recollection convergence equals historical truth.
+          </div>
+        </div>
+      </div>
+
+      <!-- Tier 5: Review Outcome -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--memory-violet);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet);">TIER 05 &bull; DISCLOSED REVIEW RUBRIC</span>
+            <span class="badge supported">PARTIALLY SUPPORTED</span>
+          </div>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Review Outcome</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            Evaluated under transparent criteria: Contextualized, Partially Supported, Contested, Insufficient Evidence, Unresolved.
+          </p>
+          <div style="background:rgba(0,0,0,0.4); padding:0.6rem 0.9rem; border-radius:6px; font-size:0.8rem; color:var(--text-muted); border-left:2px solid var(--memory-violet);">
+            <strong>Does not prove:</strong> Infallibility of the human review process.
+          </div>
+        </div>
+      </div>
+
+      <!-- Tier 6: Record Evolution -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--synaptic-cyan);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan);">TIER 06 &bull; AMENDMENT LINEAGE</span>
+            <span class="badge supported">VERSION 1 (IMMUTABLE)</span>
+          </div>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Record Evolution</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            Amendments are append-only. Version 2 points back to Version 1 without overwriting historical commitments.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tier 7: Cryptographic Proof -->
+      <div class="spine-node">
+        <div class="spine-dot" style="border-color:var(--mnemonic-gold);"></div>
+        <div class="spine-glass-panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--mnemonic-gold);">TIER 07 &bull; CRYPTOGRAPHIC INTEGRITY</span>
+            <span class="badge supported">✓ EIP-712 SIGNED</span>
+          </div>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin-bottom:0.4rem;">Cryptographic Proof</h3>
+          <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:0.8rem;">
+            Statement Root: <code>0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f</code><br>
+            Signed by EVM Account <code>0x71C8...A912</code> under Chain 1977 Domain Separator.
+          </p>
+          <a href="proof.html" class="btn btn-secondary btn-sm" style="margin-top:0.5rem;">Verify in Proof Explorer &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
+      DONK AI 7-Tier Living Provenance Ledger &bull; Standardized human remembrance verification.
+    </p>
+    <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+      Living Provenance Standard (LPS-1 v2.0)
     </div>
   </footer>
 
-  <script src="js/flow-trees.js"></script>
-  <script>
-    const sampleRecordManifest = {
-      "type": "donkai.remembrance.v1",
-      "manifestVersion": "2.0.0",
-      "memoryId": "MEM-1977-0001",
-      "statement": {
-        "language": "en-US",
-        "authoringMode": "human-authored",
-        "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978...",
-        "eventDate": { "start": "1978-07-01", "end": "1978-08-15", "certainty": "approximate" },
-        "location": { "label": "Austin, Texas, United States", "precision": "city" },
-        "authorAttestation": "I confirm this is my own independent recollection."
-      },
-      "evidenceBundle": {
-        "bundleRoot": "0x95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2",
-        "items": [
-          {
-            "contentHash": "sha256:95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2",
-            "storageRef": "ipfs://bafkreievarwibdtcaxhe7ntzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyi",
-            "tier": "contemporaneous-artifact",
-            "sourceClass": "author-provided",
-            "aiDisclosure": "none"
-          }
-        ]
-      },
-      "corroborationSummary": {
-        "verifiedBlindAccounts": 42,
-        "overlapRatio": 0.86,
-        "status": "threshold-met"
-      },
-      "reviewAssessment": {
-        "classification": "historically-supported",
-        "rubricVersion": "v0.1.0",
-        "reviewerRole": "institutional-archive"
-      }
-    };
-
-    function exportManifest() {
-      const blob = new Blob([JSON.stringify(sampleRecordManifest, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `MEM-1977-0001-manifest.json`;
-      a.click();
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const leaves = [
-        { label: "Remembrance Leaf", hash: "0xb081e19cbc9e655067a5cb7253fddbc37cca5e81f01c72dc615572b0a4d7d43e", type: "LEAF" },
-        { label: "Context Manifest", hash: "0x47a98bc10fa09823485710293847561029384756102938475610293847561029", type: "LEAF" },
-        { label: "Consent Manifest", hash: "0x12fa908123094857102938475610293847561029384756102938475610293847", type: "LEAF" },
-        { label: "Evidence Bundle", hash: "0x95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2", type: "LEAF" },
-        { label: "Version Graph", hash: "0x0000000000000000000000000000000000000000000000000000000000000000", type: "LEAF" }
-      ];
-
-      FlowTreeRenderer.renderMerkleTree('recordMerkleSvg', leaves, 0);
-    });
-  </script>
+  <script src="js/walkthrough.js?v=2.0.0"></script>
 </body>
 </html>

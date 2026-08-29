@@ -3,290 +3,223 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>1977 Cultural Memory Museum — DONK AI</title>
-  <meta name="description" content="Curated global human remembrance exhibits. High-resolution artifact archives, oral histories, and cryptographic provenance from the 1977 foundation era.">
+  <title>The 1977 Cultural Memory Museum — DONK AI</title>
+  <meta name="description" content="Visual gallery of cultural memory artifacts across arcade, cinema, broadcast, synthesizer music, family archives, and future cryptographic vaults.">
+  <link rel="stylesheet" href="css/main.css?v=2.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.2">
-  <style>
-    .museum-hero {
-      background: radial-gradient(circle at 50% 20%, rgba(196, 203, 216, 0.12) 0%, transparent 70%);
-      text-align: center;
-      padding: 5rem 1.5rem 3rem 1.5rem;
-    }
-    .museum-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .museum-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-    }
-    .museum-card:hover {
-      border-color: var(--border-glow);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
-    }
-    .museum-card-img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-bottom: 1px solid var(--border);
-      background: #090a0f;
-    }
-    .museum-card-body {
-      padding: 1.8rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(4, 5, 8, 0.88);
-      backdrop-filter: blur(12px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 2rem;
-    }
-    .modal-content {
-      background: var(--bg-card);
-      border: 1px solid var(--border-hi);
-      border-radius: 12px;
-      max-width: 900px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 2.5rem;
-      position: relative;
-    }
-    .modal-close {
-      position: absolute; top: 1.5rem; right: 1.5rem;
-      background: transparent; border: none; color: var(--text-dim);
-      font-size: 1.5rem; cursor: pointer;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <canvas id="ambientCanvas"></canvas>
+
   <header>
     <nav>
       <a href="index.html" class="brand">
         <span>DONK AI</span>
-        <span class="brand-badge">LPS-1 PROTOCOL</span>
+        <span class="brand-badge">MUSEUM ARCHIVE</span>
       </a>
       <ul>
-        <li><a href="index.html">Record a Memory</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html" class="active">1977 Museum</a></li>
+        <li><a href="index.html">Journey</a></li>
+        <li><a href="museum.html" class="active">Museum</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
         <li><a href="record.html">7-Tier Ledger</a></li>
-        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="corroborate.html">Memory Chamber</a></li>
         <li><a href="proof.html">Proof Explorer</a></li>
-        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="protocol.html">Charter</a></li>
       </ul>
+      <div style="display:flex; align-items:center; gap:0.8rem;">
+        <button id="soundToggleBtn" class="sound-toggle-btn"><span>🔇 528Hz Audio</span></button>
+      </div>
     </nav>
   </header>
 
-  <main>
-    <div class="museum-hero">
-      <span class="badge provenance" style="margin-bottom:0.8rem;">CULTURAL MEMORY EXHIBITS</span>
-      <h1>The 1977 Cultural Memory Museum</h1>
-      <p class="section-lead" style="margin: 0 auto 1.5rem auto;">
-        The 1977 Cultural Memory Museum is a visual prototype of DONK AI's Human Remembrance Protocol. It explores how personal recollections, cultural artifacts, and source material are preserved with transparent provenance—without confusing emotional memory with settled historical fact.
-      </p>
-      
-      <!-- Visual Editorial Disclaimer -->
-      <div style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(216, 190, 124, 0.08); border:1px solid rgba(216, 190, 124, 0.3); border-radius:6px; padding:0.5rem 1rem; font-size:0.82rem; font-family:var(--font-mono); color:var(--accent-gold);">
-        <span>&#9432;</span> Images on this page are illustrative museum editorial reconstructions designed to invite exploration. They are not primary source evidence.
+  <!-- Museum Hero -->
+  <section class="hero-cinema" style="min-height:45vh; padding: 4rem 1.5rem 2rem;">
+    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); letter-spacing:0.08em; text-transform:uppercase;">Curated Cultural Galleries</span>
+    <h1 style="font-size: clamp(2.4rem, 5vw, 3.8rem); color:var(--pearl); margin:0.4rem 0 1rem; font-weight:800;">The 1977 Cultural Memory Museum</h1>
+    <p style="font-size:1.1rem; color:var(--text-dim); max-width:680px; margin:0 auto;">
+      A visual prototype of human remembrance. Explore tangible cultural artifacts preserved with transparent provenance—without confusing emotional recall with settled fact.
+    </p>
+  </section>
+
+  <!-- 6 Visual Galleries Grid -->
+  <section style="max-width:1240px; margin: 0 auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(340px, 1fr)); gap:2rem;">
+
+      <!-- 1. Arcade Memory -->
+      <div class="artifact-card" onclick="openExhibitModal('arcade')">
+        <div class="artifact-img-wrap">
+          <img src="images/arcade_token_1978.jpg" alt="1978 Arcade Token" loading="lazy" onerror="this.src='images/arcade_token_1978.jpg'">
+          <span class="synthetic-badge">SYNTHETIC ARCHIVAL VISUALIZATION &bull; Editorial illustration</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-violet);">GALLERY 01 &bull; 1978 AUSTIN</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Solid Brass Arcade Token Drop</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            A grooved brass arcade token from the 1978 Space Invaders era. Recalled for its distinct two-tone chime across crowded halls.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Explore Recall Story &rarr;</button>
+        </div>
       </div>
+
+      <!-- 2. Cinema Memory -->
+      <div class="artifact-card" onclick="openExhibitModal('cinema')">
+        <div class="artifact-img-wrap">
+          <img src="images/cinema_marquee_1977.jpg" alt="1977 Cinema Marquee" loading="lazy" onerror="this.src='images/cinema_marquee_1977.jpg'">
+          <span class="synthetic-badge">SYNTHETIC ARCHIVAL VISUALIZATION &bull; Editorial illustration</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan);">GALLERY 02 &bull; MAY 1977</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Rainy Opening-Night Marquee</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            Neon letters reflected on wet pavement outside the Chinese Theatre during the original sci-fi blockbuster premiere.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Explore Recall Story &rarr;</button>
+        </div>
+      </div>
+
+      <!-- 3. Broadcast Memory -->
+      <div class="artifact-card" onclick="openExhibitModal('broadcast')">
+        <div class="artifact-img-wrap">
+          <img src="images/pirate_radio_cassette_1981.jpg" alt="Pirate Radio Cassette" loading="lazy" onerror="this.src='images/pirate_radio_cassette_1981.jpg'">
+          <span class="synthetic-badge">SYNTHETIC ARCHIVAL VISUALIZATION &bull; Editorial illustration</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--mnemonic-gold);">GALLERY 03 &bull; LONDON 1981</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Pirate Radio FM Cassette</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            Hand-labeled C90 mixtape capturing late-night unlicensed community pirate radio transmissions with analog static.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Explore Recall Story &rarr;</button>
+        </div>
+      </div>
+
+      <!-- 4. Music Memory -->
+      <div class="artifact-card" onclick="openExhibitModal('synth')">
+        <div class="artifact-img-wrap">
+          <img src="images/tokyo_synth_1977.jpg" alt="Tokyo Synthesizer" loading="lazy" onerror="this.src='images/tokyo_synth_1977.jpg'">
+          <span class="synthetic-badge">SYNTHETIC ARCHIVAL VISUALIZATION &bull; Editorial illustration</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-crimson);">GALLERY 04 &bull; TOKYO 1977</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Analog Monophonic Synthesizer</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            Brushed aluminum control panel with voltage-controlled filters and colorful patch cords from Akihabara sound labs.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Explore Recall Story &rarr;</button>
+        </div>
+      </div>
+
+      <!-- 5. Family Archive -->
+      <div class="artifact-card" onclick="openExhibitModal('family')">
+        <div class="artifact-img-wrap" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #1e1b4b, #0f172a);">
+          <div style="text-align:center; padding:1.5rem;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">📼</div>
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--pearl);">Private Sovereign Vault</span>
+          </div>
+          <span class="synthetic-badge">SOVEREIGN ENCRYPTED &bull; Not Publicly Accessible</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan);">GALLERY 05 &bull; ORAL HISTORIES</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Home Video &amp; Letter Archives</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            Private recollections stored under passphrase encryption. Sealed records with provable submission timestamps.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Learn About Private Vaults &rarr;</button>
+        </div>
+      </div>
+
+      <!-- 6. Future Archive -->
+      <div class="artifact-card" onclick="openExhibitModal('future')">
+        <div class="artifact-img-wrap" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #311042, #0d0f17);">
+          <div style="text-align:center; padding:1.5rem;">
+            <div style="font-size:2.5rem; margin-bottom:0.5rem;">⚡</div>
+            <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--pearl);">LPS-1 Merkle Roots</span>
+          </div>
+          <span class="synthetic-badge">CRYPTOGRAPHIC ATTESTATION &bull; Chain 1977</span>
+        </div>
+        <div style="padding:1.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-violet);">GALLERY 06 &bull; CRYPTOGRAPHY</span>
+          <h3 style="font-size:1.25rem; color:var(--pearl); margin:0.4rem 0;">Decentralized Memory Roots</h3>
+          <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1rem;">
+            How Merkle leaves and EIP-712 typed commitments allow a memory to be verified forever without centralized custody.
+          </p>
+          <button class="btn btn-secondary btn-sm" style="width:100%;">Inspect Proof Mechanics &rarr;</button>
+        </div>
+      </div>
+
     </div>
+  </section>
 
-    <section style="padding-top: 1rem;">
-      <div class="museum-grid">
-        
-        <!-- Exhibit 1: 1978 Space Invaders Token -->
-        <div class="museum-card">
-          <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" class="museum-card-img">
-          <div class="museum-card-body">
-            <div>
-              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                <span class="badge editorial-img">Illustrative Reconstruction</span>
-                <span class="badge">Arcade & Gaming</span>
-              </div>
-              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">Space Invaders 1978 Brass Arcade Token Study</h3>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Visual study of the solid brass arcade token from the Main Street arcade in Austin, TX. Illustrates the tactile coin mechanics and acoustic tone associated with early coin-op machines.
-              </p>
-            </div>
-            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">Topic: MEM-1977-0001</span>
-              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(1)">Inspect Exhibit &rarr;</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Exhibit 2: 1977 Cinema Marquee -->
-        <div class="museum-card">
-          <img src="img/cinema_marquee_1977.jpg" alt="May 1977 Cinema Marquee" class="museum-card-img">
-          <div class="museum-card-body">
-            <div>
-              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                <span class="badge editorial-img">Illustrative Reconstruction</span>
-                <span class="badge">Cinema & Broadcast</span>
-              </div>
-              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">May 1977 Theatrical Marquee Subtitle Divergence</h3>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Editorial visualization of the Astor Cinema opening marquee. Illustrates the widely discussed memory divergence surrounding the opening crawl subtitle billing.
-              </p>
-            </div>
-            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">Topic: MEM-1977-0002</span>
-              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(2)">Inspect Exhibit &rarr;</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Exhibit 3: London 1981 Pirate Radio -->
-        <div class="museum-card">
-          <img src="img/pirate_radio_cassette_1981.jpg" alt="London 1981 Pirate Radio Cassette" class="museum-card-img">
-          <div class="museum-card-body">
-            <div>
-              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                <span class="badge editorial-img">Illustrative Reconstruction</span>
-                <span class="badge">Audio Archive</span>
-              </div>
-              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">London Autumn 1981 Community Pirate Tape</h3>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Visual study of informal magnetic cassette recordings from unlogged pirate broadcasts during the 1981 blackout, representing fragile community oral archives.
-              </p>
-            </div>
-            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">Topic: MEM-1977-0003</span>
-              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(3)">Inspect Exhibit &rarr;</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Exhibit 4: Tokyo 1977 Modular Synth -->
-        <div class="museum-card">
-          <img src="img/tokyo_synth_1977.jpg" alt="Tokyo 1977 Synth" class="museum-card-img">
-          <div class="museum-card-body">
-            <div>
-              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem; flex-wrap:wrap;">
-                <span class="badge editorial-img">Illustrative Reconstruction</span>
-                <span class="badge">Music & Acoustics</span>
-              </div>
-              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">Shinjuku 1977 Prototype Modular Synthesizer</h3>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Visual reconstruction of the PS-3300 prototype synthesizer used in Tokyo avant-garde sessions, capturing tactile patch cords and analog tuning dials.
-              </p>
-            </div>
-            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
-              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">Topic: MEM-1977-0005</span>
-              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(4)">Inspect Exhibit &rarr;</button>
-            </div>
-          </div>
-        </div>
-
+  <!-- Exhibit Modal -->
+  <div id="exhibitModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:720px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 id="exhibitTitle" style="font-size:1.4rem; color:var(--pearl);">Exhibit Archive Details</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeExhibitModal()">✕</button>
       </div>
-    </section>
-  </main>
 
-  <!-- Interactive Exhibit Modal -->
-  <div id="exhibitModal" class="modal-overlay" onclick="closeExhibitModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeExhibitModal()" aria-label="Close Inspector">&times;</button>
-      <img id="modalImg" src="" alt="Exhibit Study" style="width:100%; height:380px; object-fit:cover; border-radius:8px; margin-bottom:1.5rem; border:1px solid var(--border);">
-      <div style="margin-bottom:0.8rem;">
-        <span class="badge editorial-img">Synthetic Archival Visualization — Not Source Evidence</span>
+      <div id="exhibitContent" style="font-size:0.92rem; color:var(--text-dim); line-height:1.6; margin-bottom:1.5rem;">
+        <!-- Filled dynamically -->
       </div>
-      <h2 id="modalTitle" style="color:var(--pearl); margin-bottom:0.5rem;"></h2>
-      <p id="modalDesc" style="color:var(--text-dim); font-size:1rem; line-height:1.7; margin-bottom:1.5rem;"></p>
-      
-      <table class="meta-table">
-        <tr><td>Asset Classification</td><td>Museum Editorial Image (Conceptual Artifact Study)</td></tr>
-        <tr><td>Source Evidence Status</td><td>Separate from submitted historical evidence</td></tr>
-        <tr><td>LPS-1 Topic Link</td><td id="modalTopic"></td></tr>
-      </table>
 
-      <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
-        <a id="modalRecordLink" href="#" class="btn btn-primary">Open 7-Tier Ledger &rarr;</a>
-        <button class="btn btn-secondary" onclick="closeExhibitModal()">Close Inspector</button>
+      <div style="border-top:1px solid var(--border); padding-top:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan);">LPS-1 Commitment: 0x9d3fe4...a21f</span>
+        <button class="btn btn-primary btn-sm" onclick="closeExhibitModal()">Close Exhibit</button>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
-      <ul class="footer-links">
-        <li><a href="protocol.html">Protocol Charter</a></li>
-        <li><a href="atlas.html">Atlas</a></li>
-        <li><a href="proof.html">Proof Explorer</a></li>
-      </ul>
+  <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
+      1977 Cultural Memory Museum &bull; Curated prototype for the DONK AI Human Remembrance Protocol.
+    </p>
+    <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+      Synthetic Visualizations explicitly marked. No claims of uncorroborated historical proof.
     </div>
   </footer>
 
+  <script src="js/walkthrough.js?v=2.0.0"></script>
   <script>
     const exhibits = {
-      1: {
-        title: "Space Invaders 1978 Brass Arcade Token Study",
-        img: "img/arcade_token_1978.jpg",
-        desc: "Visual study representing the solid brass arcade tokens used in early North American coin-op installations in 1978. Editorial reconstruction for exhibition purposes.",
-        topic: "MEM-1977-0001 (Space Invaders Austin Arcade)",
-        recordId: 1
+      arcade: {
+        title: "Solid Brass Arcade Token Drop (Austin, 1978)",
+        html: `<p>Contributed by an anonymous arcade attendee from July 1978. Recalls the initial installation of the Space Invaders cabinet on Main Street in Austin, Texas. The contributor vividly remembered the grooved rim and the descending two-tone chime upon inserting the token.</p><p style="margin-top:0.8rem; font-size:0.85rem; color:var(--text-muted);"><strong>Epistemic Note:</strong> The physical token is illustrated synthetically. Independent corroboration records collected blindly confirm the coin slot mechanism.</p>`
       },
-      2: {
-        title: "May 1977 Theatrical Marquee Subtitle Divergence",
-        img: "img/cinema_marquee_1977.jpg",
-        desc: "Archival atmosphere study exploring the memory divergence surrounding the opening run theatrical marquee billing in May 1977.",
-        topic: "MEM-1977-0002 (Astor Cinema Marquee)",
-        recordId: 2
+      cinema: {
+        title: "Rainy Opening-Night Marquee (Los Angeles, May 1977)",
+        html: `<p>Witness accounts describe the late-spring rain reflecting red neon marquee letters during the original theatrical run. Participants recall the distinctive lobby carpeting and projector whir.</p><p style="margin-top:0.8rem; font-size:0.85rem; color:var(--text-muted);"><strong>Epistemic Note:</strong> Marquee photograph is an editorial illustration for sensory recall exploration.</p>`
       },
-      3: {
-        title: "London Autumn 1981 Community Pirate Tape",
-        img: "img/pirate_radio_cassette_1981.jpg",
-        desc: "Visual reconstruction representing unlogged community cassette tapes recorded off-air during the London 1981 autumn blackout.",
-        topic: "MEM-1977-0003 (London Pirate Radio)",
-        recordId: 3
+      broadcast: {
+        title: "Pirate Radio FM Cassette (London, 1981)",
+        html: `<p>A preserved C90 cassette recording of unprompted community radio broadcasts. Oral histories capture the audio texture of early post-punk pirate transmission frequencies.</p>`
       },
-      4: {
-        title: "Shinjuku 1977 Prototype Modular Synthesizer",
-        img: "img/tokyo_synth_1977.jpg",
-        desc: "Visual reconstruction of early Japanese modular analog synthesizers and underground studio sessions in 1977 Shinjuku.",
-        topic: "MEM-1977-0005 (Tokyo Synth Sessions)",
-        recordId: 5
+      synth: {
+        title: "Analog Monophonic Synthesizer (Tokyo, 1977)",
+        html: `<p>Recollections of early synthesizer workshops in Akihabara. Contributor remembers the scent of warm vacuum tubes and the sharp resonant filter sweep.</p>`
+      },
+      family: {
+        title: "Private Sovereign Vault (Oral History & Family Records)",
+        html: `<p>Demonstrates how sensitive oral histories, home videos, and personal family memories remain client-side encrypted. Nobody—including DONK AI—can decrypt these files without the author's passphrase.</p>`
+      },
+      future: {
+        title: "Decentralized Merkle Tree & Chain 1977 Anchoring",
+        html: `<p>Explains how LPS-1 canonicalization converts human prose into immutable cryptographic roots that can be verified centuries from now across decentralized networks.</p>`
       }
     };
 
-    function openExhibitModal(id) {
-      const ex = exhibits[id];
-      if (!ex) return;
-      document.getElementById('modalTitle').innerText = ex.title;
-      document.getElementById('modalImg').src = ex.img;
-      document.getElementById('modalDesc').innerText = ex.desc;
-      document.getElementById('modalTopic').innerText = ex.topic;
-      document.getElementById('modalRecordLink').href = `record.html?id=${ex.recordId}`;
-      document.getElementById('exhibitModal').style.display = 'flex';
+    function openExhibitModal(key) {
+      const data = exhibits[key];
+      if (!data) return;
+      document.getElementById('exhibitTitle').innerText = data.title;
+      document.getElementById('exhibitContent').innerHTML = data.html;
+      document.getElementById('exhibitModal').classList.add('active');
     }
 
-    function closeExhibitModal(event) {
-      document.getElementById('exhibitModal').style.display = 'none';
+    function closeExhibitModal() {
+      document.getElementById('exhibitModal').classList.remove('active');
     }
-
-    // Keyboard Accessibility: Escape key closes modal
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeExhibitModal();
-    });
   </script>
 </body>
 </html>

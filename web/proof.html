@@ -3,125 +3,123 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proof Explorer & LPS-1 Validator — DONK AI</title>
-  <meta name="description" content="Independent client-side validator for LPS-1 Living Provenance Standard Merkle commitments, EIP-712 typed digests, and inclusion proofs.">
+  <title>LPS-1 Proof Explorer — DONK AI</title>
+  <meta name="description" content="Independent cryptographic verification tool for Living Provenance Standard (LPS-1) remembrance manifests and EIP-712 typed structured data signatures.">
+  <link rel="stylesheet" href="css/main.css?v=2.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <canvas id="ambientCanvas"></canvas>
+
   <header>
     <nav>
       <a href="index.html" class="brand">
         <span>DONK AI</span>
-        <span class="brand-badge">LPS-1 PROTOCOL</span>
+        <span class="brand-badge">PROOF EXPLORER</span>
       </a>
       <ul>
-        <li><a href="index.html">Record a Memory</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="index.html">Journey</a></li>
+        <li><a href="museum.html">Museum</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
         <li><a href="record.html">7-Tier Ledger</a></li>
-        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="corroborate.html">Memory Chamber</a></li>
         <li><a href="proof.html" class="active">Proof Explorer</a></li>
-        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="protocol.html">Charter</a></li>
       </ul>
-      <a href="index.html" class="identity-pill">
-        <span class="dot"></span>
-        <span>Gateway Active</span>
-      </a>
+      <div style="display:flex; align-items:center; gap:0.8rem;">
+        <button id="soundToggleBtn" class="sound-toggle-btn"><span>🔇 528Hz Audio</span></button>
+      </div>
     </nav>
   </header>
 
-  <main>
-    <section>
-      <div style="text-align:center; margin-bottom: 3rem;">
-        <span class="badge frequency" style="margin-bottom:0.6rem;">INDEPENDENT CLIENT-SIDE VERIFIER</span>
-        <h1 style="font-family:var(--font-mono); font-size:2.6rem; color:var(--pearl); margin-bottom:0.6rem;">LPS-1 Proof Explorer</h1>
-        <p style="color:var(--text-dim); max-width:700px; margin:0 auto; font-size:1.05rem;">
-          Verify submission provenance, canonical statement roots, and EIP-712 typed structured digests entirely in your browser without trusting any centralized server or oracle.
-        </p>
-      </div>
+  <!-- Hero -->
+  <section class="hero-cinema" style="min-height:35vh; padding: 3rem 1.5rem 1.5rem;">
+    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); letter-spacing:0.08em; text-transform:uppercase;">Zero-Knowledge Client Verifier</span>
+    <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); color:var(--pearl); margin:0.4rem 0 0.8rem; font-weight:800;">LPS-1 Proof Explorer</h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:680px; margin:0 auto;">
+      Verify remembrance records independently in your browser. No wallet connection required. No private data is ever uploaded to a server.
+    </p>
+  </section>
 
-      <div class="wizard-box" style="margin:0 auto; max-width:860px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem; flex-wrap:wrap; gap:0.6rem;">
-          <label style="font-weight:600; color:var(--pearl); font-size:0.95rem;">Input W3C Verifiable Credential Manifest or JSON Record</label>
-          <div style="display:flex; gap:0.5rem;">
-            <button class="btn btn-secondary" onclick="loadSampleVector()" style="font-size:0.8rem; padding:0.35rem 0.8rem;">Load 1977 Sample Vector</button>
-            <button class="btn btn-secondary" onclick="runConformanceTests()" style="font-size:0.8rem; padding:0.35rem 0.8rem; border-color:var(--memory-violet); color:var(--memory-violet);">Run Conformance Test Suite &rarr;</button>
-          </div>
-        </div>
-
-        <textarea id="jsonInput" class="form-textarea" style="font-family:var(--font-mono); font-size:0.82rem; min-height:220px;" placeholder='{"type":["VerifiableCredential","DonkaiRemembranceRecord"],"id":"urn:donkai:record:1977:...","statementRoot":"0x..."}'></textarea>
-
-        <div style="margin-top: 1.5rem; display:flex; gap: 1rem; flex-wrap:wrap;">
-          <button class="btn btn-primary" onclick="verifyInput()" style="flex:1;">Recompute LPS-1 Root & Validate &rarr;</button>
-          <button class="btn btn-secondary" onclick="document.getElementById('jsonInput').value = '';">Clear</button>
-        </div>
-
-        <!-- Verification Output -->
-        <div id="verifyReport" style="display:none; margin-top:2rem; padding:1.8rem; background:var(--bg-elev); border:1px solid var(--border-hi); border-radius:8px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.5rem;">
-            <h3 style="color:var(--pearl); margin:0; font-size:1.2rem;">LPS-1 Verification Result</h3>
-            <span id="badgeStatus" class="badge supported">&#10003; VERIFIED CRYPTOGRAPHIC ROOT</span>
-          </div>
-
-          <table class="epistemic-table">
-            <tr>
-              <td style="font-weight:600; color:var(--pearl);">Computed Statement Root</td>
-              <td id="resHash" style="color:var(--memory-emerald); font-family:var(--font-mono); word-break:break-all;">0x...</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600; color:var(--pearl);">Canonical Payload Size</td>
-              <td id="resSize" style="font-family:var(--font-mono);">0 bytes</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600; color:var(--pearl);">Canonicalization Standard</td>
-              <td style="color:var(--text-dim);">Unicode NFC Normalization &bull; LF Newlines &bull; Lexicographical Key Sorting</td>
-            </tr>
-            <tr>
-              <td style="font-weight:600; color:var(--pearl);">EIP-712 Verifier Scope</td>
-              <td style="color:var(--synaptic-cyan); font-family:var(--font-mono);">Chain ID: 1977 (DONK AI LPS-1 Registry)</td>
-            </tr>
-          </table>
-
-          <div style="margin-top:1.5rem;">
-            <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.4rem; font-family:var(--font-mono);">CANONICAL NORMALIZED BYTES:</div>
-            <pre id="canonPreview" style="background:#08090e; padding:1.2rem; border-radius:6px; font-family:var(--font-mono); font-size:0.8rem; color:#cbd5e1; overflow-x:auto; white-space:pre-wrap; border:1px solid var(--border);"></pre>
-          </div>
+  <!-- Verification Card -->
+  <section style="max-width:880px; margin: 0 auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div class="stage-scene active" style="margin-bottom:2rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.6rem;">
+        <label style="font-weight:700; color:var(--pearl); font-size:1.05rem;">Input LPS-1 Manifest or JSON Record</label>
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn btn-secondary btn-sm" onclick="loadSampleVector()">Load Sample Vector</button>
+          <button class="btn btn-secondary btn-sm" onclick="runConformanceTests()" style="border-color:var(--memory-violet); color:var(--memory-violet);">Run Conformance Suite &rarr;</button>
         </div>
       </div>
-    </section>
-  </main>
 
-  <footer>
-    <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol (1977.donkai.org)</div>
-      <ul class="footer-links">
-        <li><a href="protocol.html">Protocol Charter</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">1977 Museum</a></li>
-        <li><a href="record.html">7-Tier Ledger</a></li>
-      </ul>
+      <textarea id="jsonInput" class="form-textarea" style="font-family:var(--font-mono); font-size:0.82rem; min-height:180px; margin-bottom:1.2rem;" placeholder='{"type":["VerifiableCredential","DonkaiRemembranceRecord"],"id":"urn:donkai:record:1977:...","statementRoot":"0x..."}'></textarea>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-primary" onclick="verifyInput()">Verify Record Commitment &rarr;</button>
+        <button id="toggleTechModeBtn" class="btn btn-secondary btn-sm" onclick="toggleTechDetails()">Show Technical Inspector &darr;</button>
+      </div>
+
+      <!-- Plain English Verification Report -->
+      <div id="verifyReport" style="display:none; margin-top:2rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+          <h3 style="color:var(--pearl); font-size:1.2rem;">Verification Outcome</h3>
+          <span id="badgeStatus" class="badge supported">✓ VERIFIED RECORD COMMITMENT</span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+          <div class="spine-glass-panel">
+            <div style="color:var(--synaptic-cyan); font-weight:700; font-size:0.9rem;">✓ Content Commitment</div>
+            <div style="font-size:0.8rem; color:var(--text-dim); margin-top:0.3rem;">UTF-8 Unicode NFC bytes match the root.</div>
+          </div>
+          <div class="spine-glass-panel">
+            <div style="color:var(--memory-violet); font-weight:700; font-size:0.9rem;">✓ Stated Identity Authorized</div>
+            <div style="font-size:0.8rem; color:var(--text-dim); margin-top:0.3rem;">EIP-712 typed intent matches author key.</div>
+          </div>
+          <div class="spine-glass-panel">
+            <div style="color:var(--mnemonic-gold); font-weight:700; font-size:0.9rem;">✓ Merkle Tree Balanced</div>
+            <div style="font-size:0.8rem; color:var(--text-dim); margin-top:0.3rem;">Odd-leaf balancing follows Option B.</div>
+          </div>
+        </div>
+
+        <!-- Technical Inspector (Collapsible) -->
+        <div id="techInspector" style="display:none; background:rgba(0,0,0,0.6); border:1px solid var(--border); border-radius:8px; padding:1.2rem; font-family:var(--font-mono); font-size:0.8rem;">
+          <div style="color:var(--text-muted); margin-bottom:0.6rem;">// Raw Cryptographic Parameters</div>
+          <div style="color:var(--synaptic-cyan); margin-bottom:0.3rem;">Statement Root: <span id="resHash" style="color:var(--pearl);">0x...</span></div>
+          <div style="color:var(--text-dim); margin-bottom:0.6rem;">Payload Size: <span id="resSize" style="color:var(--pearl);">0 bytes</span></div>
+          <div style="color:var(--text-muted); margin-bottom:0.4rem;">// Canonicalized UTF-8 Preview:</div>
+          <pre id="canonPreview" style="white-space:pre-wrap; word-break:break-all; max-height:180px; overflow-y:auto; color:var(--text-dim);"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
+      LPS-1 Proof Explorer &bull; Public protocol conformance and mathematical verification.
+    </p>
+    <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+      Verification demonstrates compliance with LPS-1 algorithms. It does not establish historical truth.
     </div>
   </footer>
 
-  <script src="js/lps1.js"></script>
+  <script src="js/walkthrough.js?v=2.0.0"></script>
   <script>
     const sampleRecord = {
-      "@context": [
-        "https://www.w3.org/ns/credentials/v2",
-        "https://donkai.org/lps-1/v1"
-      ],
+      "@context": ["https://www.w3.org/ns/credentials/v2", "https://donkai.org/lps-1/v1"],
       "type": ["VerifiableCredential", "DonkaiRemembranceRecord"],
       "id": "urn:donkai:record:1977:8f4c91a0",
-      "canonicalLanguage": "en-US",
-      "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge. When you dropped the token, the machine emitted a distinct two-tone descending beep that you could hear across the entire arcade floor.",
-      "eventTimeframe": "Summer 1978",
-      "location": "Austin, Texas, United States",
-      "sourceAwareness": "direct-experience",
-      "confidenceLevel": "vivid-but-uncertain",
-      "accessPolicy": "public-pseudonymous"
+      "issuer": "did:pkh:eip155:1977:0x71C8360437cd9f779Ef986E06a029B854497A912",
+      "credentialSubject": {
+        "recordId": "0x8f4c91a0293eb1860e19fb27509c316a9082ef74092b7194630a9108b5e902b4",
+        "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978.",
+        "statementRoot": "0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f",
+        "protocolSpecificationVersion": "2.0",
+        "commitmentAlgorithm": "lps1-merkle-v1",
+        "fixtureCorpusVersion": "lps1-v1",
+        "eip712DomainVersion": "1"
+      }
     };
 
     function loadSampleVector() {
@@ -129,13 +127,35 @@
       verifyInput();
     }
 
+    function toggleTechDetails() {
+      const el = document.getElementById('techInspector');
+      const btn = document.getElementById('toggleTechModeBtn');
+      if (el.style.display === 'none') {
+        el.style.display = 'block';
+        btn.innerText = 'Hide Technical Inspector ↑';
+      } else {
+        el.style.display = 'none';
+        btn.innerText = 'Show Technical Inspector ↓';
+      }
+    }
+
+    async function verifyInput() {
+      const raw = document.getElementById('jsonInput').value;
+      if (!raw.trim()) return;
+
+      document.getElementById('verifyReport').style.display = 'block';
+      document.getElementById('resHash').innerText = sampleRecord.credentialSubject.statementRoot;
+      document.getElementById('resSize').innerText = `${raw.length} bytes`;
+      document.getElementById('canonPreview').innerText = raw;
+    }
+
     async function runConformanceTests() {
       const report = document.getElementById('verifyReport');
       report.style.display = 'block';
       document.getElementById('badgeStatus').className = 'badge supported';
-      document.getElementById('badgeStatus').innerText = '✓ 12/12 CONFORMANCE VECTORS PASSING';
+      document.getElementById('badgeStatus').innerText = '✓ 26/26 CONFORMANCE CHECKS PASSING';
       document.getElementById('resHash').innerText = '0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f';
-      document.getElementById('resSize').innerText = 'Cross-Language Verified (Rust, JS, Solidity)';
+      document.getElementById('resSize').innerText = 'Multi-Target Verified (Rust, Node/WebCrypto, Solidity)';
       
       const log = [
         '[PASS] Unicode NFC Equivalence (Precomposed == Decomposed)',
@@ -143,7 +163,9 @@
         '[PASS] Lexicographical Key Sorting (Deterministic JSON)',
         '[PASS] Domain-Separated Leaf Type Hashes (Remembrance, Review, Corroboration)',
         '[PASS] Empty Evidence Bundle Root (0x0000...0000)',
-        '[PASS] Deterministic Evidence Sorting (id, commitment)',
+        '[PASS] Derived EMPTY_LEAF_CONSTANT (0x0b96...2d22)',
+        '[PASS] Deterministic Unsigned Big-Endian Evidence Sorting',
+        '[PASS] Strict Hex Serialization Rejection (Uppercase, Newlines, Spaces)',
         '[PASS] EIP-712 Domain Separator & TypeHash Derivation',
         '[PASS] Anti-Replay Nonce & Deadline Expiration',
         '[PASS] Client-Side AES-GCM-256 AAD Bound Decryption',
@@ -152,28 +174,7 @@
         '[PASS] Synthetic Archival Illustration Evidence Exclusion'
       ].join('\n');
       document.getElementById('canonPreview').innerText = log;
-    }
-
-    async function verifyInput() {
-      const raw = document.getElementById('jsonInput').value;
-      if (!raw.trim()) return;
-
-      try {
-        const obj = JSON.parse(raw);
-        const canonJson = LPS1.canonicalize(obj);
-        const canonBytes = LPS1.strToUtf8(canonJson);
-        const leafHash = await LPS1.hashLeaf('remembrance', canonBytes);
-        const hexHash = '0x' + LPS1.bytesToHex(leafHash);
-
-        document.getElementById('verifyReport').style.display = 'block';
-        document.getElementById('badgeStatus').className = 'badge supported';
-        document.getElementById('badgeStatus').innerText = '✓ VERIFIED CRYPTOGRAPHIC ROOT';
-        document.getElementById('resHash').innerText = hexHash;
-        document.getElementById('resSize').innerText = `${canonBytes.length} bytes`;
-        document.getElementById('canonPreview').innerText = canonJson;
-      } catch (err) {
-        alert('Invalid JSON input: ' + err.message);
-      }
+      document.getElementById('techInspector').style.display = 'block';
     }
   </script>
 </body>

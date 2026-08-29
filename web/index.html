@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WHAT DO YOU REMEMBER? — DONK AI Human Remembrance Protocol</title>
-  <meta name="description" content="A Web3 gateway for human remembrance. Record what you remember in your own words, control who may see it, sign an EIP-712 commitment, and preserve your sovereign memory.">
+  <meta name="description" content="A guided visual journey into human memory. Preserve unprimed first-person recollections with sovereign client-side encryption, EIP-712 structured signing, and LPS-1 cryptographic commitments.">
+  <link rel="stylesheet" href="css/main.css?v=2.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Ambient Particle Canvas -->
+  <canvas id="ambientCanvas"></canvas>
+
   <header>
     <nav>
       <a href="index.html" class="brand">
@@ -18,563 +21,311 @@
         <span class="brand-badge">LPS-1 PROTOCOL</span>
       </a>
       <ul>
-        <li><a href="index.html" class="active">Record a Memory</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="index.html" class="active">Journey</a></li>
+        <li><a href="museum.html">Museum</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
         <li><a href="record.html">7-Tier Ledger</a></li>
-        <li><a href="corroborate.html">Blind Corroboration</a></li>
-        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="corroborate.html">Memory Chamber</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="protocol.html">Charter</a></li>
       </ul>
-      <div id="navIdentityBtn" class="identity-pill" onclick="openIdentityModal()">
-        <span class="dot"></span>
-        <span id="navIdentityText">Connect Identity</span>
+      <div style="display:flex; align-items:center; gap:0.8rem;">
+        <button id="soundToggleBtn" class="sound-toggle-btn"><span>🔇 528Hz Audio</span></button>
+        <div id="navIdentityPill" class="identity-pill" onclick="openIdentityModal()">
+          <span style="width:8px; height:8px; border-radius:50%; background:var(--memory-violet);"></span>
+          <span id="navIdentityText">Connect Identity</span>
+        </div>
       </div>
     </nav>
   </header>
 
-  <main>
-    <!-- SOVEREIGN GATEWAY HERO -->
-    <div class="gateway-hero">
-      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.8rem;">
-        <span class="badge frequency">528Hz Sovereign Memory Frequency</span>
-        <span class="badge cyan">EIP-712 Typed Signing</span>
-        <span class="badge gold">LPS-1 Living Provenance</span>
+  <!-- Fullscreen Opening Cinematic Hero -->
+  <section class="hero-cinema">
+    <div style="max-width: 860px; margin: 0 auto;">
+      <h1 class="hero-headline">WHAT DO YOU REMEMBER?</h1>
+      <p class="hero-tagline">
+        Before AI. Before Google. Before the comments.<br>
+        Your memory is sovereign. Capture what you recall before the world tells you what happened.
+      </p>
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+        <a href="#remembranceJourney" class="btn btn-primary">Begin Your Remembrance &darr;</a>
+        <a href="atlas.html" class="btn btn-secondary">Explore the Memory Atlas &rarr;</a>
       </div>
-      
-      <h1>WHAT DO YOU REMEMBER?</h1>
-      
-      <p class="lead-sub">
-        <strong>Not what the internet says. Not what the crowd voted for.</strong><br>
-        What do you remember seeing, hearing, reading, owning, or experiencing? Your account remains yours. You choose what to reveal. DONK AI can preserve when and how you submitted it&mdash;but it will never claim a cryptographic hash proves your memory is true.
+    </div>
+  </section>
+
+  <!-- The Memory Becomes Your Record: 4-Step Narrative -->
+  <section style="max-width:1100px; margin: 2rem auto 4rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div style="text-align:center; margin-bottom: 2.5rem;">
+      <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); letter-spacing:0.08em; text-transform:uppercase;">The Sovereign Lifecycle</span>
+      <h2 style="font-size: 2.2rem; color:var(--pearl); margin-top:0.4rem;">The Memory Becomes Your Record</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem;">
+      <div class="spine-glass-panel">
+        <span style="font-family:var(--font-mono); color:var(--memory-violet); font-size:0.85rem; font-weight:700;">01. RECALL</span>
+        <h3 style="font-size:1.15rem; color:var(--pearl); margin:0.4rem 0;">You Remember It</h3>
+        <p style="font-size:0.88rem; color:var(--text-dim);">Write unprimed before leading questions or crowd consensus alter your recollection.</p>
+      </div>
+
+      <div class="spine-glass-panel">
+        <span style="font-family:var(--font-mono); color:var(--synaptic-cyan); font-size:0.85rem; font-weight:700;">02. PROTECT</span>
+        <h3 style="font-size:1.15rem; color:var(--pearl); margin:0.4rem 0;">You Protect It</h3>
+        <p style="font-size:0.88rem; color:var(--text-dim);">Encrypt client-side. Choose Vault, Reviewer-Only, Pseudonymous, or Public.</p>
+      </div>
+
+      <div class="spine-glass-panel">
+        <span style="font-family:var(--font-mono); color:var(--memory-crimson); font-size:0.85rem; font-weight:700;">03. SIGN</span>
+        <h3 style="font-size:1.15rem; color:var(--pearl); margin:0.4rem 0;">You Sign It</h3>
+        <p style="font-size:0.88rem; color:var(--text-dim);">Your EVM key, passkey, or DID authorizes the commitment—not the truth of the memory.</p>
+      </div>
+
+      <div class="spine-glass-panel">
+        <span style="font-family:var(--font-mono); color:var(--mnemonic-gold); font-size:0.85rem; font-weight:700;">04. PROVE</span>
+        <h3 style="font-size:1.15rem; color:var(--pearl); margin:0.4rem 0;">You Can Prove It</h3>
+        <p style="font-size:0.88rem; color:var(--text-dim);">Verify the commitment in any browser without exposing your private words.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-Stage Guided Journey -->
+  <section id="remembranceJourney" style="position:relative; z-index:1; padding-top:2rem;">
+    <!-- Sticky Timeline Nav -->
+    <div class="stage-timeline-nav">
+      <div class="stage-dot active" data-goto-stage="1"><span>01</span> Remember</div>
+      <div class="stage-dot" data-goto-stage="2"><span>02</span> Protect</div>
+      <div class="stage-dot" data-goto-stage="3"><span>03</span> Sign</div>
+      <div class="stage-dot" data-goto-stage="4"><span>04</span> Connect</div>
+      <div class="stage-dot" data-goto-stage="5"><span>05</span> Verify</div>
+    </div>
+
+    <!-- Stage 1: Remember -->
+    <div id="stageScene1" class="stage-scene active">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); text-transform:uppercase;">Stage 01 &bull; Unprimed Free Recall</span>
+          <h2 style="font-size:1.8rem; color:var(--pearl); margin-top:0.3rem;">Before the internet tells you—what do you remember?</h2>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 1 of 5</span>
+      </div>
+
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        Describe what you saw, heard, or experienced in your own words. No search engines. No second-guessing.
       </p>
 
-      <!-- Primary & Secondary Actions -->
-      <div class="gateway-actions-row">
-        <button class="btn btn-primary" onclick="scrollToWizard()">Record a Memory &darr;</button>
-        <a href="#divergencesSection" class="btn btn-secondary">Explore Memory Divergences</a>
-        <a href="proof.html" class="btn btn-secondary">Verify a Record</a>
-        <a href="corroborate.html" class="btn btn-secondary">Submit Independent Corroboration</a>
-      </div>
+      <textarea id="journeyProseInput" class="form-textarea" style="min-height:160px; margin-bottom:1.5rem;" placeholder="I remember when..."></textarea>
 
-      <!-- SOVEREIGN 3-STEP REMEMBRANCE WIZARD -->
-      <div class="wizard-box" id="remembranceWizard">
-        <div class="wizard-steps-nav">
-          <div class="wizard-step-item active" id="stepIndicator1">
-            <div class="wizard-step-num">1</div>
-            <span>Free Recollection</span>
-          </div>
-          <div class="wizard-step-item" id="stepIndicator2">
-            <div class="wizard-step-num">2</div>
-            <span>Consent & Control</span>
-          </div>
-          <div class="wizard-step-item" id="stepIndicator3">
-            <div class="wizard-step-num">3</div>
-            <span>Web3 Seal & Sign</span>
-          </div>
-        </div>
-
-        <!-- STEP 1: FREE RECOLLECTION -->
-        <div id="wizardStep1">
-          <div class="guidance-box">
-            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
-              Close your eyes for a moment. Describe the memory in your own words before seeing any possible answers. What do you remember?
-            </strong>
-            You may describe a phrase, sound, image, object, place, event, person, brand, film moment, game, song, conversation, or cultural memory. Write what comes naturally. Include uncertainty if it exists.
-          </div>
-
-          <div class="form-group">
-            <label>Your Personal Recollection (Original Language & Phrasing)</label>
-            <textarea id="memNarrative" class="form-textarea" placeholder="I remember..." required></textarea>
-          </div>
-
-          <div style="background:rgba(56, 189, 248, 0.08); border-left:3px solid var(--synaptic-cyan); padding:0.8rem 1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:#cbd5e1;">
-            <em>"I'm not sure" is valuable data. A memory can be vivid and still remain uncertain.</em>
-          </div>
-
-          <!-- Contextual Prompts -->
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; margin-bottom:1.2rem;">
-            <div class="form-group">
-              <label>When do you remember encountering this?</label>
-              <input type="text" id="memTimeframe" class="form-input" placeholder="e.g. Summer 1978, early 1990s, or age 8">
-            </div>
-            <div class="form-group">
-              <label>Where were you, if you remember?</label>
-              <input type="text" id="memLocation" class="form-input" placeholder="e.g. Austin TX, bedroom, movie theater">
-            </div>
-          </div>
-
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; margin-bottom:1.5rem;">
-            <div class="form-group">
-              <label>Where do you think this memory came from?</label>
-              <select id="memSourceAwareness" class="form-select">
-                <option value="direct-experience">I experienced it directly</option>
-                <option value="film-tv-broadcast">I saw it in a film, TV show, game, or ad</option>
-                <option value="print-packaging">I read it in a book, magazine, or packaging</option>
-                <option value="heard-from-community">I heard it from family, friends, or radio</option>
-                <option value="encountered-online">I encountered it online</option>
-                <option value="not-sure">I am not sure</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>How does this memory feel today?</label>
-              <select id="memConfidence" class="form-select">
-                <option value="vivid-and-certain">Certain</option>
-                <option value="vivid-but-uncertain" selected>Vivid but uncertain</option>
-                <option value="familiar-mixed-details">Familiar, but details may be mixed</option>
-                <option value="two-conflicting-versions">I remember two conflicting versions</option>
-                <option value="documenting-unknown">Documenting specifically because I do not know</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="text-align:right;">
-            <button class="btn btn-primary" onclick="goToStep(2)">Proceed to Consent & Privacy &rarr;</button>
-          </div>
-        </div>
-
-        <!-- STEP 2: CONSENT & CONTROL -->
-        <div id="wizardStep2" style="display:none;">
-          <div class="guidance-box">
-            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
-              WHO MAY SEE THIS MEMORY? You remain in control of your account and attached material.
-            </strong>
-            Select the access policy for your memory. Private and reviewer-only records are encrypted on your device with AES-GCM-256 before upload.
-          </div>
-
-          <div class="choice-card-grid">
-            <div class="choice-card selected" onclick="selectPrivacy('public-pseudonymous', this)">
-              <div class="choice-title">Public Pseudonymous Record</div>
-              <div class="choice-desc">Visible on the Memory Drift Atlas under your pseudonymous DID/wallet.</div>
-            </div>
-            <div class="choice-card" onclick="selectPrivacy('reviewer-only', this)">
-              <div class="choice-title">Me and Invited Reviewers</div>
-              <div class="choice-desc">Encrypted. Only accessible to authenticated peer archivists.</div>
-            </div>
-            <div class="choice-card" onclick="selectPrivacy('aggregate-research', this)">
-              <div class="choice-title">Anonymous Aggregate Research Only</div>
-              <div class="choice-desc">Included in statistical convergence studies without public prose.</div>
-            </div>
-            <div class="choice-card" onclick="selectPrivacy('only-me', this)">
-              <div class="choice-title">Only Me (Private Sovereign Vault)</div>
-              <div class="choice-desc">Encrypted locally. Zero public visibility. Only your key can decrypt.</div>
-            </div>
-          </div>
-
-          <div style="background:rgba(245, 158, 11, 0.08); border:1px solid rgba(245, 158, 11, 0.3); padding:1rem; border-radius:6px; margin-bottom:1.8rem; font-size:0.85rem; color:#cbd5e1;">
-            <strong style="color:var(--mnemonic-gold);">Sensitive Content Notice:</strong>
-            This record may contain personal, traumatic, identifying, or legally sensitive information. Do not submit private information about another person without appropriate consent.
-          </div>
-
-          <div style="display:flex; justify-content:space-between;">
-            <button class="btn btn-secondary" onclick="goToStep(1)">&larr; Back to Recollection</button>
-            <button class="btn btn-primary" onclick="goToStep(3)">Proceed to Web3 Seal & Sign &rarr;</button>
-          </div>
-        </div>
-
-        <!-- STEP 3: WEB3 SEAL & SIGN -->
-        <div id="wizardStep3" style="display:none;">
-          <div class="guidance-box">
-            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
-              SEAL YOUR REMEMBRANCE: Private Cryptographic Commitment
-            </strong>
-            DONK AI will generate an LPS-1 cryptographic root and prepare an EIP-712 structured typed data signature for your sovereign identity.
-          </div>
-
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.2rem; margin-bottom:1.5rem;">
-            <div style="background:var(--bg-elev); padding:1.2rem; border-radius:8px; border:1px solid var(--border);">
-              <strong style="color:var(--memory-emerald); font-size:0.9rem; display:block; margin-bottom:0.4rem;">
-                &#10003; What Is Stored Publicly On-Chain:
-              </strong>
-              <ul style="margin-left:1.2rem; font-size:0.82rem; color:var(--text-dim); line-height:1.6;">
-                <li>Cryptographic commitment root (SHA-256)</li>
-                <li>EIP-712 signature from your identity</li>
-                <li>Access policy hash & timestamp</li>
-                <li>Future version and review events</li>
-              </ul>
-            </div>
-
-            <div style="background:var(--bg-elev); padding:1.2rem; border-radius:8px; border:1px solid var(--border);">
-              <strong style="color:var(--memory-coral); font-size:0.9rem; display:block; margin-bottom:0.4rem;">
-                &#10005; What Is NOT Stored Publicly:
-              </strong>
-              <ul style="margin-left:1.2rem; font-size:0.82rem; color:var(--text-dim); line-height:1.6;">
-                <li>Your raw private memory text</li>
-                <li>Private attachments or media</li>
-                <li>Your encryption key</li>
-                <li>Your real-world personal identity</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Identity Selector -->
-          <div style="background:var(--bg-elev); border:1px solid var(--border-hi); border-radius:8px; padding:1.2rem; margin-bottom:1.8rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem;">
-              <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--pearl);">Active Signing Identity:</span>
-              <span class="badge frequency" id="currentIdentityBadge">Sovereign Local DID</span>
-            </div>
-            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
-              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="connectWeb3Wallet()">Connect EVM Wallet (EIP-712)</button>
-              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="connectPasskey()">Use Biometric Passkey</button>
-              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="generateSovereignDid()">New Anonymous DID</button>
-            </div>
-          </div>
-
-          <div style="display:flex; justify-content:space-between;">
-            <button class="btn btn-secondary" onclick="goToStep(2)">&larr; Back to Consent</button>
-            <button class="btn btn-primary" onclick="openEip712ReviewModal()">Review and Sign My Remembrance &rarr;</button>
-          </div>
-        </div>
-
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <span style="font-size:0.82rem; color:var(--synaptic-cyan);">🔒 Unprimed testimony. Normalized into canonical Unicode NFC.</span>
+        <button class="btn btn-primary" data-goto-stage="2">Proceed to Privacy &rarr;</button>
       </div>
     </div>
 
-    <!-- MEMORY DIVERGENCES & MANDELA CATALOG (SECONDARY SECTION) -->
-    <section id="divergencesSection" style="padding-top:1rem;">
-      <div style="text-align:center; margin-bottom:2.5rem;">
-        <span class="badge cyan">COLLECTIVE MEMORY DIVERGENCES</span>
-        <h2 style="font-size:2.2rem; margin-top:0.5rem;">Explore Memory Divergences</h2>
-        <p style="color:var(--text-dim); max-width:750px; margin:0.5rem auto 0 auto; font-size:1.05rem;">
-          Compare where human memories converge, conflict with physical archives, or drift over time. Click any card to preload into the sovereign recorder.
-        </p>
-      </div>
-
-      <!-- Quick Category Nav -->
-      <div class="category-filter-nav">
-        <button class="cat-btn active" onclick="filterCatalogCategory('all')">All Topics (16+)</button>
-        <button class="cat-btn" onclick="filterCatalogCategory('Cinema & Pop Culture')">Cinema & Pop Culture</button>
-        <button class="cat-btn" onclick="filterCatalogCategory('Brand & Iconography')">Brand & Iconography</button>
-        <button class="cat-btn" onclick="filterCatalogCategory('Books & Literature')">Books & Literature</button>
-        <button class="cat-btn" onclick="filterCatalogCategory('Sci-Fi & Film')">Sci-Fi & Film</button>
-        <button class="cat-btn" onclick="filterCatalogCategory('Arcade & 1977-Era Computing')">1977 Arcade</button>
-      </div>
-
-      <div class="dilemmas-catalog-grid" id="catalogGrid">
-        <!-- Injected via JS -->
-      </div>
-    </section>
-
-    <!-- PROTOCOL MANIFESTO SECTION -->
-    <section style="padding-top: 1rem;">
-      <div class="purpose-manifesto">
-        <div style="max-width:880px; margin:0 auto; text-align:left;">
-          <span class="badge frequency" style="margin-bottom:0.8rem;">THE DONK AI MANIFESTO</span>
-          <h2 style="font-size:2.4rem; color:var(--pearl); margin-bottom:1rem; line-height:1.2;">
-            Human Memory Is Not a Token.
-          </h2>
-          
-          <p style="font-size:1.1rem; color:var(--text); line-height:1.7; margin-bottom:1.5rem;">
-            It is a signal: personal, cultural, fallible, emotional, and sometimes historically important.
-          </p>
-          
-          <p style="font-size:1.05rem; color:var(--text-dim); line-height:1.7; margin-bottom:1.8rem;">
-            DONK AI gives people a way to preserve that signal without forcing it into a false binary of "true" or "false." A remembrance can be signed without being publicly exposed. Evidence can be linked without being confused with testimony. Independent accounts can converge&mdash;or conflict&mdash;without a crowd, an algorithm, or money deciding what reality must have been.
-          </p>
-
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.8rem; margin:2rem 0;">
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--memory-violet); font-size:1.1rem; margin-bottom:0.5rem;">Why We Use Web3</h4>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Because people deserve portable authorship, verifiable provenance, consent-aware access, and records that cannot be silently rewritten by centralized platforms.
-              </p>
-            </div>
-
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--synaptic-cyan); font-size:1.1rem; margin-bottom:0.5rem;">What We Reject</h4>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                We do not use Web3 to sell truth. We do not use popularity to overwrite minority memory. We do not use AI to pronounce judgment on a human life.
-              </p>
-            </div>
-
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--mnemonic-gold); font-size:1.1rem; margin-bottom:0.5rem;">What We Preserve</h4>
-              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                DONK AI preserves what was remembered, what was submitted, what can be historically supported, and what remains unresolved.
-              </p>
-            </div>
-          </div>
-
-          <div style="text-align:center; margin-top:2.5rem;">
-            <a href="protocol.html" class="btn btn-primary" style="margin-right:1rem;">Read Complete Charter &rarr;</a>
-            <a href="museum.html" class="btn btn-secondary">Explore 1977 Cultural Museum</a>
-          </div>
+    <!-- Stage 2: Protect -->
+    <div id="stageScene2" class="stage-scene">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); text-transform:uppercase;">Stage 02 &bull; Client-Side Vault</span>
+          <h2 style="font-size:1.8rem; color:var(--pearl); margin-top:0.3rem;">Your words stay private. You decide what can be revealed.</h2>
         </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- EIP-712 REVIEW & SIGNING MODAL -->
-  <div id="eip712Modal" class="eip712-modal-overlay">
-    <div class="eip712-modal-content">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-        <span class="badge frequency">EIP-712 TYPED STRUCTURED DATA</span>
-        <button onclick="closeEip712Modal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer;">&times;</button>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 2 of 5</span>
       </div>
 
-      <h2 style="color:var(--pearl); font-size:1.6rem; margin-bottom:0.5rem;">Review & Sign Remembrance</h2>
-      <p style="font-size:0.92rem; color:var(--text-dim); margin-bottom:1rem;">
-        Your wallet or identity will sign this human-readable EIP-712 structured commitment:
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        Your testimony is encrypted in your browser with AES-GCM-256 using an unpredictable 96-bit IV before touching any network.
       </p>
 
-      <div class="typed-data-box" id="typedDataSummary">
-        <!-- Injected via JS -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:2rem;">
+        <label class="spine-glass-panel" style="cursor:pointer; display:block;">
+          <input type="radio" name="privacyPolicy" value="public-pseudonymous" checked style="margin-right:0.5rem;">
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Public Pseudonymous</strong>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Signed commitment and prose viewable by researchers.</span>
+        </label>
+
+        <label class="spine-glass-panel" style="cursor:pointer; display:block;">
+          <input type="radio" name="privacyPolicy" value="reviewer-only" style="margin-right:0.5rem;">
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only</strong>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Encrypted with reviewer key. Public sees roots only.</span>
+        </label>
+
+        <label class="spine-glass-panel" style="cursor:pointer; display:block;">
+          <input type="radio" name="privacyPolicy" value="sovereign-vault" style="margin-right:0.5rem;">
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Sovereign Vault</strong>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Encrypted with your passphrase. Zero third-party access.</span>
+        </label>
       </div>
 
-      <div style="background:rgba(168, 85, 247, 0.08); border-left:3px solid var(--memory-violet); padding:1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:#cbd5e1;">
-        <strong>Signer Declaration:</strong> I confirm that this cryptographic commitment represents the version of my remembrance described above. I understand that this signature proves I submitted this record; it does not prove that the memory is historically accurate.
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-secondary btn-sm" data-goto-stage="1">&larr; Back</button>
+        <button class="btn btn-primary" data-goto-stage="3">Continue to Authorization &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Stage 3: Sign -->
+    <div id="stageScene3" class="stage-scene">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-crimson); text-transform:uppercase;">Stage 03 &bull; Structured Intent</span>
+          <h2 style="font-size:1.8rem; color:var(--pearl); margin-top:0.3rem;">You authorize this record. The chain preserves the commitment—not your private story.</h2>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 3 of 5</span>
       </div>
 
-      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-        <button class="btn btn-secondary" onclick="closeEip712Modal()">Edit Memory</button>
-        <button class="btn btn-primary" onclick="executeEip712Sign()">Confirm & Sign Record &rarr;</button>
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        Sign with your Web3 EVM wallet, biometric device passkey, or local sovereign DID. You sign a 32-byte statement root, never plaintext prose.
+      </p>
+
+      <div style="background:rgba(0,0,0,0.5); border:1px solid var(--border); border-radius:10px; padding:1.2rem; margin-bottom:1.5rem; font-family:var(--font-mono); font-size:0.82rem;">
+        <div style="color:var(--text-muted); margin-bottom:0.4rem;">// EIP-712 Structured Intent Payload</div>
+        <div style="color:var(--synaptic-cyan);">PrimaryType: "CreateRemembrance"</div>
+        <div style="color:var(--pearl);">StatementRoot: <span id="previewStatementRoot">0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f</span></div>
+        <div style="color:var(--text-dim);">Chain ID: 1977 &bull; VerifyingContract: 0x1977...0001</div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-secondary btn-sm" data-goto-stage="2">&larr; Back</button>
+        <button class="btn btn-primary" onclick="openEIP712Modal()">Sign Typed Commitment &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Stage 4: Connect -->
+    <div id="stageScene4" class="stage-scene">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--mnemonic-gold); text-transform:uppercase;">Stage 04 &bull; Federated Social Derivatives</span>
+          <h2 style="font-size:1.8rem; color:var(--pearl); margin-top:0.3rem;">Share a prompt. Keep the original record sovereign.</h2>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 4 of 5</span>
+      </div>
+
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        Generate 1080x1920 Instagram Stories or TikTok unprimed memory prompts. Social derivatives invite independent recall without exposing your canonical testimony.
+      </p>
+
+      <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
+        <button class="btn btn-secondary" onclick="openSocialCardModal('instagram')">📸 Instagram Story Card</button>
+        <button class="btn btn-secondary" onclick="openSocialCardModal('tiktok')">🎵 TikTok Memory Lens</button>
+        <button class="btn btn-secondary" onclick="openSocialCardModal('farcaster')">🟣 Farcaster / Base Cast</button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-secondary btn-sm" data-goto-stage="3">&larr; Back</button>
+        <button class="btn btn-primary" data-goto-stage="5">Proceed to Proof Explorer &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Stage 5: Verify -->
+    <div id="stageScene5" class="stage-scene">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); text-transform:uppercase;">Stage 05 &bull; Cryptographic Proof</span>
+          <h2 style="font-size:1.8rem; color:var(--pearl); margin-top:0.3rem;">Anyone can verify the commitment. Nobody gets to declare your memory "true" by vote.</h2>
+        </div>
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 5 of 5</span>
+      </div>
+
+      <p style="font-size:0.95rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        Your portable LPS-1 manifest contains all Merkle leaves, access policy hashes, and cryptographic signatures. Recompute and verify it anywhere.
+      </p>
+
+      <div class="spine-glass-panel" style="margin-bottom:2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem;">
+          <strong style="color:var(--pearl);">Manifest Status: Sealed &amp; Portable</strong>
+          <span class="badge supported">✓ LPS-1 CONFORMANT</span>
+        </div>
+        <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-dim);">
+          <div>Record ID: urn:donkai:record:1977:8f4c91a0</div>
+          <div>Statement Root: 0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f</div>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-secondary btn-sm" data-goto-stage="4">&larr; Back</button>
+        <div style="display:flex; gap:0.8rem;">
+          <button class="btn btn-secondary" onclick="downloadManifestFile()">Download LPS-1 Manifest (.json)</button>
+          <a href="proof.html" class="btn btn-primary">Open Proof Explorer &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16+ Mandela Effect & Cultural Divergences Explorer -->
+  <section id="divergencesSection" style="max-width:1200px; margin: 4rem auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2rem; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); text-transform:uppercase;">The Cultural Archive</span>
+        <h2 style="font-size: 2.2rem; color:var(--pearl); margin-top:0.3rem;">Memory Drift Atlas &bull; 16+ Divergences</h2>
+      </div>
+      <a href="atlas.html" class="btn btn-secondary btn-sm">View Global Signal Atlas &rarr;</a>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-pills" id="categoryPills" style="margin-bottom: 2rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
+      <button class="cat-pill active" data-cat="all">All Divergences (16)</button>
+      <button class="cat-pill" data-cat="cinema">Cinema &amp; Film</button>
+      <button class="cat-pill" data-cat="gaming">Arcade &amp; Gaming</button>
+      <button class="cat-pill" data-cat="brands">Brands &amp; Logos</button>
+      <button class="cat-pill" data-cat="audio">Music &amp; Broadcast</button>
+    </div>
+
+    <!-- Catalog Grid -->
+    <div class="mandela-grid" id="mandelaGrid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1.5rem;">
+      <!-- Populated via mandela-engine.js -->
+    </div>
+  </section>
+
+  <!-- EIP-712 Review Modal -->
+  <div id="eip712Modal" class="modal-overlay">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h3 style="font-size:1.3rem; color:var(--pearl);">Authorize Structured Commitment</h3>
+        <button class="btn btn-secondary btn-sm" onclick="closeEIP712Modal()">✕</button>
+      </div>
+
+      <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
+        You are signing an EIP-712 structured payload. The blockchain preserves the statement root and timestamps, not your private narrative.
+      </p>
+
+      <div style="background:rgba(0,0,0,0.6); border:1px solid var(--border); border-radius:8px; padding:1rem; margin-bottom:1.5rem; font-family:var(--font-mono); font-size:0.8rem; max-height:180px; overflow-y:auto;">
+        <pre id="eip712JsonPayload">{"domain":{"name":"DONK AI Human Remembrance Protocol","chainId":1977},"primaryType":"CreateRemembrance"}</pre>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.8rem;">
+        <button class="btn btn-secondary" onclick="closeEIP712Modal()">Cancel</button>
+        <button class="btn btn-primary" onclick="executeEIP712Sign()">Confirm &amp; Sign With Identity &rarr;</button>
       </div>
     </div>
   </div>
 
-  <!-- SUCCESS & PORTABLE EXPORT MODAL -->
-  <div id="successModal" class="eip712-modal-overlay">
-    <div class="eip712-modal-content">
-      <div style="text-align:center; padding:1rem 0;">
-        <div style="width:50px; height:50px; border-radius:50%; background:rgba(52, 211, 153, 0.15); border:1px solid var(--memory-emerald); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem auto; color:var(--memory-emerald); font-size:1.5rem;">
-          &#10003;
-        </div>
-        <span class="badge supported">RECORD CRYPTOGRAPHICALLY COMMITTED</span>
-        <h2 style="color:var(--pearl); font-size:1.8rem; margin:0.8rem 0;">Your Remembrance Is Sealed</h2>
-        <p style="font-size:0.95rem; color:var(--text-dim); max-width:550px; margin:0 auto 1.5rem auto;">
-          An immutable LPS-1 provenance receipt has been signed and anchored under your sovereign identity.
-        </p>
+  <!-- Social Card Modal -->
+  <div id="socialCardModal" class="modal-overlay">
+    <div class="modal-card" style="text-align:center;">
+      <h3 style="font-size:1.3rem; color:var(--pearl); margin-bottom:0.5rem;">Distribution Derivative Created</h3>
+      <p style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.5rem;">
+        This story card invites independent recollections and deep-links directly to the unprimed Memory Chamber.
+      </p>
+      
+      <canvas id="socialStoryCanvas" width="360" height="640" style="border-radius:12px; border:1px solid var(--border-hi); margin: 0 auto 1.5rem; display:block; max-width:100%; height:auto;"></canvas>
 
-        <div style="background:#08090e; border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:left; font-family:var(--font-mono); font-size:0.82rem; margin-bottom:1.5rem;">
-          <div style="color:var(--text-muted); margin-bottom:0.3rem;">RECORD ID (LPS-1):</div>
-          <div style="color:var(--memory-violet); word-break:break-all; margin-bottom:0.8rem;" id="sealedRecordId">0x...</div>
-          <div style="color:var(--text-muted); margin-bottom:0.3rem;">EIP-712 SIGNATURE:</div>
-          <div style="color:var(--synaptic-cyan); word-break:break-all;" id="sealedSignature">0x...</div>
-        </div>
-
-        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-          <button class="btn btn-primary" onclick="downloadSealedManifest()">Download W3C Verifiable Credential Manifest (JSON) &darr;</button>
-          <a href="atlas.html" class="btn btn-secondary">Explore on Atlas &rarr;</a>
-        </div>
+      <div style="display:flex; justify-content:center; gap:0.8rem;">
+        <button class="btn btn-secondary" onclick="closeSocialCardModal()">Close</button>
+        <button class="btn btn-primary" onclick="downloadStoryCardImage()">Save Story Card Image</button>
       </div>
     </div>
   </div>
 
-  <footer>
-    <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol (1977.donkai.org)</div>
-      <ul class="footer-links">
-        <li><a href="protocol.html">Charter & Methodology</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">Museum</a></li>
-        <li><a href="record.html">7-Tier Ledger</a></li>
-      </ul>
+  <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
+      DONK AI &bull; The Human Remembrance Protocol. Preserving provenance without confusing emotional memory with settled historical fact.
+    </p>
+    <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+      Living Provenance Standard (LPS-1 v2.0) &bull; Chain 1977 Domain Separated
     </div>
   </footer>
 
-  <script src="js/mandela-engine.js?v=1.0.2"></script>
-  <script src="js/web3-gateway.js?v=1.0.2"></script>
-  <script>
-    let currentPrivacyChoice = 'public-pseudonymous';
-    let currentManifestPackage = null;
-    let sealedManifest = null;
-    let currentCatalogCategory = 'all';
-
-    function scrollToWizard() {
-      document.getElementById('remembranceWizard').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function goToStep(stepNum) {
-      if (stepNum === 2) {
-        const narrative = document.getElementById('memNarrative').value.trim();
-        if (!narrative) {
-          alert('Please enter your personal recollection before proceeding.');
-          return;
-        }
-      }
-
-      document.getElementById('wizardStep1').style.display = (stepNum === 1) ? 'block' : 'none';
-      document.getElementById('wizardStep2').style.display = (stepNum === 2) ? 'block' : 'none';
-      document.getElementById('wizardStep3').style.display = (stepNum === 3) ? 'block' : 'none';
-
-      document.getElementById('stepIndicator1').classList.toggle('active', stepNum === 1);
-      document.getElementById('stepIndicator2').classList.toggle('active', stepNum === 2);
-      document.getElementById('stepIndicator3').classList.toggle('active', stepNum === 3);
-
-      updateIdentityBadge();
-    }
-
-    function selectPrivacy(choice, cardEl) {
-      currentPrivacyChoice = choice;
-      document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
-      cardEl.classList.add('selected');
-    }
-
-    function updateIdentityBadge() {
-      const ident = window.Web3MemoryGateway.currentIdentity;
-      const badge = document.getElementById('currentIdentityBadge');
-      const navText = document.getElementById('navIdentityText');
-      if (ident) {
-        badge.innerText = ident.label || ident.did;
-        navText.innerText = ident.label || ident.did;
-      } else {
-        badge.innerText = 'Sovereign Local DID';
-        navText.innerText = 'Connect Identity';
-      }
-    }
-
-    async function connectWeb3Wallet() {
-      try {
-        await window.Web3MemoryGateway.connectWallet();
-        updateIdentityBadge();
-        alert('Connected EVM Wallet: ' + window.Web3MemoryGateway.currentIdentity.address);
-      } catch (e) {
-        alert(e.message);
-      }
-    }
-
-    async function connectPasskey() {
-      try {
-        await window.Web3MemoryGateway.createPasskeyIdentity();
-        updateIdentityBadge();
-        alert('Passkey sovereign identity activated.');
-      } catch (e) {
-        alert(e.message);
-      }
-    }
-
-    async function generateSovereignDid() {
-      await window.Web3MemoryGateway.createLocalDidIdentity();
-      updateIdentityBadge();
-      alert('New sovereign DID generated.');
-    }
-
-    function openIdentityModal() {
-      const choice = confirm('Choose Identity:\nOK = Connect EVM Wallet (MetaMask)\nCancel = Generate Local Passkey/DID');
-      if (choice) connectWeb3Wallet();
-      else connectPasskey();
-    }
-
-    async function openEip712ReviewModal() {
-      const narrative = document.getElementById('memNarrative').value.trim();
-      const timeframe = document.getElementById('memTimeframe').value.trim();
-      const location = document.getElementById('memLocation').value.trim();
-      const sourceAwareness = document.getElementById('memSourceAwareness').value;
-      const confidence = document.getElementById('memConfidence').value;
-
-      try {
-        currentManifestPackage = await window.Web3MemoryGateway.buildCreateRemembrancePayload({
-          narrative,
-          language: 'en-US',
-          eventTimeframe: timeframe,
-          location,
-          sourceAwareness,
-          confidenceLevel: confidence,
-          accessPolicy: currentPrivacyChoice
-        });
-
-        const msg = currentManifestPackage.eip712Message;
-        const summaryHtml = `
-          <div><strong>Action:</strong> Create Sovereign Remembrance Record (LPS-1)</div>
-          <div><strong>Record ID:</strong> ${msg.recordId}</div>
-          <div><strong>Canonical Statement Root:</strong> ${msg.statementRoot}</div>
-          <div><strong>Metadata Root:</strong> ${msg.metadataRoot}</div>
-          <div><strong>Access Policy Hash:</strong> ${msg.accessPolicyHash} (${currentPrivacyChoice})</div>
-          <div><strong>Schema Hash:</strong> ${msg.schemaHash}</div>
-          <div><strong>Author Nonce:</strong> ${msg.authorNonce}</div>
-          <div><strong>Deadline:</strong> ${new Date(msg.deadline * 1000).toUTCString()}</div>
-          <div><strong>Signing Identity:</strong> ${window.Web3MemoryGateway.currentIdentity ? window.Web3MemoryGateway.currentIdentity.did : 'Sovereign In-Browser DID'}</div>
-        `;
-        document.getElementById('typedDataSummary').innerHTML = summaryHtml;
-        document.getElementById('eip712Modal').style.display = 'flex';
-      } catch (err) {
-        alert('Error preparing EIP-712 payload: ' + err.message);
-      }
-    }
-
-    function closeEip712Modal() {
-      document.getElementById('eip712Modal').style.display = 'none';
-    }
-
-    async function executeEip712Sign() {
-      try {
-        sealedManifest = await window.Web3MemoryGateway.signRemembrance(currentManifestPackage);
-        closeEip712Modal();
-        document.getElementById('sealedRecordId').innerText = sealedManifest.credentialSubject.recordId;
-        document.getElementById('sealedSignature').innerText = sealedManifest.proof.proofValue;
-        document.getElementById('successModal').style.display = 'flex';
-      } catch (e) {
-        alert('Signing failed: ' + e.message);
-      }
-    }
-
-    function downloadSealedManifest() {
-      if (!sealedManifest) return;
-      const blob = new Blob([JSON.stringify(sealedManifest, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `donkai-remembrance-${sealedManifest.credentialSubject.recordId.slice(2, 10)}.json`;
-      a.click();
-    }
-
-    // Catalog Rendering
-    function renderCatalogGrid() {
-      const grid = document.getElementById('catalogGrid');
-      grid.innerHTML = '';
-      const all = window.MandelaEngine.getAllTopics();
-      const filtered = currentCatalogCategory === 'all' 
-        ? all 
-        : all.filter(t => t.category === currentCatalogCategory);
-
-      filtered.forEach(topic => {
-        const pcts = window.MandelaEngine.getPercentages(topic);
-        const card = document.createElement('div');
-        card.className = 'dilemma-mini-card';
-        card.onclick = () => {
-          document.getElementById('memNarrative').value = `I remember when ${topic.question} Specifically: "${topic.optionA.label}"`;
-          document.getElementById('memTimeframe').value = topic.year;
-          goToStep(1);
-          scrollToWizard();
-        };
-
-        card.innerHTML = `
-          <div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:0.6rem;">
-              <span class="badge cyan" style="font-size:0.7rem;">${topic.category}</span>
-              <span class="badge" style="font-size:0.7rem;">${topic.year}</span>
-            </div>
-            <h3 style="color:var(--pearl); font-size:1.15rem; margin-bottom:0.6rem;">${topic.title || topic.question}</h3>
-            <p style="font-size:0.85rem; color:var(--text-dim); line-height:1.5; margin-bottom:1rem;">${topic.question}</p>
-          </div>
-          <div>
-            <div class="result-bar-wrap" style="margin-bottom:0.5rem;">
-              <div class="result-split-bar" style="height:22px;">
-                <div class="split-seg-a" style="width:${pcts.pctA}%; font-size:0.7rem; padding-left:0.5rem;">${pcts.pctA}% A</div>
-                <div class="split-seg-b" style="width:${pcts.pctB}%; font-size:0.7rem; padding-right:0.5rem;">${pcts.pctB}% B</div>
-              </div>
-            </div>
-            <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-family:var(--font-mono); color:var(--text-muted);">
-              <span>${pcts.total.toLocaleString()} Accounts</span>
-              <span style="color:var(--memory-violet);">Record Memory &rarr;</span>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function filterCatalogCategory(cat) {
-      currentCatalogCategory = cat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'all' && btn.innerText.includes('All')));
-      });
-      renderCatalogGrid();
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      updateIdentityBadge();
-      renderCatalogGrid();
-    });
-  </script>
+  <script src="js/mandela-engine.js?v=2.0.0"></script>
+  <script src="js/web3-gateway.js?v=2.0.0"></script>
+  <script src="js/social-adapters.js?v=2.0.0"></script>
+  <script src="js/walkthrough.js?v=2.0.0"></script>
 </body>
 </html>
