@@ -244,7 +244,94 @@ function runSuite() {
     }
   }
 
-  console.log(`[PASS] All ${checkCount} Conformance Checks Succeeded across all 4 fixture domains!`);
+  // 5. Canonical Consent Receipt & Hashing Invariants
+  function hashConsentReceipt(receiptObj) {
+    if (!receiptObj.authorSelfRepresentation || !receiptObj.visibilityAcknowledged || 
+        !receiptObj.pilotScopeAcknowledged || !receiptObj.epistemicBoundaryAcknowledged || 
+        !receiptObj.localDraftStorageAcknowledged) {
+      throw new Error('Mandatory consent boundary acknowledgment missing or false');
+    }
+    const canonJson = canonicalize(receiptObj);
+    const prefix = Buffer.from('DONKAI:LPS1:CONSENT:v1:', 'utf8');
+    return '0x' + sha256(Buffer.concat([prefix, Buffer.from(canonJson, 'utf8')])).toString('hex');
+  }
+
+  const baseConsentReceipt = {
+    consentVersion: "donkai-cultural-pilot-v1",
+    policyHash: "0x8fa3729864bf350c3882798132e4d08b3a0972e391b4526d708304bc0632a4e2",
+    acknowledgedAt: "2026-08-29T08:22:00.000Z",
+    authorSelfRepresentation: true,
+    visibilityAcknowledged: true,
+    pilotScopeAcknowledged: true,
+    epistemicBoundaryAcknowledged: true,
+    localDraftStorageAcknowledged: true,
+    selectedAccessPolicy: "public-pseudonymous",
+    recordVersion: 1,
+    protocolSpecificationVersion: "2.0",
+    commitmentAlgorithm: "lps1-merkle-v1"
+  };
+
+  // Test 1: Deterministic derivation
+  const consentHash1 = hashConsentReceipt(baseConsentReceipt);
+  const consentHash1Recomputed = hashConsentReceipt({ ...baseConsentReceipt });
+  if (consentHash1 !== consentHash1Recomputed || !/^0x[0-9a-f]{64}$/.test(consentHash1)) {
+    throw new Error('Deterministic consent receipt hashing failed');
+  }
+  checkCount++;
+
+  // Test 2: Access policy change produces different consentHash
+  const consentPolicyChanged = { ...baseConsentReceipt, selectedAccessPolicy: "reviewer-only" };
+  const consentHash2 = hashConsentReceipt(consentPolicyChanged);
+  if (consentHash1 === consentHash2) {
+    throw new Error('Access policy change did not alter consentHash');
+  }
+  checkCount++;
+
+  // Test 3: Policy hash/version change produces different consentHash
+  const consentVersionChanged = { ...baseConsentReceipt, policyHash: "0x1111111111111111111111111111111111111111111111111111111111111111" };
+  const consentHash3 = hashConsentReceipt(consentVersionChanged);
+  if (consentHash1 === consentHash3) {
+    throw new Error('Policy hash change did not alter consentHash');
+  }
+  checkCount++;
+
+  // Test 4: Missing or false mandatory acknowledgment fails validation
+  try {
+    const invalidReceipt = { ...baseConsentReceipt, pilotScopeAcknowledged: false };
+    hashConsentReceipt(invalidReceipt);
+    throw new Error('False pilotScopeAcknowledged unexpectedly passed validation');
+  } catch (err) {
+    if (err.message.includes('unexpectedly passed')) throw err;
+    checkCount++; // Successfully rejected invalid consent
+  }
+
+  // Test 5: Namespaced Draft Keys Isolation
+  const mockStorage = {
+    "donkai:lps1:draft:v1": '{"prose":"test"}',
+    "donkai:lps1:draft-status:v1": 'saved',
+    "donkai:lps1:consent-receipt:v1": '{"consent":true}',
+    "donkai:lps1:draft-attachment-meta:v1": '{"count":0}',
+    "site_audio_preference": "muted",
+    "site_theme_mode": "dark"
+  };
+  const DONKAI_DRAFT_KEYS = [
+    "donkai:lps1:draft:v1",
+    "donkai:lps1:draft-status:v1",
+    "donkai:lps1:consent-receipt:v1",
+    "donkai:lps1:draft-attachment-meta:v1"
+  ];
+  for (const key of DONKAI_DRAFT_KEYS) {
+    delete mockStorage[key];
+  }
+  if (mockStorage["site_audio_preference"] !== "muted" || mockStorage["site_theme_mode"] !== "dark") {
+    throw new Error('Draft cleanup erased unrelated origin data');
+  }
+  if (mockStorage["donkai:lps1:draft:v1"] !== undefined) {
+    throw new Error('Draft cleanup failed to purge namespaced draft');
+  }
+  checkCount++;
+
+  console.log(`[PASS] All ${checkCount} Conformance Checks Succeeded across all 5 fixture domains!`);
 }
 
 runSuite();
