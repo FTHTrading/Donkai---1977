@@ -1,0 +1,22 @@
+{
+  "type": "donkai.remembrance.v1",
+  "language": "en-US",
+  "authoringMode": "human-authored",
+  "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge.",
+  "eventDate": {
+    "start": "1978-07-01",
+    "end": "1978-08-15",
+    "certainty": "approximate"
+  },
+  "location": {
+    "label": "Austin, Texas, United States",
+    "precision": "city"
+  },
+  "culturalContext": [
+    "arcade",
+    "1977-era",
+    "space-invaders",
+    "local-history"
+  ],
+  "authorAttestation": "I confirm this is my own independent recollection."
+}

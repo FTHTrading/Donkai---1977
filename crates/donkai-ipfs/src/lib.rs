@@ -61,9 +61,12 @@ pub fn pin_to_kubo(payload: &[u8]) -> Result<String, PinError> {
 
 /// Pin `payload` to any Kubo RPC endpoint. Uses `POST /add?cid-version=1&pin=true`.
 pub fn pin_to_kubo_at(api_base: &str, payload: &[u8]) -> Result<String, PinError> {
-    let url = format!("{}/add?cid-version=1&pin=true", api_base.trim_end_matches('/'));
-    let part = reqwest::blocking::multipart::Part::bytes(payload.to_vec())
-        .file_name("donkai-payload");
+    let url = format!(
+        "{}/add?cid-version=1&pin=true",
+        api_base.trim_end_matches('/')
+    );
+    let part =
+        reqwest::blocking::multipart::Part::bytes(payload.to_vec()).file_name("donkai-payload");
     let form = reqwest::blocking::multipart::Form::new().part("file", part);
     let client = reqwest::blocking::Client::new();
     let resp = client.post(&url).multipart(form).send()?;
@@ -73,10 +76,12 @@ pub fn pin_to_kubo_at(api_base: &str, payload: &[u8]) -> Result<String, PinError
         return Err(PinError::Kubo(status.as_u16(), body));
     }
     let key = "\"Hash\":\"";
-    let start = body.rfind(key)
+    let start = body
+        .rfind(key)
         .ok_or_else(|| PinError::Parse("no \"Hash\" field in Kubo response".into()))?
         + key.len();
-    let end_rel = body[start..].find('"')
+    let end_rel = body[start..]
+        .find('"')
         .ok_or_else(|| PinError::Parse("unterminated \"Hash\" string".into()))?;
     Ok(body[start..start + end_rel].to_string())
 }
@@ -172,7 +177,7 @@ mod tests {
             write_varint(&mut b, x);
             b
         }
-        assert_eq!(v(0),   vec![0]);
+        assert_eq!(v(0), vec![0]);
         assert_eq!(v(127), vec![127]);
         assert_eq!(v(128), vec![0x80, 0x01]);
         assert_eq!(v(300), vec![0xAC, 0x02]);
@@ -182,7 +187,7 @@ mod tests {
     #[test]
     fn empty_payload_still_produces_valid_cid() {
         let raw = compute_raw_cidv1(b"");
-        let dp  = compute_dagpb_cidv1(b"");
+        let dp = compute_dagpb_cidv1(b"");
         assert!(raw.starts_with("bafk"));
         assert!(dp.starts_with("bafy"));
     }

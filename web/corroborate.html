@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blind Independent Corroboration — DONK AI</title>
+  <meta name="description" content="Submit independent human recollection without viewing the original narrative. Cryptographic commit-reveal protocol.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html" class="active">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <span class="badge unresolved" style="margin-bottom:0.6rem;">INDEPENDENT WITNESS VERIFICATION</span>
+        <h1>Blind Independent Corroboration</h1>
+        <p class="section-lead" style="margin: 0 auto;">
+          Ordinary social "likes" are popularity signals. True corroboration requires sealing your independent recall before seeing other accounts.
+        </p>
+      </div>
+
+      <div class="form-card">
+        
+        <!-- STEP 1: Neutral Discovery Context -->
+        <div style="background:var(--bg-elev); border:1px solid var(--border-hi); padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+          <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-blue); text-transform:uppercase; margin-bottom:0.5rem;">
+            Step 1 &bull; Neutral Discovery Context (Target #MEM-1977-0001)
+          </div>
+          <h3 style="color:var(--pearl); margin-bottom:0.8rem;">Do you have recollections matching this timeframe and location?</h3>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; font-size:0.9rem;">
+            <div>
+              <span style="color:var(--text-muted);">Era / Time Range:</span>
+              <strong style="color:var(--pearl); margin-left:0.5rem;">1977 &ndash; 1980</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted);">Broad Location:</span>
+              <strong style="color:var(--pearl); margin-left:0.5rem;">Austin, Texas (Metropolitan Area)</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted);">Topic Category:</span>
+              <strong style="color:var(--pearl); margin-left:0.5rem;">Arcade & Early Computing</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted);">Cultural Keywords:</span>
+              <span class="badge" style="margin-left:0.3rem;">arcade</span>
+              <span class="badge" style="margin-left:0.3rem;">tokens</span>
+              <span class="badge" style="margin-left:0.3rem;">space-invaders</span>
+            </div>
+          </div>
+
+          <div style="margin-top:1rem; font-size:0.82rem; color:var(--accent-gold); background:rgba(216, 190, 124, 0.08); padding:0.6rem 0.9rem; border-radius:4px;">
+            &bull; Original primary testimony is hidden to eliminate social confirmation bias.
+          </div>
+        </div>
+
+        <!-- STEP 2: Contributor's Independent Testimony -->
+        <form id="blindForm" onsubmit="event.preventDefault(); handleBlindSeal();">
+          <div class="form-group">
+            <label for="blindNarrative">Step 2 &bull; What Do You Independently Remember?</label>
+            <div class="field-hint">Describe what you recall regarding this place, era, or event. Be as specific as possible about sensory details, tokens, machines, or locations.</div>
+            <textarea id="blindNarrative" class="form-textarea" placeholder="I also remember the arcade on Main Street. The coin slot was modified to..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="blindSalt">Cryptographic Blinding Salt (Generated automatically)</label>
+            <input type="text" id="blindSalt" class="form-input" style="font-family:var(--font-mono); font-size:0.85rem;" readonly>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; font-weight:normal;">
+              <input type="checkbox" id="corrobAttest" required style="margin-top: 0.25rem;">
+              <span><strong>Independent Human Recall Attestation:</strong> I attest that I wrote this recollection independently without prior coaching or exposure to the primary narrative.</span>
+            </label>
+          </div>
+
+          <!-- STEP 3: Seal & Commit -->
+          <div style="margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary" style="width:100%;">Step 3 &bull; Seal & Commit Independent Root</button>
+          </div>
+        </form>
+
+        <!-- Result Card -->
+        <div id="blindResult" style="display:none; margin-top:2rem; padding:1.5rem; background:rgba(124, 163, 216, 0.08); border:1px solid rgba(124, 163, 216, 0.3); border-radius:8px;">
+          <h3 style="color:var(--accent-blue); margin-bottom:0.5rem;">Independent Recall Sealed & Anchored</h3>
+          <p style="font-size:0.9rem; color:var(--text); margin-bottom:0.8rem;">Your account is now sealed against the neutral discovery metadata with timestamped submission provenance.</p>
+          <div style="font-family:var(--font-mono); font-size:0.82rem; word-break:break-all;">
+            <strong>Sealed Recall Root:</strong> <span id="resSealedRoot" style="color:var(--accent-green);">0x...</span><br>
+            <strong>Memory Target:</strong> <span>MEM-1977-0001</span><br>
+            <strong>Status:</strong> <span>Sealed Phase 1 / Reveal Eligible after Peer Review</span>
+          </div>
+          <div style="margin-top:1.2rem; display:flex; gap:1rem;">
+            <a href="record.html?id=1" class="btn btn-secondary" style="font-size:0.85rem;">Return to Record &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Protocol Charter</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/lps1.js"></script>
+  <script>
+    function generateRandomSalt() {
+      const arr = new Uint8Array(16);
+      crypto.getRandomValues(arr);
+      return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function handleBlindSeal() {
+      const narrative = document.getElementById('blindNarrative').value;
+      const salt = document.getElementById('blindSalt').value;
+      const sealedRoot = await LPS1.sealRecall(narrative, salt);
+
+      document.getElementById('resSealedRoot').innerText = sealedRoot;
+      document.getElementById('blindResult').style.display = 'block';
+      window.scrollTo({ top: document.getElementById('blindResult').offsetTop - 80, behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('blindSalt').value = generateRandomSalt();
+    });
+  </script>
+</body>
+</html>

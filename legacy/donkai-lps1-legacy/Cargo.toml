@@ -1,0 +1,15 @@
+[package]
+name        = "donkai-lps1-legacy"
+description = "Legacy LPS-1 paragraph-level SHA-256 Merkle provenance (Archived v0.1.0-chain1977)."
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+repository.workspace   = true
+
+[dependencies]
+sha2       = { workspace = true }
+serde      = { workspace = true }
+serde_json = { workspace = true }
+hex        = { workspace = true }

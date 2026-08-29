@@ -3,351 +3,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donkai Network — Proof-of-Stubbornness Layer-1 (Chain 1977)</title>
-  <meta name="description" content="A satirical Layer-1 blockchain that prices human obstinacy directly on-chain. Chain ID 1977. Post-quantum. LPS-1 provenance. Fifty years of format wars, distilled into a real BFT consensus algorithm.">
-  <meta property="og:title" content="Donkai Network — Chain ID 1977">
-  <meta property="og:description" content="Proof-of-Stubbornness Layer-1. Post-quantum. LPS-1 provenance. Real BFT wrapped in satirical framing.">
-  <meta property="og:type" content="website">
-  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <title>DONK AI — The Human Remembrance Protocol</title>
+  <meta name="description" content="A global, human-governed memory and evidence network. Preserves human testimony, proves submission provenance, and maps independent corroboration across cultures.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/liquid.css">
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.166.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.0/examples/jsm/"
-    }
-  }
-  </script>
 </head>
 <body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html" class="active">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="remember.html" class="nav-cta">Record a Memory</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <nav>
-    <a href="#hero" class="brand brand-mark" aria-label="Donkai · 1977"><img src="img/donkai-mark.svg" alt="Donkai · 1977"></a>
-    <ul>
-      <li><a href="#eras">Eras</a></li>
-      <li><a href="#how">How</a></li>
-      <li><a href="#ownership">Ownership</a></li>
-      <li><a href="#mint">Mint</a></li>
-      <li><a href="#arena">Arena</a></li>
-      <li><a href="#museum">Museum</a></li>
-      <li><a href="stories.html">Stories</a></li>
-      <li><a href="#stack">Stack</a></li>
-      <li><a href="https://github.com/FTHTrading/Donkai---1977" target="_blank" rel="noopener">Repo →</a></li>
-    </ul>
-  </nav>
-</header>
-
-<section id="hero">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hero-fallback" aria-hidden="true"></div>
-  <h1>DONKAI NETWORK</h1>
-  <p class="chain-id">Chain <span>1977</span> · Proof-of-Stubbornness Layer-1 · Post-Quantum</p>
-  <p class="tagline">A blockchain that prices human obstinacy directly on-chain.</p>
-  <p class="sub">Fifty years of arcade tokens, Pet Rocks, format wars, and courtroom Beanie Baby liquidations — distilled into a real 2/3 BFT consensus algorithm wrapped in satirical framing.</p>
-  <div class="terminal-frame">
-    <div class="terminal-header">
-      <span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span>
-      <span class="terminal-title">donkai-node · v0.1.0 · chain=1977</span>
-    </div>
-    <pre class="terminal" id="boot-terminal"></pre>
-  </div>
-  <div class="hero-cta">
-    <a href="#mint" class="btn primary">Mint a Relic</a>
-    <a href="stories.html" class="btn ghost">Read the Six Chapters</a>
-  </div>
-</section>
-
-<section id="eras">
-  <h2>The Five Eras of Programmed Dopamine</h2>
-  <p class="section-lead">The <code>Era</code> enum in <code>DonkaiTimelineRegistry.sol</code> is a museum, not decoration. Every relic minted on-chain is filed into one of these five behavioral epochs.</p>
-  <div class="era-grid">
-    <article class="era">
-      <div class="era-year">1720 — 1970</div>
-      <h3>PreDigital</h3>
-      <p class="era-blurb">The South Sea Bubble teaches that blind pre-sales work. "An undertaking of great advantage, funded by anyone who could hand over £2." The original soft-rug.</p>
-      <ul>
-        <li>South Sea Company (1720)</li>
-        <li>Radio speculation (1920s)</li>
-        <li>TV merchandising (1950s)</li>
-      </ul>
-    </article>
-    <article class="era">
-      <div class="era-year">1970s — 1980s</div>
-      <h3>PhysicalArcade</h3>
-      <p class="era-blurb">Brass tokens for kicks. Pet Rocks in cardboard boxes with 32-page care manuals. Cabbage Patch Kids triggering retail riots. Fiat exchanged for controlled dopamine at scale.</p>
-      <ul>
-        <li>Pet Rock (1975)</li>
-        <li>Atari VCS (1977 — this chain ID)</li>
-        <li>Cabbage Patch Kids (1983)</li>
-      </ul>
-    </article>
-    <article class="era">
-      <div class="era-year">1990s</div>
-      <h3>PaperTicket</h3>
-      <p class="era-blurb">Skee-Ball emits paper tickets on an emission curve. Beanie Baby valuations end up on Las Vegas divorce courtroom floors. The first asynchronous credit pools.</p>
-      <ul>
-        <li>Skee-Ball ticket dispensers</li>
-        <li>Beanie Babies (1993–1999)</li>
-        <li>Trading-card gacha mechanics</li>
-      </ul>
-    </article>
-    <article class="era">
-      <div class="era-year">2000s — 2010s</div>
-      <h3>DigitalMicrotrans</h3>
-      <p class="era-blurb">$2.50 horse armor arrives. The Million Dollar Homepage sells advertising pixels. Aesthetic microtransactions decouple value from utility for a generation.</p>
-      <ul>
-        <li>Oblivion Horse Armor DLC (2006)</li>
-        <li>Million Dollar Homepage (2005)</li>
-        <li>CS:GO skin market</li>
-      </ul>
-    </article>
-    <article class="era">
-      <div class="era-year">2020s +</div>
-      <h3>AgenticYield</h3>
-      <p class="era-blurb">AI agents rebalance vaults while stakers refuse to sell through drawdowns. Fifty years of behavioral conditioning, now running deterministic under a post-quantum consensus mesh.</p>
-      <ul>
-        <li>Post-quantum validator mesh (ML-DSA-87)</li>
-        <li>PolicyGuard D0–D5 adjudication</li>
-        <li>Proof-of-Stubbornness consensus</li>
-      </ul>
-    </article>
-  </div>
-</section>
-
-<section id="how">
-  <h2>How the Chain Actually Works</h2>
-  <p class="section-lead">The satirical framing wraps three technically real pillars, all shipping in the <a href="https://github.com/FTHTrading/Donkai---1977/releases/tag/v0.1.0">v0.1.0</a> Rust workspace with 28/28 tests passing and a warning-free build.</p>
-  <div class="pillar-grid">
-    <article class="pillar">
-      <h3><span class="pill">1</span> LPS-1 Provenance</h3>
-      <p>Every document, letter, or lore entry is paragraph-split, SHA-256 hashed into a binary Merkle tree, and audited across 58 discrete named checks. The root anchors to Polygon mainnet (Chain ID 137) and Bitcoin OpenTimestamps.</p>
-      <p><strong>Not a marketing number:</strong> the 58 checks are enumerated as real programmatic assertions in <code>donkai-lps1::run_all_58_checks</code> — count them yourself.</p>
-      <div class="metric-row">
-        <div class="metric"><span class="metric-value">O(log n)</span><span class="metric-label">inclusion proofs</span></div>
-        <div class="metric"><span class="metric-value">58 / 58</span><span class="metric-label">audit checks pass</span></div>
+  <main>
+    <section id="hero">
+      <div class="hero-pre">LIVING PROVENANCE STANDARD (LPS-1) &bull; EVM CHAIN 1977</div>
+      <h1>WHAT DO YOU REMEMBER?</h1>
+      <p class="hero-lead">
+        A global, human-governed memory and evidence network. Sign your account. Preserve your evidence. Discover where memory converges, conflicts, and remains unresolved.
+      </p>
+      <div class="hero-actions">
+        <a href="remember.html" class="btn btn-primary">Record Your Remembrance</a>
+        <a href="atlas.html" class="btn btn-secondary">Explore Memory Drift Atlas</a>
+        <a href="proof.html" class="btn btn-secondary">Verify LPS-1 Provenance</a>
       </div>
-    </article>
-    <article class="pillar">
-      <h3><span class="pill">2</span> Proof-of-Stubbornness</h3>
-      <p>Validator vote weight = <code>stake × blocks_unmoved × tier</code>. Selling within 30 days makes you a PaperHand (0×). Holding through a 30% drawdown makes you Stubborn (1×). Holding through a 90% drawdown makes you UltraAsinine (10×).</p>
-      <p>Consensus finalizes under strict 2/3 BFT — Asinine Fault Tolerance is the marketing name; the math is <code>agreeing × 3 ≥ total × 2</code> with saturating u128 arithmetic.</p>
-      <div class="metric-row">
-        <div class="metric"><span class="metric-value">10×</span><span class="metric-label">max tier multiplier</span></div>
-        <div class="metric"><span class="metric-value">≥ 2/3</span><span class="metric-label">BFT supermajority</span></div>
+
+      <div class="principles-grid" style="text-align: left;">
+        <div class="principle-card">
+          <span class="badge provenance">Submission Integrity</span>
+          <h3 style="margin-top:0.8rem;">Canonical LPS-1 Proof</h3>
+          <p>Every recollection is normalized to deterministic canonical JSON and committed as a domain-separated SHA-256 Merkle root before anchoring.</p>
+        </div>
+        <div class="principle-card">
+          <span class="badge unresolved">Blind Corroboration</span>
+          <h3 style="margin-top:0.8rem;">No Bandwagon Bias</h3>
+          <p>Witnesses submit sealed independent accounts against neutral discovery prompts before seeing original testimony, preventing social anchoring.</p>
+        </div>
+        <div class="principle-card">
+          <span class="badge supported">Bounded Review</span>
+          <h3 style="margin-top:0.8rem;">Transparent Rubrics</h3>
+          <p>Human curators evaluate contemporaneous artifacts under open rubrics. We distinguish personal recall from historically supported claims.</p>
+        </div>
       </div>
-    </article>
-    <article class="pillar">
-      <h3><span class="pill">3</span> PolicyGuard + PQC</h3>
-      <p>AI agent actions are gated by D0–D5 risk tiers. D4/D5 require a 2-of-N quorum of ML-DSA-87 (FIPS 204) signatures against a whitelisted validator set — the signatures are cryptographically verified, not counted.</p>
-      <p>Validator peer comms are wrapped in ML-KEM-1024 (FIPS 203) key encapsulation to defeat "harvest now, decrypt later" adversaries.</p>
-      <div class="metric-row">
-        <div class="metric"><span class="metric-value">FIPS 204</span><span class="metric-label">ML-DSA-87 sigs</span></div>
-        <div class="metric"><span class="metric-value">FIPS 203</span><span class="metric-label">ML-KEM-1024 KEM</span></div>
+    </section>
+
+    <section id="epistemic-rules" style="border-top: 1px solid var(--border);">
+      <h2>Non-Negotiable Epistemic Rules</h2>
+      <p class="section-lead">
+        DONK AI is not an artificial-memory system or a speculative truth market. We preserve these distinctions technically and visibly:
+      </p>
+
+      <div class="principles-grid">
+        <div class="principle-card">
+          <h3>Popularity &ne; Truth</h3>
+          <p>Likes, upvotes, or token stakes never alter a historical record. A widely shared recollection is documented as a cultural convergence, not an objective historical fact.</p>
+        </div>
+        <div class="principle-card">
+          <h3>No AI Authoring</h3>
+          <p>AI may assist with transcription, translation review, or discovery metadata, but AI is strictly barred from authoring, editing, voting, or judging human testimony.</p>
+        </div>
+        <div class="principle-card">
+          <h3>Making Uncertainty Visible</h3>
+          <p>Every record displays a structured 5-panel ledger: What is Remembered, What is Recalled, What Evidence Exists, What is Supported, and What Remains Unresolved.</p>
+        </div>
       </div>
-    </article>
-  </div>
-</section>
+    </section>
 
-<section id="ownership">
-  <h2>Ownership Through LPS-1</h2>
-  <p class="section-lead">Traditional NFTs bind a wallet to a token ID. Donkai binds a wallet to a <em>document</em>. The LPS-1 Merkle root of your text <strong>is</strong> your ownership token — cryptographic proof that this exact string of characters, in this exact order, was minted by you and no one else.</p>
-  <div class="ownership-grid">
-    <article class="ownership-step">
-      <div class="step-num">1</div>
-      <h3>You Write</h3>
-      <p>Story, receipt, provenance chain, personal artifact. Anything that can be split into paragraphs by a blank line.</p>
-    </article>
-    <article class="ownership-step">
-      <div class="step-num">2</div>
-      <h3>Paragraph Hash</h3>
-      <p>Each <code>\n\n</code>-separated block becomes a SHA-256 leaf. Fifty paragraphs, fifty leaves. One paragraph, one leaf.</p>
-    </article>
-    <article class="ownership-step">
-      <div class="step-num">3</div>
-      <h3>Merkle Tree</h3>
-      <p>Leaves pair upward, hash by hash, until a single 32-byte root emerges. One root per document, forever.</p>
-    </article>
-    <article class="ownership-step">
-      <div class="step-num">4</div>
-      <h3>On-Chain Claim</h3>
-      <p><code>DonkaiTimelineRegistry.mintRelic(...)</code> binds the root to your address. Same document = same root = same tokenId. Duplicate mints revert.</p>
-    </article>
-    <article class="ownership-step">
-      <div class="step-num">5</div>
-      <h3>Provenance Forever</h3>
-      <p>Anyone with the original document can regenerate the exact root and verify your claim in under a second. Change one character and the root shatters.</p>
-    </article>
-    <article class="ownership-step">
-      <div class="step-num">6</div>
-      <h3>Ownership Certificate</h3>
-      <p>Every mint produces a portable, screenshot-able certificate — the root, the CID, the owner, the chain, the block. Preview yours at the <a href="#mint">Mint Desk</a> below.</p>
-    </article>
-  </div>
-</section>
-
-<section id="mint">
-  <h2>Mint a Relic</h2>
-  <p class="section-lead">Any wallet can mint a historical Relic NFT — a photo of your original Pet Rock, a receipt for horse armor, a physical roll of Skee-Ball tickets from 1994. The preview below runs the LPS-1 Merkle root and raw CIDv1 derivations <strong>in your browser</strong>, using the same algorithms as the Rust crates. The output is byte-for-byte identical to what <code>donkai-lps1</code> and <code>donkai-ipfs</code> produce on the chain.</p>
-  <form class="mint-form" id="mint-form">
-    <label>
-      <span>Relic Title</span>
-      <input type="text" name="title" placeholder="e.g. Original 1975 Pet Rock in Original Box" maxlength="128" required>
-    </label>
-    <label>
-      <span>Era</span>
-      <select name="era" required>
-        <option value="">— Pick an era —</option>
-        <option value="0">0 · PreDigital (1720–1970)</option>
-        <option value="1">1 · PhysicalArcade (1970s–1980s)</option>
-        <option value="2">2 · PaperTicket (1990s)</option>
-        <option value="3">3 · DigitalMicrotrans (2000s–2010s)</option>
-        <option value="4">4 · AgenticYield (2020s+)</option>
-      </select>
-    </label>
-    <label>
-      <span>Story (paragraphs split by blank lines — LPS-1 hashes each paragraph independently)</span>
-      <textarea name="story" rows="7" placeholder="My grandfather bought this Pet Rock in 1975 for $3.95 at the FedCo in Culver City.&#10;&#10;It came in a cardboard carrying case with a 32-page care manual titled 'The Care and Training of Your Pet Rock.'&#10;&#10;He kept it on his desk for 46 years without moving it once, which arguably qualifies as UltraAsinine tier under the current PoS spec." required></textarea>
-    </label>
-    <label>
-      <span>LPS-1 Merkle Root (auto-computed on preview)</span>
-      <input type="text" name="root" id="mint-root" readonly placeholder="0x... will appear here">
-    </label>
-    <label>
-      <span>IPFS CIDv1 raw (auto-computed on preview)</span>
-      <input type="text" name="ipfs" id="mint-ipfs" readonly placeholder="bafkrei... will appear here">
-    </label>
-    <div class="btn-row">
-      <button type="submit" class="btn primary">Compute LPS-1 root + CIDv1</button>
-      <button type="button" class="btn ghost" id="mint-reset">Reset</button>
-    </div>
-    <p class="mint-note">On-chain minting will be wired to <code>DonkaiTimelineRegistry.mintRelic()</code> in the next release. For now, take the derived root and CID to any wallet that speaks Donkai devnet 1977. Duplicate roots are rejected on-chain — same document, same relic.</p>
-  </form>
-  <div class="ownership-cert" id="ownership-cert" hidden>
-    <div class="cert-frame">
-      <div class="cert-header">
-        <div class="cert-title">DONKAI · OWNERSHIP CERTIFICATE</div>
-        <div class="cert-sub">Chain ID 1977 · LPS-1 Cryptographic Provenance</div>
+    <section id="launch-atlas" style="border-top: 1px solid var(--border);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 2rem;">
+        <div>
+          <h2>Featured Memory Drift Exhibits</h2>
+          <p class="section-lead" style="margin-bottom:0;">Explore collective memory divergences from the 1977 cultural foundation.</p>
+        </div>
+        <a href="atlas.html" class="btn btn-secondary">View All Exhibits &rarr;</a>
       </div>
-      <dl class="cert-body">
-        <dt>Title</dt>              <dd id="cert-title">—</dd>
-        <dt>Era</dt>                <dd id="cert-era">—</dd>
-        <dt>LPS-1 Merkle Root</dt>  <dd class="mono" id="cert-root">—</dd>
-        <dt>IPFS CIDv1</dt>         <dd class="mono" id="cert-cid">—</dd>
-        <dt>Registry</dt>           <dd class="mono">DonkaiTimelineRegistry v1</dd>
-        <dt>Chain</dt>              <dd class="mono">1977 (Donkai devnet)</dd>
-        <dt>Preview generated</dt>  <dd class="mono" id="cert-time">—</dd>
-      </dl>
-      <div class="cert-seal">L · P · S · 1</div>
-    </div>
-  </div>
-</section>
 
-<section id="arena">
-  <h2>Format War Arena</h2>
-  <p class="section-lead">Three canonical matchups seeded on the arena. Each maps to a real matchup in <code>DonkaiFormatWar.sol</code>. Stakes below are mocked in your browser — click either side to see the pull-payment formula redistribute the split.</p>
-  <div class="arena-grid" id="arena-grid"></div>
-  <p class="section-lead" style="margin-top:2rem">
-    The winner claims their principal <strong>plus a pro-rata share of the losing pool</strong>:
-    <code>payout = principal + (principal × losing_pool ÷ winning_pool)</code>.
-    No unbounded loops, pull-payment only, ReentrancyGuard on every value flow.
-  </p>
-</section>
+      <div class="atlas-grid">
+        <a href="record.html?id=1" class="atlas-card">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge supported">Historically Supported</span>
+              <span class="badge">1977 Cultural Era</span>
+            </div>
+            <h3>Space Invaders 1978 Arcade Token & Coin Slot Sound</h3>
+            <p>Memories of the Austin downtown arcade opening with two-player coin slots. Contemporaneous artifact token cataloged and verified.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>42 Blind Recalls</span>
+            <span>LPS-1 0xb081...d43e</span>
+          </div>
+        </a>
 
-<section id="museum">
-  <h2>The Museum — Two Zones</h2>
-  <p class="section-lead">Every relic files into one of two zones. Zone 1 is behavioral dopamine (<em>why we hold</em>). Zone 2 is format wars (<em>why standards win</em>). Ten seed entries below; more mint via the desk above.</p>
-  <div class="museum-tabs" role="tablist">
-    <button class="tab active" data-zone="1" role="tab">Zone 1 · Behavioral Dopamine</button>
-    <button class="tab"        data-zone="2" role="tab">Zone 2 · Format &amp; Distribution Wars</button>
-  </div>
-  <div class="museum-grid" id="museum-grid"></div>
-</section>
+        <a href="record.html?id=2" class="atlas-card">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge conflicting">Conflicting Evidence</span>
+              <span class="badge">Media Broadcast</span>
+            </div>
+            <h3>1977 Summer Cinema Marquee "A New Hope" Subtitle</h3>
+            <p>Divergence between collective memories of opening-day marquee titles and original 1977 theatrical distribution ledger prints.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>89 Blind Recalls</span>
+            <span>LPS-1 0x7c14...e81a</span>
+          </div>
+        </a>
 
-<section id="stack">
-  <h2>The Stack</h2>
-  <p class="section-lead">Everything below ships in the <a href="https://github.com/FTHTrading/Donkai---1977/releases/tag/v0.1.0">v0.1.0 tag</a>. 28 / 28 Rust tests pass. Three Solidity contracts compile clean under EIP-170. No unwired dependencies, no tautological verification fields, no placeholder CIDs.</p>
-  <div class="stack-grid">
-    <article class="stack-item">
-      <h4>donkai-lps1</h4>
-      <p>Paragraph SHA-256 → binary Merkle → O(log n) inclusion proofs → 58 discrete audit checks.</p>
-      <code>crates/donkai-lps1</code>
-    </article>
-    <article class="stack-item">
-      <h4>donkai-consensus</h4>
-      <p>Proof-of-Stubbornness validator tiers + strict 2/3 BFT with saturating u128 arithmetic.</p>
-      <code>crates/donkai-consensus</code>
-    </article>
-    <article class="stack-item">
-      <h4>donkai-pqc</h4>
-      <p>ML-DSA-87 signatures (FIPS 204) + ML-KEM-1024 key exchange (FIPS 203) via pqcrypto-*.</p>
-      <code>crates/donkai-pqc</code>
-    </article>
-    <article class="stack-item">
-      <h4>donkai-policyguard</h4>
-      <p>Multi-sig adjudication that verifies signatures against a whitelisted validator set — not counted.</p>
-      <code>crates/donkai-policyguard</code>
-    </article>
-    <article class="stack-item">
-      <h4>donkai-ipfs</h4>
-      <p>Native CIDv1 computation (raw + dag-pb / UnixFS) + blocking Kubo RPC pin client.</p>
-      <code>crates/donkai-ipfs</code>
-    </article>
-    <article class="stack-item">
-      <h4>donkai-node</h4>
-      <p>Reference boot console wiring the five modules into a single runnable binary.</p>
-      <code>crates/donkai-node</code>
-    </article>
-    <article class="stack-item">
-      <h4>DonkaiTimelineRegistry.sol</h4>
-      <p>ERC-721 relic NFT + LPS-1 root binding + optional ERC-3643 identity gate. 8,825 bytes.</p>
-      <code>contracts/src</code>
-    </article>
-    <article class="stack-item">
-      <h4>DonkaiFormatWar.sol</h4>
-      <p>Two-sided historical rivalry staking + pro-rata pull-payment + compliance gate. 7,873 bytes.</p>
-      <code>contracts/src</code>
-    </article>
-    <article class="stack-item">
-      <h4>DonkaiAnchorMirror.sol</h4>
-      <p>Minimal Polygon 137 commitment log for cross-chain LPS-1 root provenance.</p>
-      <code>contracts/src</code>
-    </article>
-  </div>
-</section>
+        <a href="record.html?id=3" class="atlas-card">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge unresolved">Unresolved Research</span>
+              <span class="badge">Local History</span>
+            </div>
+            <h3>The Vanished Community Radio Broadcast of 1981</h3>
+            <p>Independent accounts of an unlogged pirate broadcast in London during the autumn blackout. Awaiting archival tape submission.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>18 Blind Recalls</span>
+            <span>LPS-1 0x3f9a...09bc</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  <div class="footer-grid">
-    <div>
-      <p class="footer-brand">DONKAI NETWORK</p>
-      <p class="footer-sub">Chain ID 1977 · Proof-of-Stubbornness Layer-1</p>
-    </div>
-    <div>
-      <p><strong>Status</strong></p>
-      <p>v0.1.0 devnet · 28 / 28 Rust tests · 3 Solidity contracts compile clean</p>
-    </div>
-    <div>
-      <p><strong>Links</strong></p>
-      <ul>
-        <li><a href="https://github.com/FTHTrading/Donkai---1977">github.com/FTHTrading/Donkai---1977</a></li>
-        <li><a href="https://github.com/FTHTrading/Donkai---1977/blob/main/WHITEPAPER.md">Whitepaper</a></li>
-        <li><a href="https://github.com/FTHTrading/Donkai---1977/releases/tag/v0.1.0">v0.1.0 release</a></li>
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <strong>DONK AI</strong> &mdash; The Human Remembrance Protocol &bull; Powered by Living Provenance Standard 1
+      </div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Protocol Charter</a></li>
+        <li><a href="protocol.html#privacy">Privacy & Consent</a></li>
+        <li><a href="protocol.html#ai">AI Disclosure</a></li>
+        <li><a href="assembly.html">Governance</a></li>
       </ul>
     </div>
-    <div>
-      <p><strong>Legal</strong></p>
-      <p>MIT OR Apache-2.0. Satirical infrastructure. Not investment advice. Not FIPS-140 certified.</p>
-    </div>
-  </div>
-  <p class="type-note">
-    Typeset in <strong>Inter</strong> (body), <strong>Space Grotesk</strong> (display), <strong>JetBrains Mono</strong> (code) — a readability-first stack over the liquid metal aesthetic. If any type here is hard to see on your setup, <a href="https://github.com/FTHTrading/Donkai---1977/issues/new">open an issue</a>. Legibility wins.
-  </p>
-</footer>
+  </footer>
 
-<script src="js/main.js"></script>
-<script type="module" src="js/liquid-scene.js"></script>
+  <script src="js/lps1.js"></script>
 </body>
 </html>

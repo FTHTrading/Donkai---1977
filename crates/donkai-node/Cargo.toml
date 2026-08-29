@@ -1,6 +1,6 @@
 [package]
 name        = "donkai-node"
-description = "Donkai Network Layer-1 reference node (Chain ID 1977)."
+description = "DONK AI — Human Remembrance Protocol reference node and verification engine"
 version.workspace      = true
 edition.workspace      = true
 rust-version.workspace = true
@@ -9,9 +9,13 @@ license.workspace      = true
 repository.workspace   = true
 
 [dependencies]
-donkai-lps1        = { workspace = true }
-donkai-consensus   = { workspace = true }
-donkai-policyguard = { workspace = true }
-donkai-pqc         = { workspace = true }
-donkai-ipfs        = { workspace = true }
-hex                = { workspace = true }
+donkai-lps1          = { workspace = true }
+donkai-evidence      = { workspace = true }
+donkai-corroboration = { workspace = true }
+donkai-identity      = { workspace = true }
+donkai-translation   = { workspace = true }
+donkai-review        = { workspace = true }
+donkai-ipfs          = { workspace = true }
+serde                = { workspace = true }
+serde_json           = { workspace = true }
+hex                  = { workspace = true }
