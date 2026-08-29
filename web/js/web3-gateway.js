@@ -223,6 +223,10 @@ class Web3MemoryGateway {
         "accessPolicy": remembranceData.accessPolicy || "public-pseudonymous",
         "accessPolicyHash": accessPolicyHash,
         "schemaHash": schemaHash,
+        "protocolSpecificationVersion": "2.0",
+        "commitmentAlgorithm": "lps1-merkle-v1",
+        "fixtureCorpusVersion": "lps1-v1",
+        "eip712DomainVersion": "1",
         "protocolVersion": "LPS-1.0",
         "recordVersion": 1,
         "historicalStatus": "unreviewed"

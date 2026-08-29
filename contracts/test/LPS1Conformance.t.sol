@@ -5,10 +5,13 @@ import "../src/DonkaiLPS1Registry.sol";
 
 /**
  * @title LPS1ConformanceTest
- * @notice Validates that DonkaiLPS1Registry derives exact EIP-712 digests matching off-chain fixtures.
+ * @notice Validates that DonkaiLPS1Registry derives exact EIP-712 digests and protocol constants matching off-chain fixtures.
  */
 contract LPS1ConformanceTest {
     DonkaiLPS1Registry public registry;
+
+    bytes32 public constant EXPECTED_EMPTY_LEAF_CONSTANT = 0x0b96f989296d0d7f9adcbad65a1161244e359831749a8564280854ac27202d22;
+    bytes32 public constant EXPECTED_EMPTY_EVIDENCE_ROOT = 0x0000000000000000000000000000000000000000000000000000000000000000;
 
     bytes32 public constant FIXTURE_STATEMENT_ROOT = 0x9d3fe4b8a10972e391b4526d708304bc0632a4e259b19e2f5926c91a0397a21f;
     bytes32 public constant FIXTURE_METADATA_ROOT = 0x8f0d14bc72a19340e2908f97816027a0210bfa9795039f99e3a6c01905389e71;
@@ -17,6 +20,11 @@ contract LPS1ConformanceTest {
 
     function setUp() public {
         registry = new DonkaiLPS1Registry();
+    }
+
+    function testEmptyLeafConstantDerivation() public pure {
+        bytes32 derived = sha256(bytes("DONKAI:LPS1:EMPTY_MERKLE_LEAF:v1"));
+        require(derived == EXPECTED_EMPTY_LEAF_CONSTANT, "Empty leaf constant mismatch");
     }
 
     function testDomainSeparator() public view {
