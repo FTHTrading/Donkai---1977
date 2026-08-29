@@ -9,6 +9,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+  <style>
+    .proof-tree-container {
+      background: #0b0c13;
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .artifact-preview-card {
+      display: flex; gap: 1.5rem; background: var(--bg-elev);
+      padding: 1.2rem; border-radius: 8px; border: 1px solid var(--border);
+      margin-bottom: 1rem; align-items: center;
+    }
+    .artifact-thumb {
+      width: 140px; height: 95px; object-fit: cover; border-radius: 6px;
+      border: 1px solid var(--border-hi); flex-shrink: 0;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,6 +39,7 @@
         <li><a href="index.html">Overview</a></li>
         <li><a href="remember.html">Remembrance Studio</a></li>
         <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html">1977 Museum</a></li>
         <li><a href="corroborate.html">Blind Corroboration</a></li>
         <li><a href="proof.html">Proof Explorer</a></li>
         <li><a href="assembly.html">Assembly</a></li>
@@ -146,29 +165,31 @@
             Artifact hashes anchored to LPS-1 Evidence Bundle root:
           </p>
 
-          <div style="display:flex; flex-direction:column; gap:0.8rem;">
-            <div style="background:var(--bg-elev); padding:0.9rem; border-radius:6px; border-left:3px solid var(--accent-green);">
+          <!-- Artifact Item 1 with Image -->
+          <div class="artifact-preview-card">
+            <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" class="artifact-thumb">
+            <div style="flex:1;">
               <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
                 <strong style="color:var(--pearl);">1978 Arcade Brass Token (Physical Scan)</strong>
-                <span class="badge supported">Contemporaneous Artifact</span>
+                <span class="badge supported">Tier 1 Artifact</span>
               </div>
               <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); word-break:break-all;">
                 SHA-256: 95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2<br>
-                Storage: bafkreievarwibdtcaxhe7ntzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyi (IPFS)<br>
+                Storage: ipfs://bafkreievarwibdtcaxhe7ntzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyi<br>
                 AI Disclosure: None (Direct unedited high-res flatbed scan)
               </div>
             </div>
+          </div>
 
-            <div style="background:var(--bg-elev); padding:0.9rem; border-radius:6px; border-left:3px solid var(--accent-gold);">
-              <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
-                <strong style="color:var(--pearl);">Austin American-Statesman Arcade Ad (July 1978)</strong>
-                <span class="badge partially-supported">Subsequent Documentation</span>
-              </div>
-              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); word-break:break-all;">
-                SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855<br>
-                Storage: bafkreihdwdcefgh4dqkjv67uzcmw7ojee6xedvi25myqbpj555nd55eei4 (IPFS)<br>
-                AI Disclosure: OCR transcription assisted for search indexing
-              </div>
+          <div style="background:var(--bg-elev); padding:0.9rem; border-radius:6px; border-left:3px solid var(--accent-gold);">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
+              <strong style="color:var(--pearl);">Austin American-Statesman Arcade Ad (July 1978)</strong>
+              <span class="badge partially-supported">Subsequent Documentation</span>
+            </div>
+            <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); word-break:break-all;">
+              SHA-256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855<br>
+              Storage: ipfs://bafkreihdwdcefgh4dqkjv67uzcmw7ojee6xedvi25myqbpj555nd55eei4<br>
+              AI Disclosure: OCR transcription assisted for search indexing
             </div>
           </div>
         </div>
@@ -227,6 +248,22 @@
           </div>
         </div>
 
+        <!-- INTERACTIVE LPS-1 MERKLE TREE VISUALIZER -->
+        <div class="record-panel panel-col-12" style="margin-top:1rem;">
+          <div class="panel-num">CRYPTOGRAPHIC VERIFICATION TREE</div>
+          <h3>
+            <span>LPS-1 Merkle Commitment & Inclusion Proof Tree</span>
+            <span class="badge provenance">Live Canvas</span>
+          </h3>
+          <p style="font-size:0.9rem; color:var(--text-dim);">
+            Click any node in the interactive Merkle DAG to inspect leaf hashes, inclusion siblings, and domain-separated root computation.
+          </p>
+
+          <div class="proof-tree-container">
+            <svg id="recordMerkleSvg" style="width:100%; height:320px;"></svg>
+          </div>
+        </div>
+
       </div>
     </section>
   </main>
@@ -237,9 +274,25 @@
       <ul class="footer-links">
         <li><a href="protocol.html">Charter</a></li>
         <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="museum.html">Museum</a></li>
         <li><a href="proof.html">Proof Explorer</a></li>
       </ul>
     </div>
   </footer>
+
+  <script src="js/flow-trees.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const leaves = [
+        { label: "Remembrance Leaf", hash: "0xb081e19cbc9e655067a5cb7253fddbc37cca5e81f01c72dc615572b0a4d7d43e", type: "LEAF" },
+        { label: "Context Manifest", hash: "0x47a98bc10fa09823485710293847561029384756102938475610293847561029", type: "LEAF" },
+        { label: "Consent Manifest", hash: "0x12fa908123094857102938475610293847561029384756102938475610293847", type: "LEAF" },
+        { label: "Evidence Bundle", hash: "0x95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2", type: "LEAF" },
+        { label: "Version Graph", hash: "0x0000000000000000000000000000000000000000000000000000000000000000", type: "LEAF" }
+      ];
+
+      FlowTreeRenderer.renderMerkleTree('recordMerkleSvg', leaves, 0);
+    });
+  </script>
 </body>
 </html>

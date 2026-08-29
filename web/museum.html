@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1977 Cultural Memory Museum — DONK AI</title>
+  <meta name="description" content="Curated global human remembrance exhibits. High-resolution artifact archives, oral histories, and cryptographic provenance from the 1977 foundation era.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .museum-hero {
+      background: radial-gradient(circle at 50% 20%, rgba(196, 203, 216, 0.12) 0%, transparent 70%);
+      text-align: center;
+      padding: 5rem 1.5rem 3rem 1.5rem;
+    }
+    .museum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .museum-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .museum-card:hover {
+      border-color: var(--border-glow);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+    .museum-card-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border);
+      background: #090a0f;
+    }
+    .museum-card-body {
+      padding: 1.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(4, 5, 8, 0.88);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2rem;
+    }
+    .modal-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-hi);
+      border-radius: 12px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: transparent; border: none; color: var(--text-dim);
+      font-size: 1.5rem; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html" class="active">1977 Museum</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="museum-hero">
+      <span class="badge provenance" style="margin-bottom:0.8rem;">CURATED GLOBAL ARCHIVES</span>
+      <h1>The 1977 Cultural Memory Museum</h1>
+      <p class="section-lead" style="margin: 0 auto;">
+        Explore physical artifacts, broadcast master recordings, and independent oral histories preserved under Living Provenance Standard 1.
+      </p>
+    </div>
+
+    <section style="padding-top: 1rem;">
+      <div class="museum-grid">
+        
+        <!-- Exhibit 1: 1978 Space Invaders Token -->
+        <div class="museum-card">
+          <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" class="museum-card-img">
+          <div class="museum-card-body">
+            <div>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem;">
+                <span class="badge supported">Tier 1 Artifact</span>
+                <span class="badge">Arcade & Gaming</span>
+              </div>
+              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">Space Invaders 1978 Brass Arcade Token</h3>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Solid brass custom arcade token preserved from the Main Street arcade in Austin, TX. Features custom star relief and grooved edge matching the coin sensor tone.
+              </p>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">LPS-1: 0xb081...d43e</span>
+              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(1)">Inspect Artifact &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exhibit 2: 1977 Cinema Marquee -->
+        <div class="museum-card">
+          <img src="img/cinema_marquee_1977.jpg" alt="May 1977 Cinema Marquee" class="museum-card-img">
+          <div class="museum-card-body">
+            <div>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem;">
+                <span class="badge conflicting">Conflicting Evidence</span>
+                <span class="badge">Cinema & Broadcast</span>
+              </div>
+              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">May 1977 Theatrical Marquee Subtitle Divergence</h3>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Archival 35mm photograph of the Astor Cinema marquee on opening weekend. Highlights divergence between collective memory of "Episode IV" subtitle and theatrical billing.
+              </p>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">LPS-1: 0x7c14...e81a</span>
+              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(2)">Inspect Artifact &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exhibit 3: London 1981 Pirate Radio -->
+        <div class="museum-card">
+          <img src="img/pirate_radio_cassette_1981.jpg" alt="London 1981 Pirate Radio Cassette" class="museum-card-img">
+          <div class="museum-card-body">
+            <div>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem;">
+                <span class="badge unresolved">Unresolved Research</span>
+                <span class="badge">Audio Archive</span>
+              </div>
+              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">London Autumn 1981 Community Pirate Tape</h3>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Off-air magnetic cassette recording of an unlogged community broadcast recorded during the October 1981 power outage. Audio undergoing acoustic frequency analysis.
+              </p>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">LPS-1: 0x3f9a...09bc</span>
+              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(3)">Inspect Artifact &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exhibit 4: Tokyo 1977 Modular Synth -->
+        <div class="museum-card">
+          <img src="img/tokyo_synth_1977.jpg" alt="Tokyo 1977 Synth" class="museum-card-img">
+          <div class="museum-card-body">
+            <div>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.6rem;">
+                <span class="badge supported">Tier 1 Artifact</span>
+                <span class="badge">Music & Acoustics</span>
+              </div>
+              <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.5rem;">Shinjuku 1977 Prototype Modular Synthesizer</h3>
+              <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
+                Photograph of the PS-3300 prototype unit used in underground avant-garde sessions in Tokyo. Preserves physical patch layout and handwritten tuning charts.
+              </p>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted);">LPS-1: 0x91da...77fc</span>
+              <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="openExhibitModal(4)">Inspect Artifact &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Exhibit Modal -->
+  <div id="exhibitModal" class="modal-overlay" onclick="closeExhibitModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeExhibitModal()">&times;</button>
+      <img id="modalImg" src="" alt="Artifact View" style="width:100%; height:380px; object-fit:cover; border-radius:8px; margin-bottom:1.5rem; border:1px solid var(--border);">
+      <h2 id="modalTitle" style="color:var(--pearl); margin-bottom:0.5rem;"></h2>
+      <div id="modalBadges" style="margin-bottom:1rem; display:flex; gap:0.5rem;"></div>
+      <p id="modalDesc" style="color:var(--text-dim); font-size:1rem; line-height:1.7; margin-bottom:1.5rem;"></p>
+      
+      <table class="meta-table">
+        <tr><td>Content Hash (SHA-256)</td><td id="modalHash"></td></tr>
+        <tr><td>Storage Reference (IPFS CIDv1)</td><td id="modalCid"></td></tr>
+        <tr><td>AI Assistance Disclosure</td><td id="modalAi">None (Physical artifact direct scan)</td></tr>
+      </table>
+
+      <div style="margin-top:2rem; display:flex; gap:1rem;">
+        <a id="modalRecordLink" href="#" class="btn btn-primary">Open Full 5-Panel Ledger &rarr;</a>
+        <button class="btn btn-secondary" onclick="closeExhibitModal()">Close Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Protocol Charter</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    const exhibits = {
+      1: {
+        title: "Space Invaders 1978 Brass Arcade Token",
+        img: "img/arcade_token_1978.jpg",
+        desc: "Contemporaneous physical artifact token cataloged from the Austin, Texas Main Street arcade. Stamped solid brass with custom star relief and grooved edge mechanism.",
+        hash: "95046c808e6205ce4fb6798ed74e1e8e14397861ef47eec630f03ce0f19999c2",
+        cid: "bafkreievarwibdtcaxhe7ntzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyi",
+        recordId: 1
+      },
+      2: {
+        title: "May 1977 Theatrical Marquee Subtitle Divergence",
+        img: "img/cinema_marquee_1977.jpg",
+        desc: "High-resolution 35mm photograph of the Astor Cinema opening marquee. The photograph demonstrates the absence of the 'Episode IV: A New Hope' subtitle during the original 1977 run.",
+        hash: "7c14a29910dbe8f45a0b98bc7201fa34ec41098ef765ad812903e198ca7210bc",
+        cid: "bafkreihq5557tzr3lu4huocq4xqyppi7xmmmhqhtqpdgmzyidwdcefgh4dq",
+        recordId: 2
+      },
+      3: {
+        title: "London Autumn 1981 Community Pirate Tape",
+        img: "img/pirate_radio_cassette_1981.jpg",
+        desc: "Off-air magnetic cassette recording of an unlogged pirate broadcast in London during the autumn blackout. Under review for contemporaneous signal modulation markers.",
+        hash: "3f9a88bc09bc7714a29910dbe8f45a0b98bc7201fa34ec41098ef765ad812903",
+        cid: "bafkreidwdcefgh4dqkjv67uzcmw7ojee6xedvi25myqbpj555nd55eei4",
+        recordId: 3
+      },
+      4: {
+        title: "Shinjuku 1977 Prototype Modular Synthesizer",
+        img: "img/tokyo_synth_1977.jpg",
+        desc: "Archival photograph of the early PS-3300 modular synthesizer unit in Tokyo. Preserves physical patch layout, rotary pots, and handwritten session logs.",
+        hash: "91da77fc01928374a5b6c7d8e9f0123456789abcdef0123456789abcdef01234",
+        cid: "bafybeihdwdcefgh4dqkjv67uzcmw7ojee6xedvi25myqbpj555nd55eei4",
+        recordId: 5
+      }
+    };
+
+    function openExhibitModal(id) {
+      const ex = exhibits[id];
+      if (!ex) return;
+      document.getElementById('modalTitle').innerText = ex.title;
+      document.getElementById('modalImg').src = ex.img;
+      document.getElementById('modalDesc').innerText = ex.desc;
+      document.getElementById('modalHash').innerText = `sha256:${ex.hash}`;
+      document.getElementById('modalCid').innerText = `ipfs://${ex.cid}`;
+      document.getElementById('modalRecordLink').href = `record.html?id=${ex.recordId}`;
+      document.getElementById('exhibitModal').style.display = 'flex';
+    }
+
+    function closeExhibitModal() {
+      document.getElementById('exhibitModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
