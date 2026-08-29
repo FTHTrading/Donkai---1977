@@ -1,0 +1,27 @@
+name: DONK AI Protocol CI
+
+on:
+  push:
+    branches: [main, feature/**]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust-check:
+    name: Rust Quality & Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Check Formatting
+        run: cargo fmt --all -- --check
+      - name: Clippy Lints
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: Run Test Suite
+        run: cargo test --workspace --verbose
+      - name: Validate CLI
+        run: |
+          cargo run -p donkai-lps1 --bin donkai-lps1 -- validate sample_remembrance.json
+          cargo run -p donkai-lps1 --bin donkai-lps1 -- commit sample_remembrance.json
