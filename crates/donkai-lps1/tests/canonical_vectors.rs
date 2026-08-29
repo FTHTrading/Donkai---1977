@@ -1,6 +1,4 @@
-use donkai_lps1::{
-    canonicalize, hash_leaf, LocationPrecision, RemembranceStatement,
-};
+use donkai_lps1::{canonicalize, hash_leaf, LocationPrecision, RemembranceStatement};
 
 #[test]
 fn test_deterministic_remembrance_root() {

@@ -57,7 +57,7 @@ impl MemoryRecordCommitment {
         let stmt_canon = canonicalize(&record.statement)?;
         let ctx_canon = canonicalize(&record.context)?;
         let consent_canon = canonicalize(&record.consent)?;
-        
+
         let stmt_root = hash_leaf("remembrance", stmt_canon.as_bytes());
         let ctx_root = hash_leaf("context", ctx_canon.as_bytes());
         let consent_root = hash_leaf("consent", consent_canon.as_bytes());
@@ -83,7 +83,7 @@ impl MemoryRecordCommitment {
             memory_id: record.evidence.as_ref().map(|e| e.memory_id.clone()),
             statement_root: stmt_root,
             context_root: ctx_root,
-            consent_root: consent_root,
+            consent_root,
             evidence_bundle_root: evidence_root,
             version_graph_root: ver_root,
             bundle_root,

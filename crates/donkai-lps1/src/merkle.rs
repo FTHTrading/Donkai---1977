@@ -1,6 +1,6 @@
-use sha2::{Digest, Sha256};
 use crate::error::{Lps1Error, Result};
 use crate::proof::{MerkleProof, ProofNode};
+use sha2::{Digest, Sha256};
 
 /// Computes a typed, domain-separated leaf hash.
 pub fn hash_leaf(object_type: &str, canonical_bytes: &[u8]) -> [u8; 32] {
@@ -49,7 +49,9 @@ impl MerkleTree {
     /// Builds a Merkle tree from a list of 32-byte leaf hashes.
     pub fn build(leaves: Vec<[u8; 32]>) -> Result<Self> {
         if leaves.is_empty() {
-            return Err(Lps1Error::Validation("Cannot build Merkle tree from empty leaves".into()));
+            return Err(Lps1Error::Validation(
+                "Cannot build Merkle tree from empty leaves".into(),
+            ));
         }
 
         let mut layers = Vec::new();

@@ -58,7 +58,9 @@ impl Validator {
             id: "SCH-02".into(),
             category: "Schema".into(),
             description: "Language tag is valid BCP-47".into(),
-            status: if !record.language.trim().is_empty() && record.language.contains('-') || record.language == "en" {
+            status: if !record.language.trim().is_empty()
+                && (record.language.contains('-') || record.language == "en")
+            {
                 CheckStatus::Pass
             } else {
                 CheckStatus::Warn
@@ -111,9 +113,18 @@ impl Validator {
             details: None,
         });
 
-        let passed = checks.iter().filter(|c| c.status == CheckStatus::Pass).count();
-        let failed = checks.iter().filter(|c| c.status == CheckStatus::Fail).count();
-        let warned = checks.iter().filter(|c| c.status == CheckStatus::Warn).count();
+        let passed = checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Pass)
+            .count();
+        let failed = checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Fail)
+            .count();
+        let warned = checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Warn)
+            .count();
 
         Ok(ValidationReport {
             record_id: None,
@@ -129,7 +140,7 @@ impl Validator {
 
     pub fn validate_memory_record(record: &MemoryRecord) -> Result<ValidationReport> {
         let mut report = Self::validate_remembrance(&record.statement)?;
-        
+
         // Privacy Validation
         report.checks.push(ValidationCheck {
             id: "PRIV-01".into(),
@@ -142,12 +153,16 @@ impl Validator {
         // Evidence Validation
         if let Some(ref evidence) = record.evidence {
             for (idx, item) in evidence.items.iter().enumerate() {
-                let has_ai_disclosure = item.ai_disclosure != AiDisclosure::None;
                 report.checks.push(ValidationCheck {
                     id: format!("EVID-{:02}", idx + 1),
                     category: "Evidence".into(),
-                    description: format!("Evidence item {} hash format and AI disclosure valid", idx + 1),
-                    status: if item.content_hash.starts_with("sha256:") || item.content_hash.starts_with("0x") {
+                    description: format!(
+                        "Evidence item {} hash format and AI disclosure valid",
+                        idx + 1
+                    ),
+                    status: if item.content_hash.starts_with("sha256:")
+                        || item.content_hash.starts_with("0x")
+                    {
                         CheckStatus::Pass
                     } else {
                         CheckStatus::Warn
@@ -158,9 +173,21 @@ impl Validator {
         }
 
         report.total_checks = report.checks.len();
-        report.passed_checks = report.checks.iter().filter(|c| c.status == CheckStatus::Pass).count();
-        report.failed_checks = report.checks.iter().filter(|c| c.status == CheckStatus::Fail).count();
-        report.warning_checks = report.checks.iter().filter(|c| c.status == CheckStatus::Warn).count();
+        report.passed_checks = report
+            .checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Pass)
+            .count();
+        report.failed_checks = report
+            .checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Fail)
+            .count();
+        report.warning_checks = report
+            .checks
+            .iter()
+            .filter(|c| c.status == CheckStatus::Warn)
+            .count();
         report.is_valid = report.failed_checks == 0;
 
         Ok(report)

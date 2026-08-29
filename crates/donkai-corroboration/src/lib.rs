@@ -1,5 +1,3 @@
-use donkai_lps1::canonicalize;
-use donkai_lps1::merkle::hash_leaf;
 use donkai_lps1::schema::{CorroborationCommitment, DiscoveryContext, VisibilityMode};
 use sha2::{Digest, Sha256};
 

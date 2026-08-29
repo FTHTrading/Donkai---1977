@@ -9,10 +9,6 @@ members = [
     "crates/donkai-translation",
     "crates/donkai-review",
     "crates/donkai-ipfs",
-    "crates/donkai-lps1-legacy",
-    "crates/donkai-consensus",
-    "crates/donkai-policyguard",
-    "crates/donkai-pqc",
 ]
 default-members = ["crates/donkai-node", "crates/donkai-lps1"]
 
@@ -31,9 +27,6 @@ serde_json      = "1"
 hex             = "0.4"
 data-encoding   = "2.6"
 thiserror       = "1"
-pqcrypto-mldsa  = "0.1.2"
-pqcrypto-mlkem  = "0.1.1"
-pqcrypto-traits = "0.3"
 reqwest         = { version = "0.12", default-features = false, features = ["blocking", "multipart", "rustls-tls"] }
 
 # Protocol crates
@@ -44,12 +37,6 @@ donkai-corroboration = { path = "crates/donkai-corroboration" }
 donkai-translation   = { path = "crates/donkai-translation" }
 donkai-review        = { path = "crates/donkai-review" }
 donkai-ipfs          = { path = "crates/donkai-ipfs" }
-
-# Legacy & Experimental crates
-donkai-lps1-legacy   = { path = "crates/donkai-lps1-legacy" }
-donkai-consensus     = { path = "crates/donkai-consensus" }
-donkai-policyguard   = { path = "crates/donkai-policyguard" }
-donkai-pqc           = { path = "crates/donkai-pqc" }
 
 [profile.release]
 opt-level     = 3

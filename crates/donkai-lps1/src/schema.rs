@@ -51,7 +51,8 @@ pub struct LocationDescriptor {
     pub precision: LocationPrecision,
 }
 
-/// 1. RemembranceStatement
+/// RemembranceStatement:
+///
 /// Original human-authored narrative, preserving original phrasing, dialect, and nuance.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct RemembranceStatement {
@@ -71,6 +72,7 @@ pub struct RemembranceStatement {
 }
 
 impl RemembranceStatement {
+    #[allow(clippy::too_many_arguments)]
     pub fn new_human_authored(
         language: impl Into<String>,
         narrative: impl Into<String>,
@@ -101,7 +103,8 @@ impl RemembranceStatement {
     }
 }
 
-/// 2. ContextManifest
+/// ContextManifest:
+///
 /// Metadata describing the context, category, and discovery metadata for blind corroboration.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DiscoveryContext {
@@ -129,7 +132,8 @@ pub struct ContextManifest {
     pub is_protected_split: bool,
 }
 
-/// 3. ConsentManifest
+/// ConsentManifest:
+///
 /// Privacy, visibility, pseudonymity, translation, and retention rules.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum VisibilityMode {
@@ -178,7 +182,7 @@ pub struct ConsentManifest {
     pub sensitive_content_flags: Vec<String>,
 }
 
-/// 4. EvidenceBundle & Items
+/// EvidenceBundle & Items
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SourceClass {
     #[serde(rename = "author-provided")]
@@ -248,7 +252,7 @@ pub struct EvidenceBundle {
     pub items: Vec<EvidenceItem>,
 }
 
-/// 5. CorroborationCommitment
+/// CorroborationCommitment
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct CorroborationCommitment {
     #[serde(rename = "type")]
@@ -266,7 +270,7 @@ pub struct CorroborationCommitment {
     pub eligibility_credential_ref: Option<String>,
 }
 
-/// 6. ReviewAssessment
+/// ReviewAssessment
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SupportClassification {
     #[serde(rename = "historically-supported")]
@@ -307,7 +311,7 @@ pub struct ReviewAssessment {
     pub appeal_status: String,
 }
 
-/// 7. VersionGraph & Amendments
+/// VersionGraph & Amendments
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AmendmentRelation {
     #[serde(rename = "clarification")]

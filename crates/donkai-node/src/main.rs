@@ -3,15 +3,11 @@
 
 use donkai_corroboration::BlindCorroborationEngine;
 use donkai_evidence::hash_artifact_bytes;
-use donkai_identity::{CredentialType, IdentityAttestation};
 use donkai_ipfs::compute_raw_cidv1;
 use donkai_lps1::{
-    canonicalize, Commitment, DiscoveryContext, EventDateRange, LocationDescriptor,
-    LocationPrecision, MemoryRecord, MemoryRecordCommitment, MerkleTree,
-    RemembranceStatement, Validator, VisibilityMode,
+    canonicalize, Commitment, DiscoveryContext, LocationPrecision, RemembranceStatement, Validator,
 };
 use donkai_review::ReviewRubric;
-use donkai_translation::TranslationBundle;
 
 fn main() {
     println!("========================================================================");
@@ -38,8 +34,10 @@ fn main() {
 
     println!("[LPS-1 STATEMENT] root        = {}", commitment.root_hex());
     println!("[LPS-1 STATEMENT] canonical   = {} bytes", canon.len());
-    println!("[LPS-1 STATEMENT] validation  = {}/{} checks passed (valid = {})\n",
-             report.passed_checks, report.total_checks, report.is_valid);
+    println!(
+        "[LPS-1 STATEMENT] validation  = {}/{} checks passed (valid = {})\n",
+        report.passed_checks, report.total_checks, report.is_valid
+    );
 
     // 2. Evidence Hashing & IPFS CIDv1
     let artifact_data = b"PHOTO: 1978 Arcade Token from Space Invaders Cabinet";
@@ -51,7 +49,7 @@ fn main() {
     // 3. Blind Independent Corroboration (Commit-Reveal)
     let sealed_root = BlindCorroborationEngine::seal_recall(
         "I also remember the Space Invaders cabinet with the two-player coin slot at Main St.",
-        b"cryptographic_salt_1977"
+        b"cryptographic_salt_1977",
     );
     let discovery = DiscoveryContext {
         category: "arcade".into(),
@@ -65,20 +63,31 @@ fn main() {
         sealed_root,
         Some("human-pass-sbt#0x1234".into()),
     );
-    println!("[CORROBORATION]   sealed root = {}", corrob_commit.sealed_recall_root);
-    println!("[CORROBORATION]   privacy     = {:?}", corrob_commit.visibility);
-    println!("[CORROBORATION]   verified    = {}\n",
-             BlindCorroborationEngine::verify_reveal(
-                 "I also remember the Space Invaders cabinet with the two-player coin slot at Main St.",
-                 b"cryptographic_salt_1977",
-                 &sealed_root
-             ));
+    println!(
+        "[CORROBORATION]   sealed root = {}",
+        corrob_commit.sealed_recall_root
+    );
+    println!(
+        "[CORROBORATION]   privacy     = {:?}",
+        corrob_commit.visibility
+    );
+    println!(
+        "[CORROBORATION]   verified    = {}\n",
+        BlindCorroborationEngine::verify_reveal(
+            "I also remember the Space Invaders cabinet with the two-player coin slot at Main St.",
+            b"cryptographic_salt_1977",
+            &sealed_root
+        )
+    );
 
     // 4. Review Rubric & Governance
     let rubric = ReviewRubric::standard_v0_1();
     println!("[REVIEW RUBRIC]   version     = {}", rubric.version);
     println!("[REVIEW RUBRIC]   title       = {}", rubric.title);
-    println!("[REVIEW RUBRIC]   criteria    = {} evaluation criteria configured\n", rubric.criteria.len());
+    println!(
+        "[REVIEW RUBRIC]   criteria    = {} evaluation criteria configured\n",
+        rubric.criteria.len()
+    );
 
     println!("DONK AI verification engine operational.");
 }

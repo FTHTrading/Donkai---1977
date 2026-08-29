@@ -1,6 +1,6 @@
 use donkai_lps1::canonicalize;
 use donkai_lps1::merkle::hash_leaf;
-use donkai_lps1::schema::{ReviewAssessment, SupportClassification};
+use donkai_lps1::schema::ReviewAssessment;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -29,7 +29,9 @@ impl ReviewRubric {
     }
 }
 
-pub fn compute_assessment_root(assessment: &ReviewAssessment) -> Result<[u8; 32], donkai_lps1::Lps1Error> {
+pub fn compute_assessment_root(
+    assessment: &ReviewAssessment,
+) -> Result<[u8; 32], donkai_lps1::Lps1Error> {
     let canon = canonicalize(assessment)?;
     Ok(hash_leaf("review_assessment", canon.as_bytes()))
 }

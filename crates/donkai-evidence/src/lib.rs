@@ -1,6 +1,6 @@
 use donkai_lps1::canonicalize;
 use donkai_lps1::merkle::hash_leaf;
-use donkai_lps1::schema::{EvidenceBundle, EvidenceItem, EvidenceTier, SourceClass, AiDisclosure};
+use donkai_lps1::schema::EvidenceBundle;
 use sha2::{Digest, Sha256};
 
 pub fn hash_artifact_bytes(data: &[u8]) -> String {
