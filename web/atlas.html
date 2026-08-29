@@ -13,6 +13,7 @@
     .atlas-card-thumbnail {
       width: 100%; height: 160px; object-fit: cover; border-radius: 6px;
       margin-bottom: 1rem; border: 1px solid var(--border);
+      transition: filter 0.3s ease;
     }
   </style>
 </head>
@@ -47,12 +48,17 @@
           </p>
         </div>
 
-        <div style="display:flex; gap:0.8rem; align-items:center;">
+        <div style="display:flex; gap:0.8rem; align-items:center; flex-wrap:wrap;">
           <a href="museum.html" class="btn btn-secondary" style="font-size:0.85rem;">View Museum Exhibits &rarr;</a>
           <button id="modeToggleBtn" class="btn btn-secondary" onclick="toggleDiscoveryMode()">
             <span>Blind Discovery Mode: <strong>OFF</strong></span>
           </button>
         </div>
+      </div>
+
+      <!-- Blind Mode Explanation Banner -->
+      <div id="blindModeBanner" style="display:none; background:rgba(124, 163, 216, 0.08); border:1px solid rgba(124, 163, 216, 0.3); border-radius:6px; padding:1rem 1.2rem; margin-bottom:1.5rem; font-size:0.88rem; color:var(--text-dim);">
+        <strong style="color:var(--accent-blue);">Operational Blind Corroboration Active:</strong> Semantic titles, descriptions, and source imagery are suppressed. Contributors receive only broad geographical and chronological discovery parameters, preventing priming and bandwagon bias.
       </div>
 
       <!-- Filter Bar -->
@@ -96,73 +102,73 @@
         
         <!-- Record 1 -->
         <a href="record.html?id=1" class="atlas-card" data-era="1977" data-category="arcade" data-status="supported" data-lang="en">
-          <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" class="atlas-card-thumbnail">
+          <img src="img/arcade_token_1978.jpg" alt="Arcade Topic" class="atlas-card-thumbnail">
           <div class="atlas-card-top">
             <div class="atlas-card-tags">
-              <span class="badge supported">Historically Supported</span>
-              <span class="badge">1977-1978</span>
-              <span class="badge">Arcade</span>
+              <span class="badge supported status-tag">Historically Supported</span>
+              <span class="badge era-tag">1977-1978</span>
+              <span class="badge cat-tag">Arcade</span>
             </div>
             <h3 class="record-title">Space Invaders 1978 Arcade Token & Coin Slot Tone</h3>
             <p class="record-desc">Personal recollections of Austin's Main Street arcade grand opening, featuring the iconic metallic token dispenser and custom sound chip tone.</p>
           </div>
           <div class="atlas-card-stats">
-            <span>42 Blind Recalls</span>
-            <span>Austin, TX (City)</span>
+            <span class="corrob-count">42 Blind Recalls</span>
+            <span class="location-text">Austin, TX (City)</span>
           </div>
         </a>
 
         <!-- Record 2 -->
         <a href="record.html?id=2" class="atlas-card" data-era="1977" data-category="cinema" data-status="conflicting" data-lang="en">
-          <img src="img/cinema_marquee_1977.jpg" alt="May 1977 Cinema Marquee" class="atlas-card-thumbnail">
+          <img src="img/cinema_marquee_1977.jpg" alt="Cinema Topic" class="atlas-card-thumbnail">
           <div class="atlas-card-top">
             <div class="atlas-card-tags">
-              <span class="badge conflicting">Conflicting Evidence</span>
-              <span class="badge">1977</span>
-              <span class="badge">Cinema</span>
+              <span class="badge conflicting status-tag">Conflicting Evidence</span>
+              <span class="badge era-tag">1977</span>
+              <span class="badge cat-tag">Cinema</span>
             </div>
             <h3 class="record-title">1977 Cinema Marquee "Episode IV" Subtitle Divergence</h3>
             <p class="record-desc">Widespread shared recollections of seeing "Episode IV: A New Hope" on theatrical marquees in May 1977, diverging from documented July 1981 re-release prints.</p>
           </div>
           <div class="atlas-card-stats">
-            <span>89 Blind Recalls</span>
-            <span>Global Distribution</span>
+            <span class="corrob-count">89 Blind Recalls</span>
+            <span class="location-text">Global Distribution</span>
           </div>
         </a>
 
         <!-- Record 3 -->
         <a href="record.html?id=3" class="atlas-card" data-era="1980s" data-category="local" data-status="unresolved" data-lang="en">
-          <img src="img/pirate_radio_cassette_1981.jpg" alt="London 1981 Pirate Radio Cassette" class="atlas-card-thumbnail">
+          <img src="img/pirate_radio_cassette_1981.jpg" alt="Audio Topic" class="atlas-card-thumbnail">
           <div class="atlas-card-top">
             <div class="atlas-card-tags">
-              <span class="badge unresolved">Unresolved</span>
-              <span class="badge">1981</span>
-              <span class="badge">Local History</span>
+              <span class="badge unresolved status-tag">Unresolved</span>
+              <span class="badge era-tag">1981</span>
+              <span class="badge cat-tag">Local History</span>
             </div>
             <h3 class="record-title">The Unlogged London Community Pirate Broadcast</h3>
             <p class="record-desc">Independent recollections of a short-range FM broadcast during the autumn 1981 power outage. Contemporaneous cassette tapes under review.</p>
           </div>
           <div class="atlas-card-stats">
-            <span>18 Blind Recalls</span>
-            <span>London, UK (City)</span>
+            <span class="corrob-count">18 Blind Recalls</span>
+            <span class="location-text">London, UK (City)</span>
           </div>
         </a>
 
         <!-- Record 4 -->
         <a href="record.html?id=5" class="atlas-card" data-era="1977" data-category="music" data-status="supported" data-lang="ja">
-          <img src="img/tokyo_synth_1977.jpg" alt="Tokyo 1977 Synth" class="atlas-card-thumbnail">
+          <img src="img/tokyo_synth_1977.jpg" alt="Music Topic" class="atlas-card-thumbnail">
           <div class="atlas-card-top">
             <div class="atlas-card-tags">
-              <span class="badge supported">Historically Supported</span>
-              <span class="badge">1977</span>
-              <span class="badge">Music</span>
+              <span class="badge supported status-tag">Historically Supported</span>
+              <span class="badge era-tag">1977</span>
+              <span class="badge cat-tag">Music</span>
             </div>
             <h3 class="record-title">Shinjuku Underground Synth Jam Session 1977</h3>
             <p class="record-desc">First-person account of an early prototype modular synthesizer demonstration in Tokyo. Ticket stub and photographic print archived.</p>
           </div>
           <div class="atlas-card-stats">
-            <span>14 Blind Recalls</span>
-            <span>Tokyo, JP (Neighborhood)</span>
+            <span class="corrob-count">14 Blind Recalls</span>
+            <span class="location-text">Tokyo, JP (Neighborhood)</span>
           </div>
         </a>
 
@@ -188,21 +194,29 @@
     function toggleDiscoveryMode() {
       isBlindMode = !isBlindMode;
       const btn = document.getElementById('modeToggleBtn');
+      const banner = document.getElementById('blindModeBanner');
+      
       btn.innerHTML = `<span>Blind Discovery Mode: <strong>${isBlindMode ? 'ON' : 'OFF'}</strong></span>`;
       btn.classList.toggle('btn-primary', isBlindMode);
       btn.classList.toggle('btn-secondary', !isBlindMode);
+      banner.style.display = isBlindMode ? 'block' : 'none';
 
       const cards = document.querySelectorAll('.atlas-card');
-      cards.forEach(card => {
+      cards.forEach((card, idx) => {
         const title = card.querySelector('.record-title');
         const desc = card.querySelector('.record-desc');
         const img = card.querySelector('.atlas-card-thumbnail');
+        const era = card.dataset.era;
+        const loc = card.querySelector('.location-text').innerText;
+        const cat = card.dataset.category;
+
         if (isBlindMode) {
-          card.dataset.origTitle = title.innerText;
-          card.dataset.origDesc = desc.innerText;
-          title.innerText = 'Neutral Discovery Prompt (Blind Mode)';
-          desc.innerText = 'What do you remember from this place, time range, and category? Sealed independent submissions are recorded before viewing full testimony.';
-          if (img) img.style.filter = 'blur(15px)';
+          if (!card.dataset.origTitle) card.dataset.origTitle = title.innerText;
+          if (!card.dataset.origDesc) card.dataset.origDesc = desc.innerText;
+          
+          title.innerText = `Neutral Discovery Prompt #${idx + 1} (${era.toUpperCase()} / ${cat.toUpperCase()})`;
+          desc.innerText = `Were you present in ${loc} during ${era}? Submit your sealed first-person recollection regarding this topic before viewing the original testimony.`;
+          if (img) img.style.filter = 'blur(20px) grayscale(100%)';
         } else {
           if (card.dataset.origTitle) title.innerText = card.dataset.origTitle;
           if (card.dataset.origDesc) desc.innerText = card.dataset.origDesc;
