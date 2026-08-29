@@ -38,8 +38,14 @@ preimage = UTF8("DONKAI:LPS1:NODE:v1:") || decodeHex32(leftChild) || decodeHex32
 parent   = SHA-256(preimage)
 ```
 
-**Normative Rules:**
-- `decodeHex32` strips an optional `0x` prefix and decodes exactly 64 hexadecimal characters into exactly 32 raw bytes.
+**Normative Hex Rules:**
+- **Accepted Serialized Form:** Exactly `0x` followed by 64 lowercase hexadecimal characters `[0-9a-f]`.
+- **Strictly Rejected Forms:**
+  - Uppercase `0X` prefixes or uppercase hex characters (`A-F`).
+  - Leading, trailing, or embedded whitespace.
+  - Underscores or custom separators.
+  - Lengths other than exactly 66 characters (`0x` + 64 hex chars).
+- `decodeHex32` decodes the 64 lowercase hex characters directly into exactly 32 raw bytes.
 - `leftChild` and `rightChild` are positional and **MUST NOT** be re-sorted after initial leaf ordering.
 - The node prefix is UTF-8 encoded with no terminating NUL byte.
 - Hash output **MUST** be serialized in manifests as lowercase `0x`-prefixed 64-hex strings.

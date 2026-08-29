@@ -38,6 +38,17 @@ function hashLeaf(objectType, canonicalBytes) {
   return sha256(Buffer.concat([prefix, Buffer.from(canonicalBytes)]));
 }
 
+function decodeHex32(hexStr) {
+  if (typeof hexStr !== 'string') {
+    throw new Error('decodeHex32 expects string');
+  }
+  // Must match exactly 0x followed by 64 lowercase hex characters
+  if (!/^0x[0-9a-f]{64}$/.test(hexStr)) {
+    throw new Error(`Invalid hex32 serialization: ${hexStr}`);
+  }
+  return Buffer.from(hexStr.slice(2), 'hex');
+}
+
 function hashInternalNode(left32, right32) {
   const prefix = Buffer.from('DONKAI:LPS1:NODE:v1:', 'utf8');
   return sha256(Buffer.concat([prefix, left32, right32]));
@@ -129,6 +140,29 @@ function runSuite() {
     throw new Error('Failed to construct 3-leaf Merkle root under Option B');
   }
   checkCount++;
+
+  // Test strict hex serialization rejections
+  const validHex = '0x' + root3.toString('hex');
+  decodeHex32(validHex); // Must pass
+  checkCount++;
+
+  const invalidHexes = [
+    '0X' + root3.toString('hex'), // Uppercase prefix
+    '0x' + root3.toString('hex').toUpperCase(), // Uppercase characters
+    validHex + ' ', // Trailing whitespace
+    validHex.slice(0, 64), // Too short
+    '0xZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ' // Non-hex
+  ];
+
+  for (const inv of invalidHexes) {
+    try {
+      decodeHex32(inv);
+      throw new Error(`decodeHex32 unexpectedly accepted invalid hex: ${inv}`);
+    } catch (err) {
+      if (err.message.includes('unexpectedly accepted')) throw err;
+      checkCount++; // Successfully rejected
+    }
+  }
 
   // 3. EIP-712 Struct Intent
   const eipFixturePath = path.join(__dirname, '../../fixtures/lps1-v1/eip712/create_remembrance_digest.json');
