@@ -39,9 +39,15 @@
     </nav>
   </header>
 
-  <!-- Fullscreen Opening Cinematic Hero -->
-  <section class="hero-cinema">
-    <div style="max-width: 860px; margin: 0 auto;">
+  <!-- Fullscreen Opening Cinematic Hero with Ambient Video -->
+  <section class="hero-cinema" style="position:relative; overflow:hidden;">
+    <video autoplay loop muted playsinline style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); min-width:100%; min-height:100%; width:auto; height:auto; z-index:-1; opacity:0.25; filter:saturate(1.2) contrast(1.1); object-fit:cover;">
+      <source src="videos/donk_tokenize_hero.mp4" type="video/mp4">
+      <source src="videos/donk_vault_intro.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(5,6,8,0.4) 0%, rgba(5,6,8,0.95) 100%); z-index:0;"></div>
+
+    <div style="max-width: 860px; margin: 0 auto; position:relative; z-index:1;">
       <h1 class="hero-headline">WHAT DO YOU REMEMBER?</h1>
       <p class="hero-tagline">
         Before AI. Before Google. Before the comments.<br>

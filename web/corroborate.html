@@ -35,8 +35,13 @@
   </header>
 
   <!-- Quiet Memory Chamber View -->
-  <section class="hero-cinema" style="min-height:75vh; padding: 4rem 1.5rem;">
-    <div id="chamberInitialView" style="max-width:680px; margin: 0 auto; text-align:center;">
+  <section class="hero-cinema" style="min-height:75vh; padding: 4rem 1.5rem; position:relative; overflow:hidden;">
+    <video autoplay loop muted playsinline style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); min-width:100%; min-height:100%; width:auto; height:auto; z-index:-1; opacity:0.18; filter:saturate(1.1) contrast(1.1); object-fit:cover;">
+      <source src="videos/donk_desert_drama_1.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(5,6,8,0.5) 0%, rgba(5,6,8,0.96) 100%); z-index:0;"></div>
+
+    <div id="chamberInitialView" style="max-width:680px; margin: 0 auto; text-align:center; position:relative; z-index:1;">
       <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); letter-spacing:0.08em; text-transform:uppercase;">Unprimed Recall Chamber</span>
       <h1 style="font-size: clamp(2.4rem, 5vw, 3.8rem); color:var(--pearl); margin:0.4rem 0 1rem; font-weight:800;">INDEPENDENT RECOLLECTION</h1>
       <p style="font-size:1.1rem; color:var(--text-dim); margin-bottom:2rem; line-height:1.5;">
