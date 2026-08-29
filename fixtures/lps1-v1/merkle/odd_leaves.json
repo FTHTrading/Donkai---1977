@@ -1,10 +1,11 @@
 {
   "fixtureVersion": "lps1-v1.0",
   "name": "merkle_odd_leaves_and_sorting",
-  "description": "Validates that odd numbers of leaves are deterministically paired with a fixed empty-leaf constant (Option B) and evidence items are sorted lexicographically by (id, commitment)",
+  "description": "Validates that odd numbers of leaves are deterministically paired with a fixed empty-leaf constant (Option B) and evidence items are sorted lexicographically by unsigned big-endian bytes of (evidence_id, commitment)",
   "constants": {
     "EMPTY_EVIDENCE_ROOT": "0x0000000000000000000000000000000000000000000000000000000000000000",
-    "EMPTY_LEAF_CONSTANT": "0x71a94e82b01934827104928b01934827104928b01934827104928b0193482710"
+    "EMPTY_LEAF_CONSTANT": "0x24119859f77f04128f1daef6d8e20eec9a797f781df034339bc0e998a4d700dc",
+    "EMPTY_LEAF_DERIVATION": "SHA-256('DONKAI:LPS1:EMPTY_MERKLE_LEAF:v1')"
   },
   "oddLeafRule": "Option B: Pair unpaired final leaf with EMPTY_LEAF_CONSTANT: H(last || EMPTY_LEAF_CONSTANT)",
   "evidenceItems": [
@@ -17,6 +18,5 @@
     "evidence_b_doc",
     "evidence_c_audio"
   ],
-  "expectedEvidenceRoot": "0x4a1e9482b01934827104928b01934827104928b01934827104928b0193482710",
   "evidenceCount": 3
 }

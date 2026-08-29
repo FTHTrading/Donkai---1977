@@ -27,7 +27,7 @@ jobs:
         run: cargo test --workspace --all-targets --verbose
 
   js-conformance:
-    name: In-Browser WebCrypto Conformance Runner
+    name: Node.js & WebCrypto Conformance Test Runner
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -41,8 +41,11 @@ jobs:
       - name: Validate Web Assets Syntax
         run: node -c web/js/mandela-engine.js web/js/web3-gateway.js web/js/social-adapters.js
 
+      - name: Run LPS-1 Conformance Tests
+        run: node web/tests/lps1-conformance.test.js
+
   secret-scanning:
-    name: Repository Secret & Credential Scanning
+    name: Repository Secret & Credential Hygiene Audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -56,4 +59,4 @@ jobs:
             echo "::error::Found exposed secrets in tracked files!"
             exit 1
           fi
-          echo "Secret scan passed with 0 exposed tokens."
+          echo "Secret scan passed with 0 exposed tokens in working tree."

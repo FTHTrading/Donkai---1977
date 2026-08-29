@@ -45,8 +45,21 @@ pub struct MerkleTree {
     pub root: [u8; 32],
 }
 
+/// Domain-separated constant for unpaired odd Merkle leaves:
+/// SHA-256("DONKAI:LPS1:EMPTY_MERKLE_LEAF:v1")
+pub const EMPTY_LEAF_CONSTANT: [u8; 32] = [
+    0x24, 0x11, 0x98, 0x59, 0xf7, 0x7f, 0x04, 0x12,
+    0x8f, 0x1d, 0xae, 0xf6, 0xd8, 0xe2, 0x0e, 0xec,
+    0x9a, 0x79, 0x7f, 0x78, 0x1d, 0xf0, 0x34, 0x33,
+    0x9b, 0xc0, 0xe9, 0x98, 0xa4, 0xd7, 0x00, 0xdc,
+];
+
+/// Empty evidence bundle root constant (32 zero bytes)
+pub const EMPTY_EVIDENCE_ROOT: [u8; 32] = [0u8; 32];
+
 impl MerkleTree {
     /// Builds a Merkle tree from a list of 32-byte leaf hashes.
+    /// Uses Option B: Unpaired odd leaves are paired with EMPTY_LEAF_CONSTANT.
     pub fn build(leaves: Vec<[u8; 32]>) -> Result<Self> {
         if leaves.is_empty() {
             return Err(Lps1Error::Validation(
@@ -65,8 +78,8 @@ impl MerkleTree {
                 let right = if i + 1 < current_layer.len() {
                     current_layer[i + 1]
                 } else {
-                    // Duplicate last odd leaf
-                    current_layer[i]
+                    // Option B: Pair odd leaf with EMPTY_LEAF_CONSTANT
+                    EMPTY_LEAF_CONSTANT
                 };
                 let parent = hash_internal_node(&left, &right);
                 next_layer.push(parent);
