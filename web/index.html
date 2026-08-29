@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WHAT DO YOU REMEMBER? — DONK AI Human Remembrance Protocol</title>
   <meta name="description" content="Preserve first-person human memory before the internet tells you what happened. Sovereign client-side encryption, unprimed recall capture, and verifiable record commitments.">
-  <link rel="stylesheet" href="css/main.css?v=2.1.0">
+  <link rel="stylesheet" href="css/main.css?v=2.2.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: var(--text-dim);
-      padding: 0.4rem 0.85rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 20px;
       font-size: 0.82rem;
       cursor: pointer;
@@ -43,7 +43,7 @@
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 0.25rem 0.65rem;
+      padding: 0.3rem 0.75rem;
       border-radius: 6px;
       font-size: 0.78rem;
       cursor: pointer;
@@ -119,13 +119,19 @@
 
     <div style="max-width: 860px; margin: 0 auto; position:relative; z-index:1;">
       <h1 class="hero-headline">WHAT DO YOU REMEMBER?</h1>
-      <p class="hero-tagline">
+      <p class="hero-tagline" style="font-size:1.15rem; max-width:720px; line-height:1.6; margin-bottom:1.5rem;">
         Before AI. Before Google. Before the comments.<br>
-        Write what you recall before the world tells you what happened.
+        Write the first version that comes to mind. A phrase. A sound. An object. A place. A moment. Something clear—or something you are not sure about.
       </p>
-      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+      <div style="font-size:0.95rem; color:var(--synaptic-cyan); margin-bottom:2rem; font-family:var(--font-mono);">
+        Your memory does not need to be perfect. It does not need to be proven today.
+      </div>
+      <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem;">
         <a href="#remembranceJourney" class="btn btn-primary">Begin Your Remembrance &darr;</a>
         <a href="atlas.html" class="btn btn-secondary">Explore the Memory Atlas &rarr;</a>
+      </div>
+      <div style="font-size:0.82rem; color:var(--text-muted);">
+        DONK AI preserves what you submitted. It does not decide whether your memory is true.
       </div>
     </div>
   </section>
@@ -153,7 +159,7 @@
       <div class="spine-glass-panel">
         <span style="font-family:var(--font-mono); color:var(--memory-crimson); font-size:0.8rem; font-weight:700;">3. YOU SIGN IT</span>
         <h3 style="font-size:1.1rem; color:var(--pearl); margin:0.3rem 0;">Authorized Proof</h3>
-        <p style="font-size:0.85rem; color:var(--text-dim);">You sign proof of your record—not your private words. The chain preserves the commitment.</p>
+        <p style="font-size:0.85rem; color:var(--text-dim);">You sign a private commitment to this version of your memory—not your private words.</p>
       </div>
 
       <div class="spine-glass-panel">
@@ -181,55 +187,72 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.6rem;">
         <div>
           <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-violet); text-transform:uppercase;">Stage 01 &bull; Unprimed Memory Capture</span>
-          <h2 style="font-size:1.7rem; color:var(--pearl); margin-top:0.2rem;">Write a memory in your own words</h2>
+          <h2 style="font-size:1.7rem; color:var(--pearl); margin-top:0.2rem;">What kind of memory is this?</h2>
         </div>
         <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 1 of 5</span>
       </div>
 
       <p style="font-size:0.92rem; color:var(--text-dim); margin-bottom:1.2rem; line-height:1.5;">
-        It can be a phrase, sound, object, place, person, event, movie scene, game, brand, or family story. Start with what comes to mind. It is okay to be uncertain. Do not search first.
+        Write what comes to mind in your own words. You can include what you saw, heard, felt, read, owned, or experienced. It is okay to be uncertain.
       </p>
 
       <!-- Choose Memory Type Chips -->
-      <div style="margin-bottom:1rem;">
-        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono); display:block; margin-bottom:0.4rem;">Choose a starter prompt:</span>
+      <div style="margin-bottom:1.2rem;">
+        <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono); display:block; margin-bottom:0.4rem;">Choose a starting point:</span>
         <div class="type-chips">
           <div class="type-chip active" onclick="selectMemoryType('phrase', 'The words I remember are ')">💬 A phrase or line</div>
           <div class="type-chip" onclick="selectMemoryType('sound', 'It sounded like ')">🔊 A sound or chime</div>
           <div class="type-chip" onclick="selectMemoryType('object', 'The object looked and felt like ')">🪙 An object or token</div>
           <div class="type-chip" onclick="selectMemoryType('place', 'The place I remember was ')">📍 A place or venue</div>
           <div class="type-chip" onclick="selectMemoryType('event', 'What happened was ')">🎟️ An event or show</div>
-          <div class="type-chip" onclick="selectMemoryType('culture', 'The version I remember is ')">📺 A cultural brand / logo</div>
+          <div class="type-chip" onclick="selectMemoryType('culture', 'The version I remember is ')">📺 A cultural brand or logo</div>
           <div class="type-chip" onclick="selectMemoryType('uncertain', 'I may be mixing this up, but ')">❓ An uncertain memory</div>
+          <div class="type-chip" onclick="selectMemoryType('other', '')">✨ Something else</div>
         </div>
       </div>
 
       <!-- Free Writing Textarea with Realistic Model Example -->
       <label for="journeyProseInput" style="font-weight:600; color:var(--pearl); font-size:0.95rem; display:block; margin-bottom:0.4rem;">What do you remember?</label>
-      <textarea id="journeyProseInput" class="form-textarea" style="min-height:160px; margin-bottom:1.2rem;" placeholder="Example: When I was a kid, I remember the arcade token feeling heavier than a normal coin. I think it had a spaceship on it, and I remember a sharp electronic chime when the game started. I may be mixing two different machines together."></textarea>
+      <textarea id="journeyProseInput" class="form-textarea" style="min-height:160px; margin-bottom:0.4rem;" placeholder="Example: When I was a kid, I remember the arcade token feeling heavier than a normal coin. I think it had a spaceship on it, and I remember a sharp electronic chime when the game started. I may be mixing two different machines together."></textarea>
+      <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1.2rem; font-style:italic;">
+        You are preserving your recollection—not trying to pass a test.
+      </div>
 
       <!-- Optional Context Chips -->
       <div class="spine-glass-panel" style="margin-bottom:1.5rem; padding:1.2rem; background:rgba(0,0,0,0.3);">
-        <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--synaptic-cyan); text-transform:uppercase; display:block; margin-bottom:0.8rem;">Optional Context Details</span>
+        <span style="font-size:0.8rem; font-family:var(--font-mono); color:var(--synaptic-cyan); text-transform:uppercase; display:block; margin-bottom:0.8rem;">Add Context &bull; Optional</span>
         
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
           <div>
-            <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">Approximate Time / Era:</label>
+            <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">About when was this?</label>
             <input type="text" id="ctxEra" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. Summer 1978, early 1980s">
           </div>
           <div>
             <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">Where were you?</label>
-            <input type="text" id="ctxPlace" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. Austin arcade, neighborhood cinema">
+            <input type="text" id="ctxPlace" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. City, venue, home, arcade, online">
+          </div>
+        </div>
+
+        <div style="margin-top:0.8rem;">
+          <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">How did this memory reach you?</label>
+          <div class="context-tag-group">
+            <span class="context-tag active" onclick="selectTag(this)">I experienced it</span>
+            <span class="context-tag" onclick="selectTag(this)">I saw it</span>
+            <span class="context-tag" onclick="selectTag(this)">I heard it</span>
+            <span class="context-tag" onclick="selectTag(this)">Someone told me</span>
+            <span class="context-tag" onclick="selectTag(this)">I read it</span>
+            <span class="context-tag" onclick="selectTag(this)">I am not sure</span>
           </div>
         </div>
 
         <div style="margin-top:0.8rem;">
           <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">How does this memory feel today?</label>
           <div class="context-tag-group">
-            <span class="context-tag active" onclick="selectTag(this)">Certain</span>
-            <span class="context-tag" onclick="selectTag(this)">Vivid but uncertain</span>
-            <span class="context-tag" onclick="selectTag(this)">Mixed memories</span>
-            <span class="context-tag" onclick="selectTag(this)">Not sure</span>
+            <span class="context-tag active" onclick="selectTag(this)">Clear to me</span>
+            <span class="context-tag" onclick="selectTag(this)">Vivid, but uncertain</span>
+            <span class="context-tag" onclick="selectTag(this)">I may be combining memories</span>
+            <span class="context-tag" onclick="selectTag(this)">I remember more than one version</span>
+            <span class="context-tag" onclick="selectTag(this)">I am not sure</span>
           </div>
         </div>
       </div>
@@ -237,13 +260,13 @@
       <!-- Plain English 'What happens next?' -->
       <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.6; margin-bottom:1.5rem; background:rgba(255,255,255,0.02); padding:0.8rem 1rem; border-radius:8px;">
         <strong style="color:var(--pearl);">What happens next?</strong><br>
-        1. You write what you remember &bull; 2. You choose who can see it &bull; 3. You sign private proof that this version existed &bull; 4. You can later compare it with sources or independent recollections.<br>
+        1. You write what you remember &bull; 2. You choose who can see it &bull; 3. You sign a private commitment to this version of your memory &bull; 4. You can later compare it with sources or independent recollections.<br>
         <em>DONK AI does not decide whether your memory is true. It preserves what you submitted and what can later be supported.</em>
       </div>
 
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-        <span style="font-size:0.82rem; color:var(--synaptic-cyan);">✓ Your words are preserved exactly as you submit them.</span>
-        <button class="btn btn-primary" data-goto-stage="2">Protect This Memory &rarr;</button>
+        <span style="font-size:0.82rem; color:var(--synaptic-cyan);">This record preserves what you recall. It does not require you to prove it today.</span>
+        <button class="btn btn-primary" data-goto-stage="2">Protect and Continue &rarr;</button>
       </div>
     </div>
 
@@ -301,7 +324,7 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1.2rem; flex-wrap:wrap; gap:0.6rem;">
         <div>
           <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-crimson); text-transform:uppercase;">Stage 03 &bull; Record Authorization</span>
-          <h2 style="font-size:1.7rem; color:var(--pearl); margin-top:0.2rem;">You sign proof of your record—not your private words.</h2>
+          <h2 style="font-size:1.7rem; color:var(--pearl); margin-top:0.2rem;">You sign a private commitment to this version of your memory.</h2>
         </div>
         <span style="font-size:0.8rem; color:var(--text-muted); font-family:var(--font-mono);">Step 3 of 5</span>
       </div>
@@ -486,16 +509,28 @@
     </div>
   </footer>
 
-  <script src="js/mandela-engine.js?v=2.1.0"></script>
-  <script src="js/web3-gateway.js?v=2.1.0"></script>
-  <script src="js/social-adapters.js?v=2.1.0"></script>
-  <script src="js/walkthrough.js?v=2.1.0"></script>
+  <script src="js/mandela-engine.js?v=2.2.0"></script>
+  <script src="js/web3-gateway.js?v=2.2.0"></script>
+  <script src="js/social-adapters.js?v=2.2.0"></script>
+  <script src="js/walkthrough.js?v=2.2.0"></script>
   <script>
     function selectMemoryType(type, prefix) {
       document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('active'));
       event.target.classList.add('active');
       const input = document.getElementById('journeyProseInput');
-      if (!input.value.trim() || input.value.startsWith('The words I remember') || input.value.startsWith('It sounded like') || input.value.startsWith('The object looked') || input.value.startsWith('The place I remember') || input.value.startsWith('What happened was') || input.value.startsWith('The version I remember') || input.value.startsWith('I may be mixing')) {
+      // Only insert starter prefix if the input is currently empty or contains only a prior starter prefix
+      const currentVal = input.value.trim();
+      const starters = [
+        'The words I remember are',
+        'It sounded like',
+        'The object looked and felt like',
+        'The place I remember was',
+        'What happened was',
+        'The version I remember is',
+        'I may be mixing this up, but'
+      ];
+      const isCleanStarter = !currentVal || starters.some(s => currentVal.startsWith(s));
+      if (isCleanStarter && prefix) {
         input.value = prefix;
       }
       input.focus();
