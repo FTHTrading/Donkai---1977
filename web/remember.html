@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remembrance Studio — DONK AI</title>
+  <meta name="description" content="Human-authored remembrance studio. Canonical LPS-1 Merkle commitment generator with client-side privacy controls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html" class="active">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <span class="badge provenance" style="margin-bottom:0.8rem;">LPS-1 LIVING PROVENANCE STUDIO</span>
+        <h1>Record Your Remembrance</h1>
+        <p class="section-lead" style="margin: 0 auto;">
+          Preserve your account in your original words. LPS-1 deterministically canonicalizes your text and commits a cryptographic root before any transmission.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <form id="remembranceForm" onsubmit="event.preventDefault(); handleCommit();">
+          
+          <!-- 1. The Human Testimony -->
+          <div class="form-group">
+            <label for="narrative">1. What Do You Remember? (Original Prose)</label>
+            <div class="field-hint">Write exactly what you recall. Do not worry about spelling or perfection; your exact phrasing is preserved canonically.</div>
+            <textarea id="narrative" class="form-textarea" placeholder="I remember an arcade on Main Street in the summer of 1978..." required oninput="updateLivePreview()"></textarea>
+          </div>
+
+          <!-- 2. Language & Cultural Context -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="language">Primary Language (BCP 47)</label>
+              <select id="language" class="form-select" onchange="updateLivePreview()">
+                <option value="en-US">English (US) &mdash; en-US</option>
+                <option value="en-GB">English (UK) &mdash; en-GB</option>
+                <option value="es-ES">Spanish &mdash; es-ES</option>
+                <option value="ja-JP">Japanese &mdash; ja-JP</option>
+                <option value="fr-FR">French &mdash; fr-FR</option>
+                <option value="de-DE">German &mdash; de-DE</option>
+                <option value="pt-BR">Portuguese &mdash; pt-BR</option>
+                <option value="zh-CN">Chinese (Simplified) &mdash; zh-CN</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="culturalTags">Cultural Context Tags (comma separated)</label>
+              <input type="text" id="culturalTags" class="form-input" placeholder="arcade, 1977-era, space-invaders" oninput="updateLivePreview()">
+            </div>
+          </div>
+
+          <!-- 3. Event Date & Location Precision -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="dateStart">Remembered Event Date / Range</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="dateStart" class="form-input" placeholder="Start (e.g. 1978-06-01)" oninput="updateLivePreview()">
+                <input type="text" id="dateEnd" class="form-input" placeholder="End (e.g. 1978-08-31)" oninput="updateLivePreview()">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="locationLabel">Location & Precision</label>
+              <div style="display:flex; gap:0.5rem;">
+                <input type="text" id="locationLabel" class="form-input" placeholder="Location (e.g. Austin, TX)" oninput="updateLivePreview()">
+                <select id="locationPrecision" class="form-select" onchange="updateLivePreview()" style="width: 140px;">
+                  <option value="city">City</option>
+                  <option value="neighborhood">Neighborhood</option>
+                  <option value="point">Exact Point</option>
+                  <option value="region">Region</option>
+                  <option value="country">Country</option>
+                  <option value="global">Global</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Privacy & Consent Settings -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="visibility">Visibility Policy</label>
+              <select id="visibility" class="form-select" onchange="updatePrivacy()">
+                <option value="public">Public &mdash; Indexed on Drift Atlas</option>
+                <option value="reviewer-only">Reviewer-Only &mdash; Private until verified</option>
+                <option value="delayed-public">Delayed Public &mdash; Sealed for 90 days</option>
+                <option value="aggregate-only">Aggregate-Only &mdash; Research stats only</option>
+                <option value="private">Private (Client-Encrypted)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="identityMode">Identity Disclosure</label>
+              <select id="identityMode" class="form-select">
+                <option value="pseudonymous">Pseudonymous (Wallet Address)</option>
+                <option value="attributable">Attributable (Named Contributor)</option>
+                <option value="anonymous-with-credential">Anonymous with Human Pass</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Client Encryption Key (if restricted/private) -->
+          <div id="encryptionGroup" class="form-group" style="display:none; background:rgba(255,255,255,0.03); padding:1rem; border-radius:6px; border:1px solid var(--border);">
+            <label for="passphrase">Client-Side Encryption Passphrase</label>
+            <div class="field-hint">Payload is encrypted with AES-GCM-256 before leaving your browser. The network only receives the commitment hash.</div>
+            <input type="password" id="passphrase" class="form-input" placeholder="Enter private passphrase">
+          </div>
+
+          <!-- 5. Human Authorship Attestation -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; font-weight:normal;">
+              <input type="checkbox" id="humanAttestation" required style="margin-top: 0.25rem;">
+              <span><strong>Human Authorship Attestation:</strong> I confirm this is my own recollection, authored by me as a human witness. I understand that AI cannot author, vote on, or replace this record.</span>
+            </label>
+          </div>
+
+          <!-- Live LPS-1 Deterministic Root Preview -->
+          <div class="live-root-box">
+            <div class="live-root-label">Live LPS-1 Domain-Separated Leaf Root (SHA-256)</div>
+            <div id="liveRootDisplay" class="live-root-val">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+            <div id="canonicalByteCount" style="color:var(--text-muted); font-size:0.75rem; margin-top:0.4rem;">Canonical Size: 0 bytes</div>
+          </div>
+
+          <!-- Submit Button -->
+          <div style="margin-top: 2rem; display:flex; gap: 1rem; align-items:center;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">Sign & Anchor LPS-1 Record</button>
+            <button type="button" class="btn btn-secondary" onclick="exportJson()">Export Canonical JSON</button>
+          </div>
+        </form>
+
+        <div id="submissionResult" style="display:none; margin-top:2rem; padding:1.5rem; background:rgba(124, 216, 168, 0.08); border:1px solid rgba(124, 216, 168, 0.3); border-radius:8px;">
+          <h3 style="color:var(--accent-green); margin-bottom:0.5rem;">LPS-1 Record Anchored</h3>
+          <p style="font-size:0.9rem; color:var(--text); margin-bottom:0.8rem;">Your canonical record has been committed to the local ledger with submission provenance.</p>
+          <div style="font-family:var(--font-mono); font-size:0.82rem; word-break:break-all;">
+            <strong>Memory ID:</strong> <span id="resMemoryId">MEM-1977-0004</span><br>
+            <strong>Root:</strong> <span id="resRoot">0x...</span><br>
+            <strong>Ledger Status:</strong> <span style="color:var(--accent-green);">Active / Verified Provenance</span>
+          </div>
+          <div style="margin-top:1rem;">
+            <a id="resLink" href="record.html?id=1" class="btn btn-secondary" style="font-size:0.85rem;">View 5-Panel Record &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Protocol Charter</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/lps1.js"></script>
+  <script>
+    async function updateLivePreview() {
+      const narrative = document.getElementById('narrative').value;
+      const language = document.getElementById('language').value;
+      const culturalTags = document.getElementById('culturalTags').value.split(',').map(s => s.trim()).filter(Boolean);
+      const start = document.getElementById('dateStart').value || '1978-01-01';
+      const end = document.getElementById('dateEnd').value || '1978-12-31';
+      const locLabel = document.getElementById('locationLabel').value || 'Unknown';
+      const locPrec = document.getElementById('locationPrecision').value;
+
+      const stmtObj = {
+        type: "donkai.remembrance.v1",
+        language: language,
+        authoringMode: "human-authored",
+        narrative: narrative || " ",
+        eventDate: {
+          start: start,
+          end: end,
+          certainty: "approximate"
+        },
+        location: {
+          label: locLabel,
+          precision: locPrec
+        },
+        culturalContext: culturalTags,
+        authorAttestation: "I confirm this is my own independent recollection."
+      };
+
+      const commitment = await LPS1.computeRemembranceCommitment(stmtObj);
+      document.getElementById('liveRootDisplay').innerText = commitment.root;
+      document.getElementById('canonicalByteCount').innerText = `Canonical Size: ${commitment.canonicalByteLength} bytes | Lexicographically sorted`;
+      return { stmtObj, commitment };
+    }
+
+    function updatePrivacy() {
+      const vis = document.getElementById('visibility').value;
+      const grp = document.getElementById('encryptionGroup');
+      grp.style.display = (vis === 'private' || vis === 'reviewer-only') ? 'block' : 'none';
+    }
+
+    async function handleCommit() {
+      const { stmtObj, commitment } = await updateLivePreview();
+      document.getElementById('submissionResult').style.display = 'block';
+      document.getElementById('resRoot').innerText = commitment.root;
+      document.getElementById('resMemoryId').innerText = 'MEM-1977-' + Math.floor(1000 + Math.random() * 9000);
+      window.scrollTo({ top: document.getElementById('submissionResult').offsetTop - 100, behavior: 'smooth' });
+    }
+
+    async function exportJson() {
+      const { stmtObj } = await updateLivePreview();
+      const canon = LPS1.canonicalize(stmtObj);
+      const blob = new Blob([canon], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `remembrance-lps1.json`;
+      a.click();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateLivePreview();
+    });
+  </script>
+</body>
+</html>

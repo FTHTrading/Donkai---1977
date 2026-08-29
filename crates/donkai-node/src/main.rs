@@ -1,96 +1,84 @@
-//! Donkai Network — Layer-1 reference node (Chain ID 1977).
-//! Boots the LPS-1, PQC, PolicyGuard, IPFS, and consensus subsystems and prints a status console.
+//! DONK AI — The Human Remembrance Protocol
+//! Reference Node & Verification Engine
 
-use donkai_lps1::{Lps1MerkleTree, run_all_58_checks};
-use donkai_consensus::{DonkaiValidator, ValidatorTier, AsinineFaultTolerance};
-use donkai_policyguard::{AgentProposal, RiskTier, PolicyGuardEvaluator, SignedApproval, EvalOutcome};
-use donkai_pqc::MlDsaKeypair;
-use donkai_ipfs::{compute_raw_cidv1, compute_dagpb_cidv1, DEFAULT_KUBO_API};
-
-const CHAIN_ID: u64 = 1977;
+use donkai_corroboration::BlindCorroborationEngine;
+use donkai_evidence::hash_artifact_bytes;
+use donkai_identity::{CredentialType, IdentityAttestation};
+use donkai_ipfs::compute_raw_cidv1;
+use donkai_lps1::{
+    canonicalize, Commitment, DiscoveryContext, EventDateRange, LocationDescriptor,
+    LocationPrecision, MemoryRecord, MemoryRecordCommitment, MerkleTree,
+    RemembranceStatement, Validator, VisibilityMode,
+};
+use donkai_review::ReviewRubric;
+use donkai_translation::TranslationBundle;
 
 fn main() {
     println!("========================================================================");
-    println!(" DONKAI NETWORK  |  Chain ID {}  |  Proof-of-Stubbornness + AFT 2/3", CHAIN_ID);
+    println!(" DONK AI  |  The Human Remembrance Protocol (LPS-1 v2.0 Engine)");
+    println!(" WHAT DO YOU REMEMBER?");
     println!("========================================================================\n");
 
-    // 1. LPS-1 provenance
-    let document = "\
-Genesis Anchor: The Pet Rock (1975) taught markets that packaging beats utility.\n\n\
-Second Anchor: Betamax (1976) had superior specs; VHS won on distribution.\n\n\
-Third Anchor: Beanie Babies (1999) proved secondary-market speculation predates crypto by decades.";
-    let tree = Lps1MerkleTree::build_from_document(document);
-    let report = run_all_58_checks(&tree, document);
+    // 1. Human Remembrance Statement & LPS-1 Canonical Commitment
+    let stmt = RemembranceStatement::new_human_authored(
+        "en-US",
+        "I remember playing Space Invaders at the arcade on Main Street in Austin, TX in the summer of 1978.",
+        "1978-06-01",
+        "1978-08-31",
+        "Austin, Texas",
+        LocationPrecision::City,
+        vec!["arcade".into(), "space-invaders".into(), "1977-era".into()],
+        "I confirm this is my own independent human recollection.",
+    );
 
-    println!("[LPS-1]        root       = 0x{}", hex::encode(tree.root_hash));
-    println!("[LPS-1]        leaves     = {}", tree.leaves.len());
-    println!("[LPS-1]        audit      = {} / {} checks passed  (all_passed = {})",
-             report.passed_count, report.total, report.all_passed());
-    if !report.all_passed() {
-        for f in report.failures() {
-            println!("[LPS-1]        FAIL #{}: {}  {}",
-                     f.id, f.name, f.note.as_deref().unwrap_or(""));
-        }
-    }
-    if let Some(proof) = tree.generate_proof(1) {
-        let ok = Lps1MerkleTree::verify_inclusion(&tree.root_hash, &proof);
-        println!("[LPS-1]        proof(#1)  = path_len={} verified={}", proof.audit_path.len(), ok);
-    }
-    println!();
+    let canon = canonicalize(&stmt).expect("Canonicalization failed");
+    let commitment = Commitment::from_canonical("remembrance", canon.as_bytes())
+        .expect("Commitment computation failed");
+    let report = Validator::validate_remembrance(&stmt).expect("Validation failed");
 
-    // 2. IPFS CIDs
-    let payload = b"Donkai Genesis Manifest v0.1.0";
-    println!("[IPFS]         raw CIDv1     = {}", compute_raw_cidv1(payload));
-    println!("[IPFS]         dag-pb CIDv1  = {}", compute_dagpb_cidv1(payload));
-    println!("[IPFS]         Kubo endpoint = {}  (not contacted)\n", DEFAULT_KUBO_API);
+    println!("[LPS-1 STATEMENT] root        = {}", commitment.root_hex());
+    println!("[LPS-1 STATEMENT] canonical   = {} bytes", canon.len());
+    println!("[LPS-1 STATEMENT] validation  = {}/{} checks passed (valid = {})\n",
+             report.passed_checks, report.total_checks, report.is_valid);
 
-    // 3. PQC keygen + signature roundtrip
-    let kp = MlDsaKeypair::generate();
-    let msg = b"donkai:validator-attestation:block=1";
-    let sig = kp.sign(msg);
-    let verified = MlDsaKeypair::verify(&kp.public_key_bytes(), msg, &sig);
-    println!("[PQC]          ml-dsa-87    pk_len={} sig_len={} verified={}\n",
-             kp.public_key_bytes().len(), sig.len(), verified);
+    // 2. Evidence Hashing & IPFS CIDv1
+    let artifact_data = b"PHOTO: 1978 Arcade Token from Space Invaders Cabinet";
+    let artifact_hash = hash_artifact_bytes(artifact_data);
+    let artifact_cid = compute_raw_cidv1(artifact_data);
+    println!("[EVIDENCE]        artifact    = {}", artifact_hash);
+    println!("[EVIDENCE]        cidv1       = {}\n", artifact_cid);
 
-    // 4. Consensus + AFT
-    let v = DonkaiValidator {
-        node_id: "donkai1val_ultra_asinine_01".into(),
-        staked_donk: 1_000_000u128 * 10u128.pow(18),
-        blocks_unmoved: 50_000,
-        tier: ValidatorTier::UltraAsinine,
+    // 3. Blind Independent Corroboration (Commit-Reveal)
+    let sealed_root = BlindCorroborationEngine::seal_recall(
+        "I also remember the Space Invaders cabinet with the two-player coin slot at Main St.",
+        b"cryptographic_salt_1977"
+    );
+    let discovery = DiscoveryContext {
+        category: "arcade".into(),
+        place: "Austin, Texas".into(),
+        date_range: "1977-1980".into(),
+        cultural_keywords: vec!["arcade".into(), "space-invaders".into()],
     };
-    let weight = v.calculate_vote_weight();
-    let has_supermajority = AsinineFaultTolerance::has_supermajority(weight, weight);
-    println!("[CONSENSUS]    node       = {}", v.node_id);
-    println!("[CONSENSUS]    weight     = {}", weight);
-    println!("[CONSENSUS]    2/3 BFT    = {}\n", has_supermajority);
+    let corrob_commit = BlindCorroborationEngine::create_commitment(
+        "MEM-1977-0001",
+        discovery,
+        sealed_root,
+        Some("human-pass-sbt#0x1234".into()),
+    );
+    println!("[CORROBORATION]   sealed root = {}", corrob_commit.sealed_recall_root);
+    println!("[CORROBORATION]   privacy     = {:?}", corrob_commit.visibility);
+    println!("[CORROBORATION]   verified    = {}\n",
+             BlindCorroborationEngine::verify_reveal(
+                 "I also remember the Space Invaders cabinet with the two-player coin slot at Main St.",
+                 b"cryptographic_salt_1977",
+                 &sealed_root
+             ));
 
-    // 5. PolicyGuard with two real ML-DSA signatures over the same action
-    let action = b"MINT_DONK_USD::amount=500000::to=treasury";
-    let kp1 = MlDsaKeypair::generate();
-    let kp2 = MlDsaKeypair::generate();
-    let proposal = AgentProposal {
-        agent_id: "agent_rwa_oracle".into(),
-        proposed_action_bytes: action.to_vec(),
-        risk_tier: RiskTier::D4Degenerate,
-        approvals: vec![
-            SignedApproval { signer_public_key: kp1.public_key_bytes(), signature: kp1.sign(action) },
-            SignedApproval { signer_public_key: kp2.public_key_bytes(), signature: kp2.sign(action) },
-        ],
-    };
-    let validator_set = vec![kp1.public_key_bytes(), kp2.public_key_bytes()];
-    let outcome = PolicyGuardEvaluator::evaluate(&proposal, &validator_set, 0);
-    let outcome_line = match &outcome {
-        EvalOutcome::Approved { valid_signatures, required } =>
-            format!("APPROVED  ({}-of-{} required)", valid_signatures, required),
-        EvalOutcome::RejectedBelowQuorum { valid, required } =>
-            format!("REJECTED  below quorum ({} valid / {} required)", valid, required),
-        EvalOutcome::RejectedUnknownSigner { .. } =>
-            "REJECTED  unknown signer".to_string(),
-        EvalOutcome::RejectedInvalidSignature { .. } =>
-            "REJECTED  invalid signature".to_string(),
-        EvalOutcome::RejectedDuplicateSigner { .. } =>
-            "REJECTED  duplicate signer".to_string(),
-    };
-    println!("[POLICYGUARD]  tier=D4Degenerate action=MINT_DONK_USD -> {}", outcome_line);
+    // 4. Review Rubric & Governance
+    let rubric = ReviewRubric::standard_v0_1();
+    println!("[REVIEW RUBRIC]   version     = {}", rubric.version);
+    println!("[REVIEW RUBRIC]   title       = {}", rubric.title);
+    println!("[REVIEW RUBRIC]   criteria    = {} evaluation criteria configured\n", rubric.criteria.len());
+
+    println!("DONK AI verification engine operational.");
 }

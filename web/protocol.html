@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocol Charter & Documentation — DONK AI</title>
+  <meta name="description" content="Technical documentation, LPS-1 specification, epistemic rules, evidence standards, and privacy architecture for DONK AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html" class="active">Protocol Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div style="max-width:900px; margin:0 auto;">
+        <span class="badge provenance" style="margin-bottom:0.6rem;">DONK AI CANONICAL SPECIFICATION</span>
+        <h1>Protocol Charter & Standards</h1>
+        <p class="section-lead">
+          The official architecture, epistemic constraints, and cryptographic commitment definitions of DONK AI: The Human Remembrance Protocol.
+        </p>
+
+        <hr style="border:0; border-top:1px solid var(--border); margin: 2rem 0;">
+
+        <!-- 1. Epistemic Principles -->
+        <div id="epistemic" style="margin-bottom: 3rem;">
+          <h2>1. Non-Negotiable Epistemic Principles</h2>
+          <p style="color:var(--text-dim); margin-top:0.8rem; line-height:1.7;">
+            DONK AI makes uncertainty visible. The product never claims that a blockchain, a token, AI, voting, or prediction stakes prove a memory is objectively true.
+          </p>
+
+          <div style="background:var(--bg-elev); padding:1.5rem; border-radius:6px; border-left:3px solid var(--chrome); margin-top:1rem;">
+            <strong style="color:var(--pearl); font-size:1.05rem;">Core Distinction Formula:</strong>
+            <p style="font-family:var(--font-mono); font-size:0.92rem; color:var(--accent-green); margin-top:0.5rem;">
+              Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support<br>
+              Stake &ne; Truth
+            </p>
+          </div>
+
+          <div style="margin-top:1.2rem; line-height:1.7; color:var(--text-dim);">
+            <strong style="color:var(--pearl);">What a valid DONK AI record establishes:</strong>
+            <ul style="margin: 0.5rem 0 1rem 1.5rem;">
+              <li>A signer submitted a specified canonical record.</li>
+              <li>The record existed no later than its chain-anchored timestamp.</li>
+              <li>The committed record has not changed when its Merkle root is recomputed.</li>
+              <li>An artifact was supplied, hashed, attributed, and linked to a record.</li>
+              <li>Multiple witnesses independently submitted accounts under blind-first conditions.</li>
+            </ul>
+
+            <strong style="color:var(--pearl);">What a record CANNOT establish:</strong>
+            <ul style="margin: 0.5rem 0 0 1.5rem;">
+              <li>That a subjective memory is objectively true.</li>
+              <li>That an artifact's interpretation is complete or singular.</li>
+              <li>That token ownership, stake, or public consensus equates to historical reality.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 2. LPS-1 Living Provenance Standard -->
+        <div id="lps1" style="margin-bottom: 3rem;">
+          <h2>2. LPS-1 Living Provenance Standard (v2.0)</h2>
+          <p style="color:var(--text-dim); margin-top:0.8rem; line-height:1.7;">
+            LPS-1 replaces static document hashing with typed, domain-separated cryptographic commitments for human remembrance records, context manifests, consent manifests, and evidence bundles.
+          </p>
+
+          <pre style="background:#090a0f; padding:1.2rem; border-radius:6px; border:1px solid var(--border); font-family:var(--font-mono); font-size:0.82rem; color:#cbd5e1; margin-top:1rem; overflow-x:auto;">
+leaf_hash   = SHA256( "DONKAI:LPS1:LEAF:<OBJECT_TYPE>:v1:" || canonical_bytes )
+parent_hash = SHA256( "DONKAI:LPS1:NODE:v1:" || left_hash || right_hash )
+root_hash   = SHA256( "DONKAI:LPS1:ROOT:<BUNDLE_TYPE>:v1:" || tree_root )
+          </pre>
+
+          <h3 style="color:var(--pearl); margin-top:1.5rem; font-size:1.15rem;">Canonicalization Rules</h3>
+          <ul style="margin: 0.5rem 0 0 1.5rem; color:var(--text-dim); line-height:1.7;">
+            <li>UTF-8 only &bull; Unicode NFC normalized</li>
+            <li>Deterministic JSON serialization with lexicographically sorted object keys</li>
+            <li>No insignificant whitespace &bull; Strict RFC 3339 UTC timestamps</li>
+            <li>Original human prose preserved without auto-correction, grammar filtering, or dialect alteration</li>
+          </ul>
+        </div>
+
+        <!-- 3. AI Assistance Disclosure Policy -->
+        <div id="ai" style="margin-bottom: 3rem;">
+          <h2>3. AI Assistance & Disclosure Policy</h2>
+          <p style="color:var(--text-dim); margin-top:0.8rem; line-height:1.7;">
+            DONK AI is a human remembrance network. AI tools may assist with optional discovery indexing, accessibility aids, OCR transcription, and translation review, but AI must <strong>never</strong>:
+          </p>
+          <ul style="margin: 0.5rem 0 0 1.5rem; color:var(--text-dim); line-height:1.7;">
+            <li>Author a primary remembrance statement</li>
+            <li>Replace, silently rewrite, or fabricate human testimony</li>
+            <li>Vote or stake on memory records</li>
+            <li>Determine historical truth verdicts</li>
+          </ul>
+        </div>
+
+        <!-- 4. Privacy & Consent Framework -->
+        <div id="privacy" style="margin-bottom: 3rem;">
+          <h2>4. Privacy, Consent & Retention</h2>
+          <p style="color:var(--text-dim); margin-top:0.8rem; line-height:1.7;">
+            Privacy is an architectural requirement. The protocol supports six granular visibility modes:
+          </p>
+          <ul style="margin: 0.5rem 0 0 1.5rem; color:var(--text-dim); line-height:1.7;">
+            <li><strong>Public:</strong> Indexed on the Memory Drift Atlas.</li>
+            <li><strong>Reviewer-Only:</strong> Restricted to credentialed curators until verified.</li>
+            <li><strong>Trusted-Circle:</strong> Access-controlled for families and local communities.</li>
+            <li><strong>Delayed-Public:</strong> Sealed for an agreed embargo period.</li>
+            <li><strong>Aggregate-Only:</strong> Included only in research statistics and theme clustering.</li>
+            <li><strong>Private:</strong> Client-side encrypted with AES-GCM-256 before upload.</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="remember.html">Record a Memory</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

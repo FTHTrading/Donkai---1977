@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Drift Atlas — DONK AI</title>
+  <meta name="description" content="Explore collective memory divergences and cultural recall cases worldwide. Filter by era, language, and historical support status.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html" class="active">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+        <li><a href="remember.html" class="nav-cta">Record a Memory</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 2.5rem; flex-wrap:wrap; gap:1.5rem;">
+        <div>
+          <span class="badge provenance" style="margin-bottom:0.6rem;">GLOBAL RECALL NETWORK</span>
+          <h1>Memory Drift Atlas</h1>
+          <p class="section-lead" style="margin-bottom:0;">
+            Explore where collective memories converge, conflict with archival records, and remain unresolved.
+          </p>
+        </div>
+
+        <div style="display:flex; gap:0.8rem; align-items:center;">
+          <button id="modeToggleBtn" class="btn btn-secondary" onclick="toggleDiscoveryMode()">
+            <span>Blind Discovery Mode: <strong>OFF</strong></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <select id="filterEra" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Eras</option>
+          <option value="1977">1977 Cultural Foundation</option>
+          <option value="1980s">1980s Arcade & Media</option>
+          <option value="1990s">1990s Early Internet</option>
+          <option value="2000s">2000s Digital Shift</option>
+        </select>
+
+        <select id="filterCategory" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Categories</option>
+          <option value="arcade">Arcade & Early Computing</option>
+          <option value="cinema">Cinema & Broadcast</option>
+          <option value="local">Local & Regional History</option>
+          <option value="brands">Brand & Product Design</option>
+          <option value="music">Music & Performance</option>
+        </select>
+
+        <select id="filterStatus" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Classifications</option>
+          <option value="supported">Historically Supported</option>
+          <option value="partially-supported">Partially Supported</option>
+          <option value="conflicting">Conflicting Evidence</option>
+          <option value="unresolved">Unresolved</option>
+        </select>
+
+        <select id="filterLang" class="filter-select" onchange="applyFilters()">
+          <option value="all">All Languages</option>
+          <option value="en">English (en-US / en-GB)</option>
+          <option value="es">Spanish (es-ES)</option>
+          <option value="ja">Japanese (ja-JP)</option>
+          <option value="fr">French (fr-FR)</option>
+        </select>
+      </div>
+
+      <!-- Atlas Grid -->
+      <div id="atlasGrid" class="atlas-grid">
+        
+        <!-- Record 1 -->
+        <a href="record.html?id=1" class="atlas-card" data-era="1977" data-category="arcade" data-status="supported" data-lang="en">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge supported">Historically Supported</span>
+              <span class="badge">1977-1978</span>
+              <span class="badge">Arcade</span>
+            </div>
+            <h3 class="record-title">Space Invaders 1978 Arcade Token & Coin Slot Tone</h3>
+            <p class="record-desc">Personal recollections of Austin's Main Street arcade grand opening, featuring the iconic metallic token dispenser and custom sound chip tone.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>42 Blind Recalls</span>
+            <span>Austin, TX (City)</span>
+          </div>
+        </a>
+
+        <!-- Record 2 -->
+        <a href="record.html?id=2" class="atlas-card" data-era="1977" data-category="cinema" data-status="conflicting" data-lang="en">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge conflicting">Conflicting Evidence</span>
+              <span class="badge">1977</span>
+              <span class="badge">Cinema</span>
+            </div>
+            <h3 class="record-title">1977 Cinema Marquee "Episode IV" Subtitle Divergence</h3>
+            <p class="record-desc">Widespread shared recollections of seeing "Episode IV: A New Hope" on theatrical marquees in May 1977, diverging from documented July 1981 re-release prints.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>89 Blind Recalls</span>
+            <span>Global Distribution</span>
+          </div>
+        </a>
+
+        <!-- Record 3 -->
+        <a href="record.html?id=3" class="atlas-card" data-era="1980s" data-category="local" data-status="unresolved" data-lang="en">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge unresolved">Unresolved</span>
+              <span class="badge">1981</span>
+              <span class="badge">Local History</span>
+            </div>
+            <h3 class="record-title">The Unlogged London Community Pirate Broadcast</h3>
+            <p class="record-desc">Independent recollections of a short-range FM broadcast during the autumn 1981 power outage. Contemporaneous cassette tapes under review.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>18 Blind Recalls</span>
+            <span>London, UK (City)</span>
+          </div>
+        </a>
+
+        <!-- Record 4 -->
+        <a href="record.html?id=4" class="atlas-card" data-era="1980s" data-category="brands" data-status="partially-supported" data-lang="en">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge partially-supported">Partially Supported</span>
+              <span class="badge">1984</span>
+              <span class="badge">Brand Design</span>
+            </div>
+            <h3 class="record-title">Fruit Loom Cornucopia Label Packaging Memories</h3>
+            <p class="record-desc">Cross-generational recollections of the woven cornucopia basket emblem on clothing labels in North America. Trademark filings vs retail mockups.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>312 Blind Recalls</span>
+            <span>North America (Region)</span>
+          </div>
+        </a>
+
+        <!-- Record 5 -->
+        <a href="record.html?id=5" class="atlas-card" data-era="1977" data-category="music" data-status="supported" data-lang="ja">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge supported">Historically Supported</span>
+              <span class="badge">1977</span>
+              <span class="badge">Music</span>
+            </div>
+            <h3 class="record-title">Shinjuku Underground Synth Jam Session 1977</h3>
+            <p class="record-desc">First-person account of an early prototype modular synthesizer demonstration in Tokyo. Ticket stub and photographic print archived.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>14 Blind Recalls</span>
+            <span>Tokyo, JP (Neighborhood)</span>
+          </div>
+        </a>
+
+        <!-- Record 6 -->
+        <a href="record.html?id=6" class="atlas-card" data-era="1990s" data-category="arcade" data-status="unresolved" data-lang="es">
+          <div class="atlas-card-top">
+            <div class="atlas-card-tags">
+              <span class="badge unresolved">Unresolved</span>
+              <span class="badge">1992</span>
+              <span class="badge">Gaming</span>
+            </div>
+            <h3 class="record-title">Buenos Aires Unofficial Street Fighter II Tournament</h3>
+            <p class="record-desc">Recollections of a custom-modded championship arcade machine in Lavalle Street arcade. Oral histories recorded; seeking flyer documentation.</p>
+          </div>
+          <div class="atlas-card-stats">
+            <span>27 Blind Recalls</span>
+            <span>Buenos Aires, AR</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Charter</a></li>
+        <li><a href="corroborate.html">Corroborate</a></li>
+        <li><a href="proof.html">Proof Explorer</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    let isBlindMode = false;
+
+    function toggleDiscoveryMode() {
+      isBlindMode = !isBlindMode;
+      const btn = document.getElementById('modeToggleBtn');
+      btn.innerHTML = `<span>Blind Discovery Mode: <strong>${isBlindMode ? 'ON' : 'OFF'}</strong></span>`;
+      btn.classList.toggle('btn-primary', isBlindMode);
+      btn.classList.toggle('btn-secondary', !isBlindMode);
+
+      const cards = document.querySelectorAll('.atlas-card');
+      cards.forEach(card => {
+        const title = card.querySelector('.record-title');
+        const desc = card.querySelector('.record-desc');
+        if (isBlindMode) {
+          card.dataset.origTitle = title.innerText;
+          card.dataset.origDesc = desc.innerText;
+          title.innerText = 'Neutral Discovery Prompt (Blind Mode)';
+          desc.innerText = 'What do you remember from this place, time range, and category? Sealed independent submissions are recorded before viewing full testimony.';
+        } else if (card.dataset.origTitle) {
+          title.innerText = card.dataset.origTitle;
+          desc.innerText = card.dataset.origDesc;
+        }
+      });
+    }
+
+    function applyFilters() {
+      const era = document.getElementById('filterEra').value;
+      const cat = document.getElementById('filterCategory').value;
+      const status = document.getElementById('filterStatus').value;
+      const lang = document.getElementById('filterLang').value;
+
+      const cards = document.querySelectorAll('.atlas-card');
+      cards.forEach(card => {
+        const matchEra = era === 'all' || card.dataset.era === era;
+        const matchCat = cat === 'all' || card.dataset.category === cat;
+        const matchStatus = status === 'all' || card.dataset.status === status;
+        const matchLang = lang === 'all' || card.dataset.lang === lang;
+
+        card.style.display = (matchEra && matchCat && matchStatus && matchLang) ? 'flex' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

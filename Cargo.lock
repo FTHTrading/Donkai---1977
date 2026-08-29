@@ -139,6 +139,42 @@ dependencies = [
 ]
 
 [[package]]
+name = "donkai-corroboration"
+version = "0.1.0"
+dependencies = [
+ "donkai-lps1",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "donkai-evidence"
+version = "0.1.0"
+dependencies = [
+ "donkai-lps1",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "donkai-identity"
+version = "0.1.0"
+dependencies = [
+ "donkai-lps1",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 1.0.69",
+]
+
+[[package]]
 name = "donkai-ipfs"
 version = "0.1.0"
 dependencies = [
@@ -156,18 +192,33 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "donkai-lps1-legacy"
+version = "0.1.0"
+dependencies = [
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
 ]
 
 [[package]]
 name = "donkai-node"
 version = "0.1.0"
 dependencies = [
- "donkai-consensus",
+ "donkai-corroboration",
+ "donkai-evidence",
+ "donkai-identity",
  "donkai-ipfs",
  "donkai-lps1",
- "donkai-policyguard",
- "donkai-pqc",
+ "donkai-review",
+ "donkai-translation",
  "hex",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -185,6 +236,30 @@ dependencies = [
  "pqcrypto-mldsa",
  "pqcrypto-mlkem",
  "pqcrypto-traits",
+]
+
+[[package]]
+name = "donkai-review"
+version = "0.1.0"
+dependencies = [
+ "donkai-lps1",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "donkai-translation"
+version = "0.1.0"
+dependencies = [
+ "donkai-lps1",
+ "hex",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 1.0.69",
 ]
 
 [[package]]

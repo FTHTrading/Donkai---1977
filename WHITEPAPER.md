@@ -1,74 +1,97 @@
-# Donkai Network — `donkai-core` v0.1.0
+# DONK AI Whitepaper: The Human Remembrance Protocol
 
-**Chain ID:** `1977` (devnet)
-**Repository target:** `https://github.com/donkai-org/donkai-core`
-**Status:** reference implementation. Not audited. Not FIPS-certified.
-
-This document describes what the `donkai-core` workspace *actually implements today*. Anything not listed under **Shipped** is future work and is not to be quoted as a running feature.
+**Version:** 0.1.0-draft  
+**Status:** Shipped Prototype & Working Protocol  
+**Domain:** Protocol Architecture, Epistemic Integrity & Cryptographic Provenance  
 
 ---
 
-## Shipped in v0.1.0
+## 1. Abstract
 
-| Module | Crate | What it does |
-|---|---|---|
-| Provenance | `donkai-lps1` | Paragraph-split SHA-256 binary Merkle tree with true O(log n) inclusion proofs. 58 discrete named audit checks, each a real programmatic assertion. |
-| Consensus | `donkai-consensus` | Proof-of-Stubbornness validator tiers + Asinine Fault Tolerance strict 2/3 supermajority (`agreeing * 3 >= total * 2`, u128 saturating). |
-| Post-quantum | `donkai-pqc` | ML-DSA-87 (FIPS 204) signature + ML-KEM-1024 (FIPS 203) KEM wrappers over `pqcrypto-mldsa` / `pqcrypto-mlkem` C reference implementations. Sign/verify/encapsulate/decapsulate roundtrips tested. |
-| Agent security | `donkai-policyguard` | Deterministic multi-signature adjudication. Verifies each ML-DSA signature against a whitelisted validator set. Rejects unknown signers, tampered signatures, duplicate signers, and below-quorum proposals. |
-| Storage | `donkai-ipfs` | Native CIDv1 computation (raw codec `0x55` + dag-pb codec `0x70` wrapping single-block UnixFS File), base32-lowercase-no-pad multibase. Blocking Kubo RPC pin client targeting `http://127.0.0.1:5001/api/v0`. |
-| Node | `donkai-node` | Reference binary wiring the five modules together into a boot console. |
+Digital history is increasingly vulnerable to silent alteration, AI-generated synthetic revisionism, and algorithmic popularity loops that conflate viral consensus with historical reality. **DONK AI** establishes a decentralized, human-governed remembrance and evidence protocol. Anchored by **Living Provenance Standard 1 (LPS-1)**, the network enables individuals, communities, and archival institutions to preserve first-person testimony in its original language, cryptographically timestamp submission provenance, link physical artifacts to verifiable hashes, and gather blind independent human corroboration.
 
-## Design notes
+Crucially, the protocol makes **uncertainty visible**. It does not treat blockchain consensus, token holdings, or machine learning models as arbiters of truth. Instead, it maintains a structured 5-panel ledger distinguishing personal recollection, independent witness testimony, artifact integrity, bounded historical support, and open research questions.
 
-### The 58-check audit manifest is real
+---
 
-The old `verified_checks_passed: 58` self-set field is gone. `run_all_58_checks(tree, document)` executes 58 discrete named assertions grouped as:
+## 2. The Crisis of Digital Memory
 
-- **1–15** Structural (leaves present, indices contiguous, depth = ceil(log₂ n), root deterministic on rebuild, …)
-- **16–30** Content (paragraph parsing parity, UTF-8, size bounds, serde roundtrip, …)
-- **31–45** Anchor metadata (Polygon Chain ID 137, schema version, hex roundtrip, level cache invariants, …)
-- **46–58** Proof & verification behavior (build → prove → verify roundtrip; tampered leaf, tampered sibling, flipped direction, odd-tail duplication, out-of-range index, and bounded execution time)
+Three convergent vectors threaten the integrity of human collective memory:
+1. **Synthetic Fluidity:** Generative AI models can produce plausible historical texts, images, and audio, eroding trust in unanchored digital documents.
+2. **Bandwagon Epistemology:** Social platforms reward popular consensus, creating instant echo chambers where shared misconceptions (e.g., the Mandela Effect) are either dismissed as trivial or weaponized for speculative engagement.
+3. **Financialization of Truth:** Prediction markets and tokenized governance models allow capital concentrations to purchase consensus, confusing economic stake with historical fact.
 
-`Lps1AuditReport::passed_count` is a counted result, not a hardcoded number.
+DONK AI resolves these failures not by declaring what is "true," but by cryptographically proving **who submitted what, when it was submitted, what evidence was attached, and what methodology was applied by human reviewers.**
 
-### AFT math is strict 2/3 BFT — comment matches code
+---
 
-`AsinineFaultTolerance::has_supermajority(total, agreeing)` returns true iff `agreeing * 3 >= total * 2`. The "asinine" name is satirical framing; the math is real BFT. Both sides use `saturating_mul` so pathological weights do not panic.
+## 3. Living Provenance Standard (LPS-1 v2.0)
 
-### PolicyGuard actually verifies signatures
+LPS-1 is a typed, canonicalized, domain-separated cryptographic commitment standard.
 
-`PolicyGuardEvaluator::evaluate(proposal, validator_set, base_quorum)`:
+### Core Data Objects:
+1. **RemembranceStatement:** Canonical human prose, language tag (BCP 47), date range with explicit certainty, location descriptor with precision rating, and human-authorship attestation.
+2. **ContextManifest:** Discovery metadata partitioned between public indexing fields and protected personal context.
+3. **ConsentManifest:** Granular visibility policies (Public, Reviewer-Only, Trusted-Circle, Delayed-Public, Aggregate-Only, Private), identity modes, and retention rules.
+4. **EvidenceBundle:** Content-addressed hashes (SHA-256 / CIDv1), source classes, evidence tiers, and explicit AI disclosure flags.
+5. **CorroborationCommitment:** Sealed independent recall root committed prior to exposure to primary accounts.
+6. **ReviewAssessment:** Bounded classification under versioned open rubrics with written rationale roots.
+7. **VersionGraph:** Append-only graph of amendments, corrections, redactions, and retractions.
 
-- D0/D1 → no signatures required.
-- D2/D3 → `base_quorum` valid signatures required.
-- D4/D5 → `max(2, base_quorum)` valid signatures required.
+### Typed Domain Separation:
+To prevent cross-type collision and semantic impersonation, all hashes use strict domain separation:
+$$\text{Leaf} = \text{SHA256}(\text{"DONKAI:LPS1:LEAF:"} \parallel \text{TYPE} \parallel \text{":v1:"} \parallel \text{CanonicalBytes})$$
+$$\text{Node} = \text{SHA256}(\text{"DONKAI:LPS1:NODE:v1:"} \parallel \text{LeftHash} \parallel \text{RightHash})$$
+$$\text{Root} = \text{SHA256}(\text{"DONKAI:LPS1:ROOT:"} \parallel \text{BUNDLE} \parallel \text{":v1:"} \parallel \text{TreeRoot})$$
 
-Each `SignedApproval` is checked against the whitelisted validator set (`RejectedUnknownSigner`), deduplicated (`RejectedDuplicateSigner`), and cryptographically verified via ML-DSA-87 (`RejectedInvalidSignature`). Array length alone is not the gate.
+---
 
-### IPFS CIDs are computed, not fabricated
+## 4. Blind Independent Corroboration
 
-`compute_raw_cidv1(bytes)` → `bafkrei…` string.
-`compute_dagpb_cidv1(bytes)` → `bafybei…` string, wrapping the payload as a single-block UnixFS File PBNode.
-`pin_to_kubo_at(api_base, bytes)` → posts to Kubo `/add?cid-version=1&pin=true` and returns the daemon-reported CID.
+A fundamental product innovation of DONK AI is the elimination of bandwagon bias through **blind commit-reveal protocols**.
 
-Placeholder strings like `QmDonkaiL1QuantumResilientMesh2026` are not used anywhere in the codebase.
+1. **Discovery Stage:** A potential witness views only neutral discovery parameters (era: 1977–1980, place: Austin, category: arcade, tags: [tokens, coin-op]). The primary narrative remains concealed.
+2. **Local Sealing:** The witness authors their recollection locally. The client computes:
+   $$\text{SealedRoot} = \text{SHA256}(\text{"DONKAI:LPS1:BLIND\_CORROBORATION:v1:"} \parallel \text{Salt} \parallel \text{Narrative})$$
+3. **On-Chain Commitment:** The sealed root is anchored to `DonkaiBlindCorroboration.sol`.
+4. **Reveal & Peer Analysis:** After an embargo or review trigger, the witness reveals the narrative and salt. Reviewers analyze genuine thematic convergence without the corrupting influence of social conformity.
 
-## Not shipped
+---
 
-The following appear in earlier design drafts but are **not** in the v0.1.0 code and should not be marketed as live features:
+## 5. Bounded Historical Support & The 5-Panel Ledger
 
-- Bitcoin OpenTimestamps anchoring (only Polygon Chain ID 137 metadata is present on the manifest; OTS submission is roadmap).
-- SLH-DSA (FIPS 205) signatures.
-- ERC-3643 / T-REX Solidity contracts.
-- `$DONK-USD` stablecoin mint contracts.
-- Two-museum IPFS-pinned lore archive (collectibles + format wars) — data only, no engine yet.
-- Full Tendermint-like BFT gossip network. Consensus math is present; the p2p layer is not.
+Public records are rendered through a mandatory 5-panel ledger:
+1. **What is Remembered:** Subjective testimony and original prose.
+2. **What is Independently Recalled:** Blind witness metrics, geographic distribution, and overlap/divergence themes.
+3. **What Evidence Was Submitted:** Contemporaneous artifacts, photographs, newspaper clippings, and digital records.
+4. **What Can Be Historically Supported:** Bounded review classifications:
+   - *Historically Supported*
+   - *Partially Supported*
+   - *Conflicting Evidence*
+   - *Unresolved*
+   - *Insufficient Evidence*
+   - *Retracted by Author*
+5. **What Remains Unresolved:** Explicit documentation of missing archives, conflicting witness accounts, and open research questions.
 
-## Verification
+---
 
-```bash
-cd dev/blockchain/donkai-core
-cargo test --workspace
-cargo run
-```
+## 6. Tokenomics & Non-Financial Governance
+
+DONK AI intentionally rejects speculative token mechanics for truth determination:
+- **No Truth Markets:** Financial stakes cannot purchase, alter, or vote on historical classifications.
+- **Human Pass (SBT):** Soulbound credentials ensure sybil resistance and verify curator roles.
+- **Archive Treasury:** Protocol grants are allocated exclusively for archival digitizations, community oral history projects, and multilingual translation subsidies.
+- **Research Credits:** Non-transferable, non-monetary protocol forecast credits are permitted only for verifiable operational milestones (e.g., reaching witness counts), never on human trauma or historical veracity.
+
+---
+
+## 7. Status & Roadmap
+
+| Component | Status | Target |
+| :--- | :--- | :--- |
+| LPS-1 v2.0 Rust Core | **Shipped** | crates/donkai-lps1 |
+| Solidity EVM Suite | **Shipped** | contracts/src/ |
+| 5-Panel Web Experience | **Shipped** | web/ |
+| Memory Drift Atlas Pilot | **Shipped** | 1977 Foundation Collection |
+| Zero-Knowledge Personhood Adapters | *Prototype* | donkai-identity v0.2 |
+| Encrypted Decentralized Storage RPC | *In Development* | donkai-ipfs v0.2 |

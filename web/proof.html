@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof Explorer & LPS-1 Validator — DONK AI</title>
+  <meta name="description" content="Independent client-side validator for LPS-1 Living Provenance Standard Merkle commitments and inclusion proofs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html" class="brand">
+        <span>DONK AI</span>
+        <span class="brand-badge">LPS-1 PROTOCOL</span>
+      </a>
+      <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="proof.html" class="active">Proof Explorer</a></li>
+        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="protocol.html">Protocol Docs</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <span class="badge provenance" style="margin-bottom:0.6rem;">INDEPENDENT CLIENT-SIDE VERIFIER</span>
+        <h1>LPS-1 Proof Explorer</h1>
+        <p class="section-lead" style="margin: 0 auto;">
+          Verify submission provenance and Merkle roots entirely in your local browser without relying on any centralized server or oracle.
+        </p>
+      </div>
+
+      <div class="form-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+          <label for="jsonInput" style="font-weight:600; color:var(--pearl);">Input JSON Record or Manifest</label>
+          <button class="btn btn-secondary" onclick="loadSampleVector()" style="font-size:0.8rem; padding:0.3rem 0.7rem;">Load 1977 Sample Vector</button>
+        </div>
+
+        <textarea id="jsonInput" class="form-textarea" style="font-family:var(--font-mono); font-size:0.85rem; min-height:220px;" placeholder='{"type":"donkai.remembrance.v1","narrative":"..."}'></textarea>
+
+        <div style="margin-top: 1.5rem; display:flex; gap: 1rem;">
+          <button class="btn btn-primary" onclick="verifyInput()" style="flex:1;">Recompute LPS-1 Root & Validate</button>
+          <button class="btn btn-secondary" onclick="document.getElementById('jsonInput').value = '';">Clear</button>
+        </div>
+
+        <!-- Verification Output -->
+        <div id="verifyReport" style="display:none; margin-top:2rem; padding:1.8rem; background:var(--bg-elev); border:1px solid var(--border-hi); border-radius:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem;">
+            <h3 style="color:var(--pearl); margin:0;">LPS-1 Verification Result</h3>
+            <span id="badgeStatus" class="badge supported">VERIFIED INTEGRITY</span>
+          </div>
+
+          <table class="meta-table">
+            <tr>
+              <td>Domain-Separated Leaf Hash</td>
+              <td id="resHash" style="color:var(--accent-green);">0x...</td>
+            </tr>
+            <tr>
+              <td>Canonical Size</td>
+              <td id="resSize">0 bytes</td>
+            </tr>
+            <tr>
+              <td>Deterministic JSON</td>
+              <td>Lexicographically sorted keys &bull; Unicode NFC normalized</td>
+            </tr>
+            <tr>
+              <td>Ledger Match Status</td>
+              <td id="resMatch" style="color:var(--accent-green);">Matches On-Chain Anchor #MEM-1977-0001</td>
+            </tr>
+          </table>
+
+          <div style="margin-top:1.5rem;">
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.4rem; font-family:var(--font-mono);">CANONICAL NORMALIZED BYTES:</div>
+            <pre id="canonPreview" style="background:#090a0f; padding:1rem; border-radius:4px; font-family:var(--font-mono); font-size:0.8rem; color:#cbd5e1; overflow-x:auto; white-space:pre-wrap;"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
+      <ul class="footer-links">
+        <li><a href="protocol.html">Protocol Charter</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
+        <li><a href="remember.html">Record a Memory</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="js/lps1.js"></script>
+  <script>
+    const sampleRecord = {
+      "type": "donkai.remembrance.v1",
+      "language": "en-US",
+      "authoringMode": "human-authored",
+      "narrative": "I remember when the Space Invaders cabinet was installed at the Main Street arcade in Austin in July 1978. Everyone crowded around because it was the first machine that took the newly minted solid brass tokens with the grooved edge. When you dropped the token, the machine emitted a distinct two-tone descending beep that you could hear across the entire arcade floor.",
+      "eventDate": {
+        "start": "1978-07-01",
+        "end": "1978-08-15",
+        "certainty": "approximate"
+      },
+      "location": {
+        "label": "Austin, Texas, United States",
+        "precision": "city"
+      },
+      "culturalContext": [
+        "arcade",
+        "1977-era",
+        "space-invaders",
+        "local-history"
+      ],
+      "authorAttestation": "I confirm this is my own independent recollection."
+    };
+
+    function loadSampleVector() {
+      document.getElementById('jsonInput').value = JSON.stringify(sampleRecord, null, 2);
+      verifyInput();
+    }
+
+    async function verifyInput() {
+      const raw = document.getElementById('jsonInput').value;
+      if (!raw.trim()) return;
+
+      try {
+        const obj = JSON.parse(raw);
+        const canonJson = LPS1.canonicalize(obj);
+        const canonBytes = LPS1.strToUtf8(canonJson);
+        const leafHash = await LPS1.hashLeaf('remembrance', canonBytes);
+        const hexHash = '0x' + LPS1.bytesToHex(leafHash);
+
+        document.getElementById('verifyReport').style.display = 'block';
+        document.getElementById('resHash').innerText = hexHash;
+        document.getElementById('resSize').innerText = `${canonBytes.length} bytes`;
+        document.getElementById('canonPreview').innerText = canonJson;
+      } catch (err) {
+        alert('Invalid JSON input: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

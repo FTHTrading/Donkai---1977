@@ -1,6 +1,6 @@
 [package]
-name        = "donkai-lps1"
-description = "LPS-1 Living Provenance Standard 2.0: Canonical Data & Merkle Commitments for Human Remembrance"
+name        = "donkai-corroboration"
+description = "Blind independent corroboration and commit-reveal primitives for DONK AI"
 version.workspace      = true
 edition.workspace      = true
 rust-version.workspace = true
@@ -9,12 +9,9 @@ license.workspace      = true
 repository.workspace   = true
 
 [dependencies]
+donkai-lps1 = { workspace = true }
 sha2        = { workspace = true }
 serde       = { workspace = true }
 serde_json  = { workspace = true }
 hex         = { workspace = true }
 thiserror   = { workspace = true }
-
-[[bin]]
-name = "donkai-lps1"
-path = "src/main.rs"
