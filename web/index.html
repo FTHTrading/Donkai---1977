@@ -4,57 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WHAT DO YOU REMEMBER? — DONK AI Human Remembrance Protocol</title>
-  <meta name="description" content="Vote on iconic Mandela Effect memory divergences. Build an on-chain cryptographic remembrance record right from your browser. Popularity != Truth.">
+  <meta name="description" content="A Web3 gateway for human remembrance. Record what you remember in your own words, control who may see it, sign an EIP-712 commitment, and preserve your sovereign memory.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
-  <style>
-    .category-filter-nav {
-      display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;
-    }
-    .cat-btn {
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-dim); padding: 0.45rem 1rem; border-radius: 20px;
-      font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease;
-      font-family: var(--font-body);
-    }
-    .cat-btn:hover, .cat-btn.active {
-      border-color: var(--memory-violet); color: var(--pearl); background: rgba(168, 85, 247, 0.15);
-      box-shadow: 0 0 14px var(--memory-violet-glow);
-    }
-
-    /* Full Dilemmas Grid */
-    .dilemmas-catalog-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem; margin-top: 2rem;
-    }
-    .dilemma-mini-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1.6rem; cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .dilemma-mini-card:hover {
-      border-color: var(--memory-violet); transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px var(--memory-violet-glow);
-    }
-    .dilemma-mini-card.active-topic {
-      border-color: var(--synaptic-cyan);
-      box-shadow: 0 0 18px var(--synaptic-cyan-glow);
-    }
-
-    /* Purpose Manifesto Box */
-    .purpose-manifesto {
-      background: linear-gradient(180deg, #0e0f18 0%, #07080c 100%);
-      border: 1px solid var(--border-hi); border-radius: 14px;
-      padding: 3.5rem 2.5rem; margin: 4rem 0; position: relative; overflow: hidden;
-    }
-    .purpose-manifesto::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--memory-violet), var(--synaptic-cyan), var(--mnemonic-gold));
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -64,133 +18,235 @@
         <span class="brand-badge">LPS-1 PROTOCOL</span>
       </a>
       <ul>
-        <li><a href="index.html" class="active">What Do You Remember?</a></li>
+        <li><a href="index.html" class="active">Record a Memory</a></li>
         <li><a href="atlas.html">Memory Drift Atlas</a></li>
         <li><a href="museum.html">1977 Museum</a></li>
-        <li><a href="record.html">Record Detail</a></li>
+        <li><a href="record.html">7-Tier Ledger</a></li>
         <li><a href="corroborate.html">Blind Corroboration</a></li>
-        <li><a href="remember.html">Remembrance Studio</a></li>
         <li><a href="protocol.html">Protocol Docs</a></li>
       </ul>
+      <div id="navIdentityBtn" class="identity-pill" onclick="openIdentityModal()">
+        <span class="dot"></span>
+        <span id="navIdentityText">Connect Identity</span>
+      </div>
     </nav>
   </header>
 
   <main>
-    <!-- HERO RECALL ARENA -->
-    <div class="recall-hero">
-      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.6rem;">
-        <span class="badge frequency">528Hz Memory Frequency</span>
-        <span class="badge cyan">Decentralized Human Recall</span>
-        <span class="badge gold">LPS-1 On-Chain Standard</span>
+    <!-- SOVEREIGN GATEWAY HERO -->
+    <div class="gateway-hero">
+      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.8rem;">
+        <span class="badge frequency">528Hz Sovereign Memory Frequency</span>
+        <span class="badge cyan">EIP-712 Typed Signing</span>
+        <span class="badge gold">LPS-1 Living Provenance</span>
       </div>
       
       <h1>WHAT DO YOU REMEMBER?</h1>
       
       <p class="lead-sub">
-        Right or wrong, what you remember is authentic human testimony. Vote on the world's most debated Mandela Effect memory divergences and seal your recollection directly into an immutable cryptographic ledger.
+        <strong>Not what the internet says. Not what the crowd voted for.</strong><br>
+        What do you remember seeing, hearing, reading, owning, or experiencing? Your account remains yours. You choose what to reveal. DONK AI can preserve when and how you submitted it&mdash;but it will never claim a cryptographic hash proves your memory is true.
       </p>
 
-      <!-- Category Filter Tabs -->
-      <div class="category-filter-nav">
-        <button class="cat-btn active" onclick="filterCategory('all')">All Divergences (16+)</button>
-        <button class="cat-btn" onclick="filterCategory('Cinema & Pop Culture')">Cinema & Pop Culture</button>
-        <button class="cat-btn" onclick="filterCategory('Brand & Iconography')">Brand & Iconography</button>
-        <button class="cat-btn" onclick="filterCategory('Books & Literature')">Books & Literature</button>
-        <button class="cat-btn" onclick="filterCategory('Sci-Fi & Film')">Sci-Fi & Film</button>
-        <button class="cat-btn" onclick="filterCategory('Arcade & 1977-Era Computing')">1977 Arcade Era</button>
+      <!-- Primary & Secondary Actions -->
+      <div class="gateway-actions-row">
+        <button class="btn btn-primary" onclick="scrollToWizard()">Record a Memory &darr;</button>
+        <a href="#divergencesSection" class="btn btn-secondary">Explore Memory Divergences</a>
+        <a href="proof.html" class="btn btn-secondary">Verify a Record</a>
+        <a href="corroborate.html" class="btn btn-secondary">Submit Independent Corroboration</a>
       </div>
 
-      <!-- Quick Topic Switcher Pills -->
-      <div class="topic-pills-bar" id="topicPills">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- MAIN INTERACTIVE DILEMMA ARENA -->
-      <div class="dilemma-arena" id="dilemmaArena">
-        <div class="dilemma-header">
-          <div>
-            <span class="badge cyan" id="topicCategory">CINEMA & POP CULTURE</span>
-            <span class="badge" id="topicYear" style="margin-left:0.4rem;">1980</span>
+      <!-- SOVEREIGN 3-STEP REMEMBRANCE WIZARD -->
+      <div class="wizard-box" id="remembranceWizard">
+        <div class="wizard-steps-nav">
+          <div class="wizard-step-item active" id="stepIndicator1">
+            <div class="wizard-step-num">1</div>
+            <span>Free Recollection</span>
           </div>
-          <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);" id="totalRecallsText">
-            1,420 Community Recalls
+          <div class="wizard-step-item" id="stepIndicator2">
+            <div class="wizard-step-num">2</div>
+            <span>Consent & Control</span>
+          </div>
+          <div class="wizard-step-item" id="stepIndicator3">
+            <div class="wizard-step-num">3</div>
+            <span>Web3 Seal & Sign</span>
           </div>
         </div>
 
-        <div class="dilemma-question" id="dilemmaQuestion">
-          What does Darth Vader say to Luke Skywalker in Empire Strikes Back?
-        </div>
+        <!-- STEP 1: FREE RECOLLECTION -->
+        <div id="wizardStep1">
+          <div class="guidance-box">
+            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
+              Close your eyes for a moment. Describe the memory in your own words before seeing any possible answers. What do you remember?
+            </strong>
+            You may describe a phrase, sound, image, object, place, event, person, brand, film moment, game, song, conversation, or cultural memory. Write what comes naturally. Include uncertainty if it exists.
+          </div>
 
-        <!-- Option A vs Option B Grid -->
-        <div class="options-grid">
-          <button class="option-btn opt-a" id="btnOptA" onclick="castVote('A')">
-            <div>
-              <div class="opt-badge">OPTION A</div>
-              <div class="opt-text" id="textOptA">"Luke, I am your father."</div>
+          <div class="form-group">
+            <label>Your Personal Recollection (Original Language & Phrasing)</label>
+            <textarea id="memNarrative" class="form-textarea" placeholder="I remember..." required></textarea>
+          </div>
+
+          <div style="background:rgba(56, 189, 248, 0.06); border-left:3px solid var(--synaptic-cyan); padding:0.8rem 1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:var(--text-dim);">
+            <em>"I'm not sure" is valuable data. A memory can be vivid and still remain uncertain.</em>
+          </div>
+
+          <!-- Contextual Prompts -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.2rem;">
+            <div class="form-group">
+              <label>When do you remember encountering this?</label>
+              <input type="text" id="memTimeframe" class="form-input" placeholder="e.g. Summer 1978, early 1990s, or age 8">
             </div>
-            <div class="opt-sub" id="subOptA">Popular Collective Recall</div>
-          </button>
-
-          <button class="option-btn opt-b" id="btnOptB" onclick="castVote('B')">
-            <div>
-              <div class="opt-badge">OPTION B</div>
-              <div class="opt-text" id="textOptB">"No, I am your father."</div>
+            <div class="form-group">
+              <label>Where were you, if you remember?</label>
+              <input type="text" id="memLocation" class="form-input" placeholder="e.g. Austin TX, bedroom, movie theater">
             </div>
-            <div class="opt-sub" id="subOptB">Documented Film Audio</div>
-          </button>
-        </div>
+          </div>
 
-        <!-- Live Split Bar -->
-        <div class="result-bar-wrap">
-          <div class="result-split-bar">
-            <div class="split-seg-a" id="splitSegA" style="width: 67%;">67% RECALL A</div>
-            <div class="split-seg-b" id="splitSegB" style="width: 33%;">33% RECALL B</div>
-          </div>
-        </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.5rem;">
+            <div class="form-group">
+              <label>Where do you think this memory came from?</label>
+              <select id="memSourceAwareness" class="form-select">
+                <option value="direct-experience">I experienced it directly</option>
+                <option value="film-tv-broadcast">I saw it in a film, TV show, game, or ad</option>
+                <option value="print-packaging">I read it in a book, magazine, or packaging</option>
+                <option value="heard-from-community">I heard it from family, friends, or radio</option>
+                <option value="encountered-online">I encountered it online</option>
+                <option value="not-sure">I am not sure</option>
+              </select>
+            </div>
 
-        <!-- Epistemic Context Note -->
-        <div style="background:var(--bg-elev); border-left:3px solid var(--memory-violet); padding:1rem 1.2rem; border-radius:0 6px 6px 0; text-align:left; font-size:0.9rem; color:var(--text-dim); line-height:1.6;" id="topicContext">
-          Widely cited in pop culture across 40 years, yet original theatrical audio tracks preserve "No, I am your father."
-        </div>
+            <div class="form-group">
+              <label>How does this memory feel today?</label>
+              <select id="memConfidence" class="form-select">
+                <option value="vivid-and-certain">Certain</option>
+                <option value="vivid-but-uncertain" selected>Vivid but uncertain</option>
+                <option value="familiar-mixed-details">Familiar, but details may be mixed</option>
+                <option value="two-conflicting-versions">I remember two conflicting versions</option>
+                <option value="documenting-unknown">Documenting specifically because I do not know</option>
+              </select>
+            </div>
+          </div>
 
-        <!-- Cryptographic On-Chain Receipt Box -->
-        <div class="receipt-anchor-box" id="receiptBox">
-          <div class="receipt-title">
-            <span>&#10003; LPS-1 MEMORY COMMITMENT GENERATED</span>
-            <span class="badge supported" style="font-size:0.7rem;">SEALED IN BROWSER</span>
-          </div>
-          <div style="font-size:0.85rem; color:var(--text); margin-bottom:0.4rem;">
-            Your vote has been cryptographically hashed with a client-side random nonce:
-          </div>
-          <div class="receipt-hash" id="receiptHash">
-            0x8fd5e8f23644ec8680b24c13eb4e44b7cc299d8ca0b1c2d3e4f506172839405a
-          </div>
-          <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
-            <a href="record.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">View 7-Tier Record Ledger &rarr;</a>
-            <a href="atlas.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">Explore Global Drift Atlas &rarr;</a>
+          <div style="text-align:right;">
+            <button class="btn btn-primary" onclick="goToStep(2)">Proceed to Consent & Privacy &rarr;</button>
           </div>
         </div>
 
-        <!-- Carousel Navigation -->
-        <div class="topic-nav">
-          <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="prevDilemma()">&larr; Previous Dilemma</button>
-          <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted);" id="topicCounter">1 of 16</span>
-          <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="nextDilemma()">Next Dilemma &rarr;</button>
+        <!-- STEP 2: CONSENT & CONTROL -->
+        <div id="wizardStep2" style="display:none;">
+          <div class="guidance-box">
+            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
+              WHO MAY SEE THIS MEMORY? You remain in control of your account and attached material.
+            </strong>
+            Select the access policy for your memory. Private and reviewer-only records are encrypted on your device with AES-GCM-256 before upload.
+          </div>
+
+          <div class="choice-card-grid">
+            <div class="choice-card selected" onclick="selectPrivacy('public-pseudonymous', this)">
+              <div class="choice-title">Public Pseudonymous Record</div>
+              <div class="choice-desc">Visible on the Memory Drift Atlas under your pseudonymous DID/wallet.</div>
+            </div>
+            <div class="choice-card" onclick="selectPrivacy('reviewer-only', this)">
+              <div class="choice-title">Me and Invited Reviewers</div>
+              <div class="choice-desc">Encrypted. Only accessible to authenticated peer archivists.</div>
+            </div>
+            <div class="choice-card" onclick="selectPrivacy('aggregate-research', this)">
+              <div class="choice-title">Anonymous Aggregate Research Only</div>
+              <div class="choice-desc">Included in statistical convergence studies without public prose.</div>
+            </div>
+            <div class="choice-card" onclick="selectPrivacy('only-me', this)">
+              <div class="choice-title">Only Me (Private Sovereign Vault)</div>
+              <div class="choice-desc">Encrypted locally. Zero public visibility. Only your key can decrypt.</div>
+            </div>
+          </div>
+
+          <div style="background:rgba(245, 158, 11, 0.06); border:1px solid rgba(245, 158, 11, 0.25); padding:1rem; border-radius:6px; margin-bottom:1.8rem; font-size:0.85rem; color:var(--text-dim);">
+            <strong style="color:var(--mnemonic-gold);">Sensitive Content Notice:</strong>
+            This record may contain personal, traumatic, identifying, or legally sensitive information. Do not submit private information about another person without appropriate consent.
+          </div>
+
+          <div style="display:flex; justify-content:space-between;">
+            <button class="btn btn-secondary" onclick="goToStep(1)">&larr; Back to Recollection</button>
+            <button class="btn btn-primary" onclick="goToStep(3)">Proceed to Web3 Seal & Sign &rarr;</button>
+          </div>
         </div>
+
+        <!-- STEP 3: WEB3 SEAL & SIGN -->
+        <div id="wizardStep3" style="display:none;">
+          <div class="guidance-box">
+            <strong style="color:var(--pearl); display:block; margin-bottom:0.3rem;">
+              SEAL YOUR REMEMBRANCE: Private Cryptographic Commitment
+            </strong>
+            DONK AI will generate an LPS-1 cryptographic root and prepare an EIP-712 structured typed data signature for your sovereign identity.
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.5rem;">
+            <div style="background:var(--bg-elev); padding:1.2rem; border-radius:8px; border:1px solid var(--border);">
+              <strong style="color:var(--memory-emerald); font-size:0.9rem; display:block; margin-bottom:0.4rem;">
+                &#10003; What Is Stored Publicly On-Chain:
+              </strong>
+              <ul style="margin-left:1.2rem; font-size:0.82rem; color:var(--text-dim); line-height:1.6;">
+                <li>Cryptographic commitment root (SHA-256)</li>
+                <li>EIP-712 signature from your identity</li>
+                <li>Access policy hash & timestamp</li>
+                <li>Future version and review events</li>
+              </ul>
+            </div>
+
+            <div style="background:var(--bg-elev); padding:1.2rem; border-radius:8px; border:1px solid var(--border);">
+              <strong style="color:var(--memory-coral); font-size:0.9rem; display:block; margin-bottom:0.4rem;">
+                &#10005; What Is NOT Stored Publicly:
+              </strong>
+              <ul style="margin-left:1.2rem; font-size:0.82rem; color:var(--text-dim); line-height:1.6;">
+                <li>Your raw private memory text</li>
+                <li>Private attachments or media</li>
+                <li>Your encryption key</li>
+                <li>Your real-world personal identity</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Identity Selector -->
+          <div style="background:var(--bg-elev); border:1px solid var(--border-hi); border-radius:8px; padding:1.2rem; margin-bottom:1.8rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.8rem;">
+              <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--pearl);">Active Signing Identity:</span>
+              <span class="badge frequency" id="currentIdentityBadge">Sovereign Local DID</span>
+            </div>
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="connectWeb3Wallet()">Connect EVM Wallet (EIP-712)</button>
+              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="connectPasskey()">Use Biometric Passkey</button>
+              <button class="btn btn-secondary" style="font-size:0.82rem; padding:0.4rem 0.8rem;" onclick="generateSovereignDid()">New Anonymous DID</button>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between;">
+            <button class="btn btn-secondary" onclick="goToStep(2)">&larr; Back to Consent</button>
+            <button class="btn btn-primary" onclick="openEip712ReviewModal()">Review and Sign My Remembrance &rarr;</button>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- FULL DILEMMAS EXPLORER CATALOG -->
-    <section style="padding-top: 0;">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
-        <div>
-          <span class="badge cyan">COMPLETE CATALOG</span>
-          <h2 style="font-size:2rem; margin-top:0.4rem;">Explore All Memory Divergences</h2>
-          <p style="color:var(--text-dim); margin-bottom:0;">Click any card to load the dilemma and cast your cryptographic on-chain vote.</p>
-        </div>
-        <button class="btn btn-secondary" onclick="document.getElementById('submitDilemmaSection').scrollIntoView({behavior:'smooth'})">
-          + Propose New Memory Dilemma
-        </button>
+    <!-- MEMORY DIVERGENCES & MANDELA CATALOG (SECONDARY SECTION) -->
+    <section id="divergencesSection" style="padding-top:1rem;">
+      <div style="text-align:center; margin-bottom:2.5rem;">
+        <span class="badge cyan">COLLECTIVE MEMORY DIVERGENCES</span>
+        <h2 style="font-size:2.2rem; margin-top:0.5rem;">Explore Memory Divergences</h2>
+        <p style="color:var(--text-dim); max-width:750px; margin:0.5rem auto 0 auto; font-size:1.05rem;">
+          Compare where human memories converge, conflict with physical archives, or drift over time.
+        </p>
+      </div>
+
+      <!-- Quick Category Nav -->
+      <div class="category-filter-nav">
+        <button class="cat-btn active" onclick="filterCatalogCategory('all')">All Topics (16+)</button>
+        <button class="cat-btn" onclick="filterCatalogCategory('Cinema & Pop Culture')">Cinema & Pop Culture</button>
+        <button class="cat-btn" onclick="filterCatalogCategory('Brand & Iconography')">Brand & Iconography</button>
+        <button class="cat-btn" onclick="filterCatalogCategory('Books & Literature')">Books & Literature</button>
+        <button class="cat-btn" onclick="filterCatalogCategory('Sci-Fi & Film')">Sci-Fi & Film</button>
+        <button class="cat-btn" onclick="filterCatalogCategory('Arcade & 1977-Era Computing')">1977 Arcade</button>
       </div>
 
       <div class="dilemmas-catalog-grid" id="catalogGrid">
@@ -198,110 +254,110 @@
       </div>
     </section>
 
-    <!-- WHY WE ARE DOING IT: THE TRUE PURPOSE MANIFESTO -->
+    <!-- PROTOCOL MANIFESTO SECTION -->
     <section style="padding-top: 1rem;">
       <div class="purpose-manifesto">
         <div style="max-width:880px; margin:0 auto; text-align:left;">
-          <span class="badge frequency" style="margin-bottom:0.8rem;">PROTOCOL MANIFESTO</span>
+          <span class="badge frequency" style="margin-bottom:0.8rem;">THE DONK AI MANIFESTO</span>
           <h2 style="font-size:2.4rem; color:var(--pearl); margin-bottom:1rem; line-height:1.2;">
-            Why We Are Doing This: The Purpose of DONK AI
+            Human Memory Is Not a Token.
           </h2>
           
-          <p style="font-size:1.1rem; color:var(--text); line-height:1.7; margin-bottom:1.8rem;">
-            We live at the dawn of the synthetic age. As generative AI models synthesize billions of texts, images, and videos daily, digital archives are quietly overwritten, edited, and flattened. The risk of <strong>digital amnesia</strong>—where what humans actually saw, felt, and remembered is silently erased—is the defining cultural challenge of our century.
+          <p style="font-size:1.1rem; color:var(--text); line-height:1.7; margin-bottom:1.5rem;">
+            It is a signal: personal, cultural, fallible, emotional, and sometimes historically important.
+          </p>
+          
+          <p style="font-size:1.05rem; color:var(--text-dim); line-height:1.7; margin-bottom:1.8rem;">
+            DONK AI gives people a way to preserve that signal without forcing it into a false binary of "true" or "false." A remembrance can be signed without being publicly exposed. Evidence can be linked without being confused with testimony. Independent accounts can converge&mdash;or conflict&mdash;without a crowd, an algorithm, or money deciding what reality must have been.
           </p>
 
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.8rem; margin:2rem 0;">
             <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--memory-violet); font-size:1.1rem; margin-bottom:0.5rem;">1. Memory Is Not a Bug</h4>
+              <h4 style="color:var(--memory-violet); font-size:1.1rem; margin-bottom:0.5rem;">Why We Use Web3</h4>
               <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Your subjective recollection is genuine human cognitive data. Whether your memory matches the physical museum archive or reflects a collective cultural schema, it deserves an immutable sovereign record.
+                Because people deserve portable authorship, verifiable provenance, consent-aware access, and records that cannot be silently rewritten by centralized platforms.
               </p>
             </div>
 
             <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--synaptic-cyan); font-size:1.1rem; margin-bottom:0.5rem;">2. Defense Against Retro-Edits</h4>
+              <h4 style="color:var(--synaptic-cyan); font-size:1.1rem; margin-bottom:0.5rem;">What We Reject</h4>
               <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                Centralized cloud databases can retroactively alter film dialogue, brand logos, and historic speeches with a single server commit. LPS-1 anchors cryptographic time-stamped proof of what humanity experienced.
+                We do not use Web3 to sell truth. We do not use popularity to overwrite minority memory. We do not use AI to pronounce judgment on a human life.
               </p>
             </div>
 
             <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:1.5rem; border-radius:8px;">
-              <h4 style="color:var(--mnemonic-gold); font-size:1.1rem; margin-bottom:0.5rem;">3. Stake Does Not Equal Truth</h4>
+              <h4 style="color:var(--mnemonic-gold); font-size:1.1rem; margin-bottom:0.5rem;">What We Preserve</h4>
               <p style="font-size:0.9rem; color:var(--text-dim); line-height:1.6;">
-                We reject speculative prediction markets and token wagering on human trauma. Historical support is bounded through transparent peer review and blind corroboration, not financial capital.
+                DONK AI preserves what was remembered, what was submitted, what can be historically supported, and what remains unresolved.
               </p>
             </div>
           </div>
 
           <div style="text-align:center; margin-top:2.5rem;">
-            <a href="protocol.html" class="btn btn-primary" style="margin-right:1rem;">Read Complete Protocol Charter &rarr;</a>
-            <a href="museum.html" class="btn btn-secondary">Visit 1977 Cultural Museum</a>
+            <a href="protocol.html" class="btn btn-primary" style="margin-right:1rem;">Read Complete Charter &rarr;</a>
+            <a href="museum.html" class="btn btn-secondary">Explore 1977 Cultural Museum</a>
           </div>
         </div>
       </div>
     </section>
+  </main>
 
-    <!-- SUBMIT A NEW DILEMMA SECTION -->
-    <section id="submitDilemmaSection" style="padding-top:1rem;">
-      <div class="form-card">
-        <span class="badge cyan" style="margin-bottom:0.6rem;">COMMUNITY PROPOSAL</span>
-        <h2 style="font-size:2rem; margin-bottom:0.6rem;">Propose a Memory Divergence</h2>
-        <p style="color:var(--text-dim); margin-bottom:2rem; font-size:0.95rem;">
-          Notice a widespread memory divergence that isn't cataloged yet? Submit the dilemma below to generate an on-chain proposal commitment root.
+  <!-- EIP-712 REVIEW & SIGNING MODAL -->
+  <div id="eip712Modal" class="eip712-modal-overlay">
+    <div class="eip712-modal-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <span class="badge frequency">EIP-712 TYPED STRUCTURED DATA</span>
+        <button onclick="closeEip712Modal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <h2 style="color:var(--pearl); font-size:1.6rem; margin-bottom:0.5rem;">Review & Sign Remembrance</h2>
+      <p style="font-size:0.92rem; color:var(--text-dim); margin-bottom:1rem;">
+        Your wallet or identity will sign this human-readable EIP-712 structured commitment:
+      </p>
+
+      <div class="typed-data-box" id="typedDataSummary">
+        <!-- Injected via JS -->
+      </div>
+
+      <div style="background:rgba(168, 85, 247, 0.08); border-left:3px solid var(--memory-violet); padding:1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:var(--text-dim);">
+        <strong>Signer Declaration:</strong> I confirm that this cryptographic commitment represents the version of my remembrance described above. I understand that this signature proves I submitted this record; it does not prove that the memory is historically accurate.
+      </div>
+
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+        <button class="btn btn-secondary" onclick="closeEip712Modal()">Edit Memory</button>
+        <button class="btn btn-primary" onclick="executeEip712Sign()">Confirm & Sign Record &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS & PORTABLE EXPORT MODAL -->
+  <div id="successModal" class="eip712-modal-overlay">
+    <div class="eip712-modal-content">
+      <div style="text-align:center; padding:1rem 0;">
+        <div style="width:50px; height:50px; border-radius:50%; background:rgba(52, 211, 153, 0.15); border:1px solid var(--memory-emerald); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem auto; color:var(--memory-emerald); font-size:1.5rem;">
+          &#10003;
+        </div>
+        <span class="badge supported">RECORD CRYPTOGRAPHICALLY COMMITTED</span>
+        <h2 style="color:var(--pearl); font-size:1.8rem; margin:0.8rem 0;">Your Remembrance Is Sealed</h2>
+        <p style="font-size:0.95rem; color:var(--text-dim); max-width:550px; margin:0 auto 1.5rem auto;">
+          An immutable LPS-1 provenance receipt has been signed and anchored under your sovereign identity.
         </p>
 
-        <form id="customDilemmaForm" onsubmit="submitCustomDilemma(event)">
-          <div class="form-group">
-            <label>Dilemma Topic Title</label>
-            <input type="text" id="propTitle" class="form-input" placeholder="e.g. Curious George's Tail" required>
-          </div>
+        <div style="background:var(--bg-elev); border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:left; font-family:var(--font-mono); font-size:0.82rem; margin-bottom:1.5rem;">
+          <div style="color:var(--text-muted); margin-bottom:0.3rem;">RECORD ID (LPS-1):</div>
+          <div style="color:var(--memory-violet); word-break:break-all; margin-bottom:0.8rem;" id="sealedRecordId">0x...</div>
+          <div style="color:var(--text-muted); margin-bottom:0.3rem;">EIP-712 SIGNATURE:</div>
+          <div style="color:var(--synaptic-cyan); word-break:break-all;" id="sealedSignature">0x...</div>
+        </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
-            <div class="form-group">
-              <label>Topic Category</label>
-              <select id="propCategory" class="form-select" required>
-                <option value="Cinema & Pop Culture">Cinema & Pop Culture</option>
-                <option value="Brand & Iconography">Brand & Iconography</option>
-                <option value="Books & Literature">Books & Literature</option>
-                <option value="Sci-Fi & Film">Sci-Fi & Film</option>
-                <option value="Arcade & 1977-Era Computing">Arcade & Early Tech</option>
-                <option value="Music & Performance">Music & Performance</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Era / Year</label>
-              <input type="text" id="propYear" class="form-input" placeholder="e.g. 1977 or 1990s" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>The Core Divergence Question</label>
-            <input type="text" id="propQuestion" class="form-input" placeholder="e.g. Does Curious George have a monkey tail?" required>
-          </div>
-
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;">
-            <div class="form-group">
-              <label>Option A (Popular Memory)</label>
-              <input type="text" id="propOptA" class="form-input" placeholder="e.g. Yes, he has a tail" required>
-            </div>
-            <div class="form-group">
-              <label>Option B (Archival Record)</label>
-              <input type="text" id="propOptB" class="form-input" placeholder="e.g. No, he has no tail" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Context & Archival Notes</label>
-            <textarea id="propContext" class="form-textarea" placeholder="Describe where people remember this vs what the physical archival records show..." required></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width:100%;">Seal & Submit Memory Dilemma &rarr;</button>
-        </form>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="downloadSealedManifest()">Download W3C Verifiable Credential Manifest (JSON) &darr;</button>
+          <a href="atlas.html" class="btn btn-secondary">Explore on Atlas &rarr;</a>
+        </div>
       </div>
-    </section>
-
-  </main>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-inner">
@@ -316,25 +372,163 @@
   </footer>
 
   <script src="js/mandela-engine.js"></script>
+  <script src="js/web3-gateway.js"></script>
   <script>
-    let currentCategoryFilter = 'all';
+    let currentPrivacyChoice = 'public-pseudonymous';
+    let currentManifestPackage = null;
+    let sealedManifest = null;
+    let currentCatalogCategory = 'all';
 
-    function renderCatalog() {
+    function scrollToWizard() {
+      document.getElementById('remembranceWizard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function goToStep(stepNum) {
+      if (stepNum === 2) {
+        const narrative = document.getElementById('memNarrative').value.trim();
+        if (!narrative) {
+          alert('Please enter your personal recollection before proceeding.');
+          return;
+        }
+      }
+
+      document.getElementById('wizardStep1').style.display = (stepNum === 1) ? 'block' : 'none';
+      document.getElementById('wizardStep2').style.display = (stepNum === 2) ? 'block' : 'none';
+      document.getElementById('wizardStep3').style.display = (stepNum === 3) ? 'block' : 'none';
+
+      document.getElementById('stepIndicator1').classList.toggle('active', stepNum === 1);
+      document.getElementById('stepIndicator2').classList.toggle('active', stepNum === 2);
+      document.getElementById('stepIndicator3').classList.toggle('active', stepNum === 3);
+
+      updateIdentityBadge();
+    }
+
+    function selectPrivacy(choice, cardEl) {
+      currentPrivacyChoice = choice;
+      document.querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+      cardEl.classList.add('selected');
+    }
+
+    function updateIdentityBadge() {
+      const ident = window.Web3MemoryGateway.currentIdentity;
+      const badge = document.getElementById('currentIdentityBadge');
+      const navText = document.getElementById('navIdentityText');
+      if (ident) {
+        badge.innerText = ident.label || ident.did;
+        navText.innerText = ident.label || ident.did;
+      } else {
+        badge.innerText = 'Sovereign Local DID';
+        navText.innerText = 'Connect Identity';
+      }
+    }
+
+    async function connectWeb3Wallet() {
+      try {
+        await window.Web3MemoryGateway.connectWallet();
+        updateIdentityBadge();
+        alert('Connected EVM Wallet: ' + window.Web3MemoryGateway.currentIdentity.address);
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function connectPasskey() {
+      try {
+        await window.Web3MemoryGateway.createPasskeyIdentity();
+        updateIdentityBadge();
+        alert('Passkey sovereign identity activated.');
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function generateSovereignDid() {
+      await window.Web3MemoryGateway.createLocalDidIdentity();
+      updateIdentityBadge();
+      alert('New sovereign DID generated.');
+    }
+
+    function openIdentityModal() {
+      const choice = confirm('Choose Identity:\nOK = Connect EVM Wallet (MetaMask)\nCancel = Generate Local Passkey/DID');
+      if (choice) connectWeb3Wallet();
+      else connectPasskey();
+    }
+
+    async function openEip712ReviewModal() {
+      const narrative = document.getElementById('memNarrative').value.trim();
+      const timeframe = document.getElementById('memTimeframe').value.trim();
+      const location = document.getElementById('memLocation').value.trim();
+      const sourceAwareness = document.getElementById('memSourceAwareness').value;
+      const confidence = document.getElementById('memConfidence').value;
+
+      currentManifestPackage = await window.Web3MemoryGateway.buildRemembranceManifest({
+        narrative,
+        language: 'en-US',
+        eventTimeframe: timeframe,
+        location,
+        sourceAwareness,
+        confidenceLevel: confidence,
+        accessPolicy: currentPrivacyChoice
+      });
+
+      const msg = currentManifestPackage.eip712Message;
+      const summaryHtml = `
+        <div><strong>Action:</strong> Create Sovereign Remembrance Record</div>
+        <div><strong>Record ID:</strong> ${msg.recordId}</div>
+        <div><strong>Canonical Statement Root:</strong> ${msg.canonicalStatementRoot}</div>
+        <div><strong>Access Policy Hash:</strong> ${msg.accessPolicyHash} (${currentPrivacyChoice})</div>
+        <div><strong>Protocol Version:</strong> LPS-1.0 (Chain ID: 1977)</div>
+        <div><strong>Creation Epoch:</strong> ${new Date(msg.createdAt * 1000).toUTCString()}</div>
+        <div><strong>Signing Identity:</strong> ${window.Web3MemoryGateway.currentIdentity ? window.Web3MemoryGateway.currentIdentity.did : 'Sovereign In-Browser DID'}</div>
+      `;
+      document.getElementById('typedDataSummary').innerHTML = summaryHtml;
+      document.getElementById('eip712Modal').style.display = 'flex';
+    }
+
+    function closeEip712Modal() {
+      document.getElementById('eip712Modal').style.display = 'none';
+    }
+
+    async function executeEip712Sign() {
+      try {
+        sealedManifest = await window.Web3MemoryGateway.signRemembrance(currentManifestPackage);
+        closeEip712Modal();
+        document.getElementById('sealedRecordId').innerText = sealedManifest.credentialSubject.recordId;
+        document.getElementById('sealedSignature').innerText = sealedManifest.proof.proofValue;
+        document.getElementById('successModal').style.display = 'flex';
+      } catch (e) {
+        alert('Signing failed: ' + e.message);
+      }
+    }
+
+    function downloadSealedManifest() {
+      if (!sealedManifest) return;
+      const blob = new Blob([JSON.stringify(sealedManifest, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `donkai-remembrance-${sealedManifest.credentialSubject.recordId.slice(2, 10)}.json`;
+      a.click();
+    }
+
+    // Catalog Rendering
+    function renderCatalogGrid() {
       const grid = document.getElementById('catalogGrid');
       grid.innerHTML = '';
-      const allTopics = window.MandelaEngine.getAllTopics();
-      const filtered = currentCategoryFilter === 'all' 
-        ? allTopics 
-        : allTopics.filter(t => t.category === currentCategoryFilter);
+      const all = window.MandelaEngine.getAllTopics();
+      const filtered = currentCatalogCategory === 'all' 
+        ? all 
+        : all.filter(t => t.category === currentCatalogCategory);
 
-      filtered.forEach((topic) => {
+      filtered.forEach(topic => {
         const pcts = window.MandelaEngine.getPercentages(topic);
         const card = document.createElement('div');
-        card.className = `dilemma-mini-card ${topic.id === window.MandelaEngine.getCurrentTopic().id ? 'active-topic' : ''}`;
+        card.className = 'dilemma-mini-card';
         card.onclick = () => {
-          window.MandelaEngine.setTopicById(topic.id);
-          renderTopic();
-          document.getElementById('dilemmaArena').scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('memNarrative').value = `I remember when ${topic.question} Specifically: "${topic.optionA.label}"`;
+          document.getElementById('memTimeframe').value = topic.year;
+          goToStep(1);
+          scrollToWizard();
         };
 
         card.innerHTML = `
@@ -354,8 +548,8 @@
               </div>
             </div>
             <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-family:var(--font-mono); color:var(--text-muted);">
-              <span>${pcts.total.toLocaleString()} Recalls</span>
-              <span style="color:var(--memory-violet);">Vote &rarr;</span>
+              <span>${pcts.total.toLocaleString()} Accounts</span>
+              <span style="color:var(--memory-violet);">Record Memory &rarr;</span>
             </div>
           </div>
         `;
@@ -363,113 +557,17 @@
       });
     }
 
-    function filterCategory(cat) {
-      currentCategoryFilter = cat;
+    function filterCatalogCategory(cat) {
+      currentCatalogCategory = cat;
       document.querySelectorAll('.cat-btn').forEach(btn => {
         btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'all' && btn.innerText.includes('All')));
       });
-      renderPills();
-      renderCatalog();
-    }
-
-    function renderPills() {
-      const pillsContainer = document.getElementById('topicPills');
-      pillsContainer.innerHTML = '';
-      const allTopics = window.MandelaEngine.getAllTopics();
-      const filtered = currentCategoryFilter === 'all' 
-        ? allTopics 
-        : allTopics.filter(t => t.category === currentCategoryFilter);
-
-      filtered.forEach((t) => {
-        const btn = document.createElement('button');
-        btn.className = `topic-pill ${t.id === window.MandelaEngine.getCurrentTopic().id ? 'active' : ''}`;
-        btn.innerText = (t.title || t.id.replace(/-/g, ' ')).toUpperCase();
-        btn.onclick = () => {
-          window.MandelaEngine.setTopicById(t.id);
-          renderTopic();
-        };
-        pillsContainer.appendChild(btn);
-      });
-    }
-
-    function renderTopic() {
-      const topic = window.MandelaEngine.getCurrentTopic();
-      document.getElementById('topicCategory').innerText = topic.category.toUpperCase();
-      document.getElementById('topicYear').innerText = topic.year;
-      document.getElementById('dilemmaQuestion').innerText = topic.question;
-      
-      document.getElementById('textOptA').innerText = topic.optionA.label;
-      document.getElementById('subOptA').innerText = topic.optionA.recalledBy;
-      document.getElementById('textOptB').innerText = topic.optionB.label;
-      document.getElementById('subOptB').innerText = topic.optionB.recalledBy;
-      document.getElementById('topicContext').innerText = topic.context;
-
-      const pcts = window.MandelaEngine.getPercentages(topic);
-      document.getElementById('totalRecallsText').innerText = `${pcts.total.toLocaleString()} Community Recalls`;
-      document.getElementById('splitSegA').style.width = `${pcts.pctA}%`;
-      document.getElementById('splitSegA').innerText = `${pcts.pctA}% RECALL A`;
-      document.getElementById('splitSegB').style.width = `${pcts.pctB}%`;
-      document.getElementById('splitSegB').innerText = `${pcts.pctB}% RECALL B`;
-
-      const allTopics = window.MandelaEngine.getAllTopics();
-      const currentIdx = allTopics.findIndex(t => t.id === topic.id);
-      document.getElementById('topicCounter').innerText = `${currentIdx + 1} of ${allTopics.length}`;
-
-      const userVote = window.MandelaEngine.getVote(topic.id);
-      const btnA = document.getElementById('btnOptA');
-      const btnB = document.getElementById('btnOptB');
-      const receiptBox = document.getElementById('receiptBox');
-
-      btnA.classList.toggle('selected', userVote && userVote.choice === 'A');
-      btnB.classList.toggle('selected', userVote && userVote.choice === 'B');
-
-      if (userVote) {
-        receiptBox.classList.add('active');
-        document.getElementById('receiptHash').innerText = userVote.commitmentHash;
-      } else {
-        receiptBox.classList.remove('active');
-      }
-
-      renderPills();
-      renderCatalog();
-    }
-
-    async function castVote(choice) {
-      const topic = window.MandelaEngine.getCurrentTopic();
-      await window.MandelaEngine.vote(topic.id, choice);
-      renderTopic();
-    }
-
-    function nextDilemma() {
-      window.MandelaEngine.nextTopic();
-      renderTopic();
-    }
-
-    function prevDilemma() {
-      window.MandelaEngine.prevTopic();
-      renderTopic();
-    }
-
-    async function submitCustomDilemma(event) {
-      event.preventDefault();
-      const title = document.getElementById('propTitle').value;
-      const category = document.getElementById('propCategory').value;
-      const year = document.getElementById('propYear').value;
-      const question = document.getElementById('propQuestion').value;
-      const optA = document.getElementById('propOptA').value;
-      const optB = document.getElementById('propOptB').value;
-      const context = document.getElementById('propContext').value;
-
-      const newTopic = await window.MandelaEngine.submitCustomDilemma(title, category, year, question, optA, optB, context);
-      alert(`Memory Dilemma '${title}' successfully anchored under LPS-1! Switching to your dilemma.`);
-      document.getElementById('customDilemmaForm').reset();
-      window.MandelaEngine.setTopicById(newTopic.id);
-      renderTopic();
-      document.getElementById('dilemmaArena').scrollIntoView({ behavior: 'smooth' });
+      renderCatalogGrid();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      renderTopic();
+      updateIdentityBadge();
+      renderCatalogGrid();
     });
   </script>
 </body>
