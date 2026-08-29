@@ -560,15 +560,15 @@
   </div>
 
   <!-- Clear Draft Confirmation Modal -->
-  <div id="clearDraftModal" class="modal-overlay">
+  <div id="clearDraftModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="clearDraftTitle">
     <div class="modal-card" style="max-width:440px;">
-      <h3 style="font-size:1.2rem; color:var(--memory-crimson); margin-bottom:0.6rem;">Clear this local draft?</h3>
+      <h3 id="clearDraftTitle" style="font-size:1.2rem; color:var(--memory-crimson); margin-bottom:0.6rem;">Clear this local draft?</h3>
       <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:1.4rem; line-height:1.5;">
         This removes the unsent recollection from this browser. It cannot be restored unless you saved or submitted it elsewhere.
       </p>
       <div style="display:flex; justify-content:flex-end; gap:0.8rem;">
-        <button class="btn btn-secondary btn-sm" onclick="closeClearDraftModal()">Keep draft</button>
-        <button class="btn btn-primary btn-sm" style="background:var(--memory-crimson); border-color:var(--memory-crimson);" onclick="executeClearDraft()">Clear permanently</button>
+        <button id="btnKeepDraft" class="btn btn-secondary btn-sm" onclick="closeClearDraftModal()">Keep draft</button>
+        <button id="btnClearConfirm" class="btn btn-primary btn-sm" style="background:var(--memory-crimson); border-color:var(--memory-crimson);" onclick="executeClearDraft()">Clear permanently</button>
       </div>
     </div>
   </div>
@@ -588,6 +588,13 @@
   <script src="js/walkthrough.js?v=2.2.0"></script>
   <script>
     let pendingStarter = '';
+    const DONKAI_DRAFT_KEY = "donkai:lps1:draft:v1";
+    const DONKAI_DRAFT_KEYS = [
+      "donkai:lps1:draft:v1",
+      "donkai:lps1:draft-status:v1",
+      "donkai:lps1:consent-receipt:v1",
+      "donkai:lps1:draft-attachment-meta:v1"
+    ];
 
     function selectMemoryType(type, prefix) {
       document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('active'));
@@ -643,7 +650,7 @@
         savedAt: now.toISOString(),
         expiresAt: new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000).toISOString()
       };
-      localStorage.setItem('donkai_remembrance_draft', JSON.stringify(draft));
+      localStorage.setItem(DONKAI_DRAFT_KEY, JSON.stringify(draft));
       const status = document.getElementById('draftSaveStatus');
       if (status) {
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -652,12 +659,12 @@
     }
 
     function loadDraft() {
-      const raw = localStorage.getItem('donkai_remembrance_draft');
+      const raw = localStorage.getItem(DONKAI_DRAFT_KEY);
       if (!raw) return;
       try {
         const draft = JSON.parse(raw);
         if (draft.expiresAt && new Date(draft.expiresAt) < new Date()) {
-          localStorage.removeItem('donkai_remembrance_draft');
+          purgeAllDraftKeys();
           return;
         }
         if (draft.prose) document.getElementById('journeyProseInput').value = draft.prose;
@@ -671,16 +678,28 @@
       } catch (e) {}
     }
 
+    function purgeAllDraftKeys() {
+      for (const key of DONKAI_DRAFT_KEYS) {
+        localStorage.removeItem(key);
+      }
+      localStorage.removeItem('donkai_remembrance_draft');
+    }
+
     function openClearDraftModal() {
-      document.getElementById('clearDraftModal').classList.add('active');
+      const modal = document.getElementById('clearDraftModal');
+      modal.classList.add('active');
+      setTimeout(() => {
+        document.getElementById('btnKeepDraft').focus();
+      }, 50);
     }
 
     function closeClearDraftModal() {
       document.getElementById('clearDraftModal').classList.remove('active');
+      document.getElementById('journeyProseInput').focus();
     }
 
     function executeClearDraft() {
-      localStorage.removeItem('donkai_remembrance_draft');
+      purgeAllDraftKeys();
       document.getElementById('journeyProseInput').value = '';
       document.getElementById('ctxEra').value = '';
       document.getElementById('ctxPlace').value = '';
@@ -715,6 +734,7 @@
         recordVersion: 1
       };
       window.currentConsentReceipt = consentReceipt;
+      localStorage.setItem("donkai:lps1:consent-receipt:v1", JSON.stringify(consentReceipt));
 
       openEIP712Modal();
     }
@@ -733,8 +753,32 @@
       }
     }
 
+    // Modal Keyboard Handler (Escape & Focus Trap)
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('clearDraftModal');
+      if (!modal.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeClearDraftModal();
+      } else if (e.key === 'Tab') {
+        const btnKeep = document.getElementById('btnKeepDraft');
+        const btnClear = document.getElementById('btnClearConfirm');
+        if (e.shiftKey && document.activeElement === btnKeep) {
+          e.preventDefault();
+          btnClear.focus();
+        } else if (!e.shiftKey && document.activeElement === btnClear) {
+          e.preventDefault();
+          btnKeep.focus();
+        }
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
       loadDraft();
+      // Periodic check for draft TTL expiration
+      setInterval(() => {
+        loadDraft();
+      }, 60000);
     });
   </script>
 </body>

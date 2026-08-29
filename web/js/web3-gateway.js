@@ -24,6 +24,7 @@ const EIP712_TYPES = {
     { name: "evidenceRoot", type: "bytes32" },
     { name: "metadataRoot", type: "bytes32" },
     { name: "accessPolicyHash", type: "bytes32" },
+    { name: "consentHash", type: "bytes32" },
     { name: "schemaHash", type: "bytes32" },
     { name: "createdAt", type: "uint64" },
     { name: "deadline", type: "uint64" },
@@ -179,7 +180,7 @@ class Web3MemoryGateway {
     const statementRoot = await this.sha256Hex(`DONKAI:LPS1:LEAF:remembrance:v1:${statementJson}`);
     const evidenceRoot = "0x0000000000000000000000000000000000000000000000000000000000000000";
     
-    // 2. Metadata Root
+    // 2. Metadata Root & Consent Hash
     const metadataObj = {
       timeframe: remembranceData.eventTimeframe || 'Unspecified',
       location: remembranceData.location || 'Unspecified',
@@ -187,6 +188,21 @@ class Web3MemoryGateway {
     };
     const metadataRoot = await this.sha256Hex(`DONKAI:LPS1:METADATA:v1:${JSON.stringify(metadataObj)}`);
     const accessPolicyHash = await this.sha256Hex(`DONKAI:LPS1:POLICY:v1:${remembranceData.accessPolicy || 'public-pseudonymous'}`);
+    
+    // Canonical Consent Receipt
+    const consentObj = remembranceData.consentReceipt || {
+      consentVersion: "donkai-cultural-pilot-v1",
+      acknowledgedAt: new Date(nowSec * 1000).toISOString(),
+      authorSelfRepresentation: true,
+      visibilityAcknowledged: true,
+      pilotScopeAcknowledged: true,
+      epistemicBoundaryAcknowledged: true,
+      selectedAccessPolicy: remembranceData.accessPolicy || 'public-pseudonymous',
+      recordVersion: 1
+    };
+    const consentJson = JSON.stringify(consentObj, Object.keys(consentObj).sort());
+    const consentHash = await this.sha256Hex(`DONKAI:LPS1:CONSENT:v1:${consentJson}`);
+
     const schemaHash = await this.sha256Hex("donkai.lps1.remembrance-manifest.v1");
     const recordId = await this.sha256Hex(`DONKAI:LPS1:RECORD:v1:${statementRoot}:${nowSec}:${nonceValue}`);
 
@@ -197,6 +213,7 @@ class Web3MemoryGateway {
       evidenceRoot,
       metadataRoot,
       accessPolicyHash,
+      consentHash,
       schemaHash,
       createdAt: nowSec,
       deadline: deadlineSec,
@@ -222,6 +239,8 @@ class Web3MemoryGateway {
         "metadataRoot": metadataRoot,
         "accessPolicy": remembranceData.accessPolicy || "public-pseudonymous",
         "accessPolicyHash": accessPolicyHash,
+        "consentReceipt": consentObj,
+        "consentHash": consentHash,
         "schemaHash": schemaHash,
         "protocolSpecificationVersion": "2.0",
         "commitmentAlgorithm": "lps1-merkle-v1",
