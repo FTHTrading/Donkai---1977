@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css?v=1.0.2">
 </head>
 <body>
   <header>
@@ -87,12 +87,12 @@
             <textarea id="memNarrative" class="form-textarea" placeholder="I remember..." required></textarea>
           </div>
 
-          <div style="background:rgba(56, 189, 248, 0.06); border-left:3px solid var(--synaptic-cyan); padding:0.8rem 1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:var(--text-dim);">
+          <div style="background:rgba(56, 189, 248, 0.08); border-left:3px solid var(--synaptic-cyan); padding:0.8rem 1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:#cbd5e1;">
             <em>"I'm not sure" is valuable data. A memory can be vivid and still remain uncertain.</em>
           </div>
 
           <!-- Contextual Prompts -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.2rem;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; margin-bottom:1.2rem;">
             <div class="form-group">
               <label>When do you remember encountering this?</label>
               <input type="text" id="memTimeframe" class="form-input" placeholder="e.g. Summer 1978, early 1990s, or age 8">
@@ -103,7 +103,7 @@
             </div>
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.2rem; margin-bottom:1.5rem;">
             <div class="form-group">
               <label>Where do you think this memory came from?</label>
               <select id="memSourceAwareness" class="form-select">
@@ -161,7 +161,7 @@
             </div>
           </div>
 
-          <div style="background:rgba(245, 158, 11, 0.06); border:1px solid rgba(245, 158, 11, 0.25); padding:1rem; border-radius:6px; margin-bottom:1.8rem; font-size:0.85rem; color:var(--text-dim);">
+          <div style="background:rgba(245, 158, 11, 0.08); border:1px solid rgba(245, 158, 11, 0.3); padding:1rem; border-radius:6px; margin-bottom:1.8rem; font-size:0.85rem; color:#cbd5e1;">
             <strong style="color:var(--mnemonic-gold);">Sensitive Content Notice:</strong>
             This record may contain personal, traumatic, identifying, or legally sensitive information. Do not submit private information about another person without appropriate consent.
           </div>
@@ -181,7 +181,7 @@
             DONK AI will generate an LPS-1 cryptographic root and prepare an EIP-712 structured typed data signature for your sovereign identity.
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.2rem; margin-bottom:1.5rem;">
             <div style="background:var(--bg-elev); padding:1.2rem; border-radius:8px; border:1px solid var(--border);">
               <strong style="color:var(--memory-emerald); font-size:0.9rem; display:block; margin-bottom:0.4rem;">
                 &#10003; What Is Stored Publicly On-Chain:
@@ -235,7 +235,7 @@
         <span class="badge cyan">COLLECTIVE MEMORY DIVERGENCES</span>
         <h2 style="font-size:2.2rem; margin-top:0.5rem;">Explore Memory Divergences</h2>
         <p style="color:var(--text-dim); max-width:750px; margin:0.5rem auto 0 auto; font-size:1.05rem;">
-          Compare where human memories converge, conflict with physical archives, or drift over time.
+          Compare where human memories converge, conflict with physical archives, or drift over time. Click any card to preload into the sovereign recorder.
         </p>
       </div>
 
@@ -308,7 +308,7 @@
     <div class="eip712-modal-content">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
         <span class="badge frequency">EIP-712 TYPED STRUCTURED DATA</span>
-        <button onclick="closeEip712Modal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+        <button onclick="closeEip712Modal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.8rem; cursor:pointer;">&times;</button>
       </div>
 
       <h2 style="color:var(--pearl); font-size:1.6rem; margin-bottom:0.5rem;">Review & Sign Remembrance</h2>
@@ -320,7 +320,7 @@
         <!-- Injected via JS -->
       </div>
 
-      <div style="background:rgba(168, 85, 247, 0.08); border-left:3px solid var(--memory-violet); padding:1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:var(--text-dim);">
+      <div style="background:rgba(168, 85, 247, 0.08); border-left:3px solid var(--memory-violet); padding:1rem; border-radius:0 6px 6px 0; margin-bottom:1.5rem; font-size:0.85rem; color:#cbd5e1;">
         <strong>Signer Declaration:</strong> I confirm that this cryptographic commitment represents the version of my remembrance described above. I understand that this signature proves I submitted this record; it does not prove that the memory is historically accurate.
       </div>
 
@@ -344,7 +344,7 @@
           An immutable LPS-1 provenance receipt has been signed and anchored under your sovereign identity.
         </p>
 
-        <div style="background:var(--bg-elev); border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:left; font-family:var(--font-mono); font-size:0.82rem; margin-bottom:1.5rem;">
+        <div style="background:#08090e; border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:left; font-family:var(--font-mono); font-size:0.82rem; margin-bottom:1.5rem;">
           <div style="color:var(--text-muted); margin-bottom:0.3rem;">RECORD ID (LPS-1):</div>
           <div style="color:var(--memory-violet); word-break:break-all; margin-bottom:0.8rem;" id="sealedRecordId">0x...</div>
           <div style="color:var(--text-muted); margin-bottom:0.3rem;">EIP-712 SIGNATURE:</div>
@@ -371,8 +371,8 @@
     </div>
   </footer>
 
-  <script src="js/mandela-engine.js"></script>
-  <script src="js/web3-gateway.js"></script>
+  <script src="js/mandela-engine.js?v=1.0.2"></script>
+  <script src="js/web3-gateway.js?v=1.0.2"></script>
   <script>
     let currentPrivacyChoice = 'public-pseudonymous';
     let currentManifestPackage = null;
@@ -461,28 +461,34 @@
       const sourceAwareness = document.getElementById('memSourceAwareness').value;
       const confidence = document.getElementById('memConfidence').value;
 
-      currentManifestPackage = await window.Web3MemoryGateway.buildRemembranceManifest({
-        narrative,
-        language: 'en-US',
-        eventTimeframe: timeframe,
-        location,
-        sourceAwareness,
-        confidenceLevel: confidence,
-        accessPolicy: currentPrivacyChoice
-      });
+      try {
+        currentManifestPackage = await window.Web3MemoryGateway.buildCreateRemembrancePayload({
+          narrative,
+          language: 'en-US',
+          eventTimeframe: timeframe,
+          location,
+          sourceAwareness,
+          confidenceLevel: confidence,
+          accessPolicy: currentPrivacyChoice
+        });
 
-      const msg = currentManifestPackage.eip712Message;
-      const summaryHtml = `
-        <div><strong>Action:</strong> Create Sovereign Remembrance Record</div>
-        <div><strong>Record ID:</strong> ${msg.recordId}</div>
-        <div><strong>Canonical Statement Root:</strong> ${msg.canonicalStatementRoot}</div>
-        <div><strong>Access Policy Hash:</strong> ${msg.accessPolicyHash} (${currentPrivacyChoice})</div>
-        <div><strong>Protocol Version:</strong> LPS-1.0 (Chain ID: 1977)</div>
-        <div><strong>Creation Epoch:</strong> ${new Date(msg.createdAt * 1000).toUTCString()}</div>
-        <div><strong>Signing Identity:</strong> ${window.Web3MemoryGateway.currentIdentity ? window.Web3MemoryGateway.currentIdentity.did : 'Sovereign In-Browser DID'}</div>
-      `;
-      document.getElementById('typedDataSummary').innerHTML = summaryHtml;
-      document.getElementById('eip712Modal').style.display = 'flex';
+        const msg = currentManifestPackage.eip712Message;
+        const summaryHtml = `
+          <div><strong>Action:</strong> Create Sovereign Remembrance Record (LPS-1)</div>
+          <div><strong>Record ID:</strong> ${msg.recordId}</div>
+          <div><strong>Canonical Statement Root:</strong> ${msg.statementRoot}</div>
+          <div><strong>Metadata Root:</strong> ${msg.metadataRoot}</div>
+          <div><strong>Access Policy Hash:</strong> ${msg.accessPolicyHash} (${currentPrivacyChoice})</div>
+          <div><strong>Schema Hash:</strong> ${msg.schemaHash}</div>
+          <div><strong>Author Nonce:</strong> ${msg.authorNonce}</div>
+          <div><strong>Deadline:</strong> ${new Date(msg.deadline * 1000).toUTCString()}</div>
+          <div><strong>Signing Identity:</strong> ${window.Web3MemoryGateway.currentIdentity ? window.Web3MemoryGateway.currentIdentity.did : 'Sovereign In-Browser DID'}</div>
+        `;
+        document.getElementById('typedDataSummary').innerHTML = summaryHtml;
+        document.getElementById('eip712Modal').style.display = 'flex';
+      } catch (err) {
+        alert('Error preparing EIP-712 payload: ' + err.message);
+      }
     }
 
     function closeEip712Modal() {
