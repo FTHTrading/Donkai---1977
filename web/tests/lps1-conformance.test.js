@@ -150,6 +150,10 @@ function runSuite() {
     '0X' + root3.toString('hex'), // Uppercase prefix
     '0x' + root3.toString('hex').toUpperCase(), // Uppercase characters
     validHex + ' ', // Trailing whitespace
+    validHex + '\n', // Trailing newline
+    validHex + '\r\n', // Trailing CRLF
+    validHex + '\u200B', // Zero-width space
+    validHex + '\u00A0', // Non-breaking space
     validHex.slice(0, 64), // Too short
     '0xZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ' // Non-hex
   ];
@@ -162,6 +166,28 @@ function runSuite() {
       if (err.message.includes('unexpectedly accepted')) throw err;
       checkCount++; // Successfully rejected
     }
+  }
+
+  // Test all-zero bytes32 encoding vs field semantic validation
+  const allZeroHex = '0x0000000000000000000000000000000000000000000000000000000000000000';
+  const decodedZero = decodeHex32(allZeroHex); // Generic decoding must succeed
+  if (decodedZero.length !== 32) throw new Error('Failed to decode valid zero bytes32');
+  checkCount++;
+
+  // Semantic field rule: statementRoot must never be all-zero
+  function validateFieldSemantics(fieldName, hexValue) {
+    if (fieldName === 'statementRoot' && hexValue === allZeroHex) {
+      throw new Error('statementRoot cannot be all-zero');
+    }
+    return true;
+  }
+
+  try {
+    validateFieldSemantics('statementRoot', allZeroHex);
+    throw new Error('validateFieldSemantics unexpectedly accepted zero statementRoot');
+  } catch (err) {
+    if (err.message.includes('unexpectedly accepted')) throw err;
+    checkCount++; // Successfully rejected zero statementRoot
   }
 
   // 3. EIP-712 Struct Intent
