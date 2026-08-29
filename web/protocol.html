@@ -5,141 +5,129 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Protocol Charter & Methodology — DONK AI</title>
   <meta name="description" content="Core charter, mathematical foundations, epistemic guardrails, and Living Provenance Standard 1 (LPS-1) architecture for DONK AI.">
+  <link rel="stylesheet" href="css/main.css?v=2.0.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=1.0.2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <canvas id="ambientCanvas"></canvas>
+
   <header>
     <nav>
       <a href="index.html" class="brand">
         <span>DONK AI</span>
-        <span class="brand-badge">LPS-1 PROTOCOL</span>
+        <span class="brand-badge">LPS-1 CHARTER</span>
       </a>
       <ul>
-        <li><a href="index.html">Record a Memory</a></li>
-        <li><a href="atlas.html">Memory Drift Atlas</a></li>
-        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="index.html">Journey</a></li>
+        <li><a href="museum.html">Museum</a></li>
+        <li><a href="atlas.html">Atlas</a></li>
         <li><a href="record.html">7-Tier Ledger</a></li>
-        <li><a href="corroborate.html">Blind Corroboration</a></li>
+        <li><a href="corroborate.html">Memory Chamber</a></li>
         <li><a href="proof.html">Proof Explorer</a></li>
-        <li><a href="protocol.html" class="active">Protocol Docs</a></li>
+        <li><a href="protocol.html" class="active">Charter</a></li>
       </ul>
+      <div style="display:flex; align-items:center; gap:0.8rem;">
+        <button id="soundToggleBtn" class="sound-toggle-btn"><span>🔇 528Hz Audio</span></button>
+      </div>
     </nav>
   </header>
 
-  <main>
-    <section>
-      <div style="max-width: 960px; margin: 0 auto;">
-        <span class="badge provenance" style="margin-bottom: 0.8rem;">GOVERNANCE & METHODOLOGY</span>
-        <h1 style="font-size: 2.8rem; margin-bottom: 1.2rem;">The DONK AI Charter & Epistemic Methodology</h1>
-        <p class="section-lead">
-          DONK AI is a privacy-aware, human-governed protocol designed to preserve first-person testimony, physical evidence provenance, and blind independent corroboration.
-        </p>
+  <!-- Hero -->
+  <section class="hero-cinema" style="min-height:35vh; padding: 3rem 1.5rem 1.5rem;">
+    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--memory-violet); letter-spacing:0.08em; text-transform:uppercase;">Epistemic Boundaries</span>
+    <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); color:var(--pearl); margin:0.4rem 0 0.8rem; font-weight:800;">Protocol Charter &amp; Methodology</h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:680px; margin:0 auto;">
+      DONK AI preserves human testimony, client-side encryption, and blind independent corroboration without confusing personal memory with settled historical fact.
+    </p>
+  </section>
 
-        <!-- Core Axiom Banner -->
-        <div style="background: var(--bg-card); border-left: 4px solid var(--chrome); padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 3rem;">
-          <div style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--pearl); font-weight: 700; margin-bottom: 0.5rem;">
-            Core Epistemic Equation
-          </div>
-          <div style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--accent-gold); line-height: 1.8;">
-            Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support<br>
-            Stake &ne; Truth
-          </div>
-        </div>
+  <!-- Content Section -->
+  <section style="max-width:960px; margin: 0 auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    
+    <!-- Epistemic Axiom Panel -->
+    <div class="spine-glass-panel" style="border-left:4px solid var(--memory-violet); margin-bottom:2.5rem;">
+      <div style="font-family:var(--font-mono); font-size:1.05rem; color:var(--pearl); font-weight:700; margin-bottom:0.5rem;">
+        Core Epistemic Equations
+      </div>
+      <div style="font-family:var(--font-mono); font-size:0.9rem; color:var(--synaptic-cyan); line-height:1.8;">
+        Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support<br>
+        Stake &ne; Truth &bull; LPS-1 Conformance &ne; Historical Infallibility
+      </div>
+    </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">1. Explicit Boundaries: What DONK AI Proves</h2>
-          <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
-            DONK AI does not use financial stakes, popularity voting, or AI generation to settle historical truth. The platform provides transparent provenance mechanisms:
-          </p>
-
-          <table class="epistemic-table">
-            <thead>
-              <tr>
-                <th style="width: 25%;">Status Indicator</th>
-                <th style="width: 37%;">What It Proves</th>
-                <th style="width: 38%;">What It Does NOT Mean</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Content Hash Verified</strong></td>
-                <td class="proves-col">The digital payload matches the 32-byte hash committed at submission.</td>
-                <td class="not-means-col">Does not prove the depicted object is historically authentic or that the photo was taken at the claimed date.</td>
-              </tr>
-              <tr>
-                <td><strong>CID Recorded</strong></td>
-                <td class="proves-col">The content-addressed payload resolves to the committed byte sequence when available.</td>
-                <td class="not-means-col">Does not guarantee eternal availability or that the content is universally accepted as truth.</td>
-              </tr>
-              <tr>
-                <td><strong>Merkle Inclusion Verified</strong></td>
-                <td class="proves-col">The item was cryptographically included in the signed record bundle.</td>
-                <td class="not-means-col">Does not prove the testimony is complete, unconflicted, or legally dispositive.</td>
-              </tr>
-              <tr>
-                <td><strong>Submission Signed</strong></td>
-                <td class="proves-col">A designated signing identity committed this specific canonical record no later than the block timestamp.</td>
-                <td class="not-means-col">Does not establish that the author's memory is accurate or free from cognitive bias.</td>
-              </tr>
-              <tr>
-                <td><strong>Historical Support Assigned</strong></td>
-                <td class="proves-col">Reviewers evaluated submitted artifacts and witness accounts against Rubric v0.1.</td>
-                <td class="not-means-col">Does not mean the classification is beyond appeal, universally complete, or an absolute truth verdict.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">2. Living Provenance Standard 1 (LPS-1 v2.0)</h2>
-          <p style="color: var(--text-dim); line-height: 1.7; margin-bottom: 1.2rem;">
-            LPS-1 represents memories as typed, canonical Merkle trees. Rather than storing raw sensitive text on public ledgers, DONK AI calculates domain-separated SHA-256 leaf hashes for each distinct record component:
-          </p>
-
-          <ul style="margin-left: 1.5rem; color: var(--text); line-height: 1.8; margin-bottom: 1.5rem;">
-            <li><strong>Statement Leaf:</strong> Original narrative text, language tag, and human authorship attestation.</li>
-            <li><strong>Context Leaf:</strong> Broad geographical and chronological metadata used for blind discovery.</li>
-            <li><strong>Consent Leaf:</strong> Visibility policies, access epochs, retention terms, and pseudonymity rules.</li>
-            <li><strong>Evidence Bundle Leaf:</strong> Content hashes, custody metadata, and AI disclosure statements for physical/digital artifacts.</li>
-            <li><strong>Version Graph Leaf:</strong> Lineage pointers to parent records for corrections, translations, or retractions.</li>
+    <!-- 1. Explicit Boundaries -->
+    <div class="spine-glass-panel" style="margin-bottom:2rem;">
+      <h2 style="font-size:1.4rem; color:var(--pearl); margin-bottom:1rem;">1. Explicit Boundaries: What DONK AI Proves</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem;">
+        <div style="background:rgba(0,0,0,0.4); padding:1rem; border-radius:8px;">
+          <strong style="color:var(--synaptic-cyan); display:block; margin-bottom:0.3rem;">✓ What Is Cryptographically Proven</strong>
+          <ul style="font-size:0.85rem; color:var(--text-dim); padding-left:1.2rem; line-height:1.6;">
+            <li>Exact un-tampered record payload at time $T$.</li>
+            <li>Author account/key authorized the commitment.</li>
+            <li>Evidence CIDs match SHA-256 Merkle tree leaves.</li>
+            <li>Corroborator submitted before seeing the target record.</li>
           </ul>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">3. Operational 2-Phase Blind Corroboration</h2>
-          <p style="color: var(--text-dim); line-height: 1.7; margin-bottom: 1.2rem;">
-            To eliminate priming, social contagion, and bandwagon bias, independent witness accounts are collected via a cryptographic two-phase commit-reveal protocol:
-          </p>
-
-          <ol style="margin-left: 1.5rem; color: var(--text); line-height: 1.8;">
-            <li><strong>Discovery Phase:</strong> The contributor sees only broad parameters (e.g. "Austin, TX &bull; 1978 &bull; Arcade") without access to the target narrative.</li>
-            <li><strong>Local Sealing:</strong> The contributor authors their recollection locally. The browser computes a sealed root: <code>SHA-256("DONKAI:LPS1:BLIND_CORROBORATION:v1:" + salt + narrative)</code>.</li>
-            <li><strong>On-Chain Commit:</strong> The sealed root is committed to <code>DonkaiBlindCorroboration.sol</code>.</li>
-            <li><strong>Reveal & Review:</strong> Only after the commitment is anchored on-chain does the reveal phase occur, enabling transparent peer review without prior contamination.</li>
-          </ol>
-        </div>
-
-        <div style="margin-top: 3rem; text-align: center;">
-          <a href="remember.html" class="btn btn-primary" style="margin-right: 1rem;">Open Remembrance Studio &rarr;</a>
-          <a href="museum.html" class="btn btn-secondary">Explore 1977 Museum</a>
+        <div style="background:rgba(0,0,0,0.4); padding:1rem; border-radius:8px;">
+          <strong style="color:var(--memory-crimson); display:block; margin-bottom:0.3rem;">✕ What Is NOT Claimed</strong>
+          <ul style="font-size:0.85rem; color:var(--text-dim); padding-left:1.2rem; line-height:1.6;">
+            <li>Does not prove the event physically happened.</li>
+            <li>Does not verify real-world human identity.</li>
+            <li>Does not claim majority consensus equals truth.</li>
+            <li>Does not accept generative AI as source evidence.</li>
+          </ul>
         </div>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol</div>
-      <ul class="footer-links">
-        <li><a href="protocol.html">Charter</a></li>
-        <li><a href="atlas.html">Atlas</a></li>
-        <li><a href="museum.html">Museum</a></li>
-        <li><a href="proof.html">Proof Explorer</a></li>
-      </ul>
     </div>
+
+    <!-- 2. The 5 Bounded Review Outcomes -->
+    <div class="spine-glass-panel" style="margin-bottom:2rem;">
+      <h2 style="font-size:1.4rem; color:var(--pearl); margin-bottom:1rem;">2. Bounded Historical Review Rubric</h2>
+      <p style="font-size:0.9rem; color:var(--text-dim); margin-bottom:1.2rem;">
+        Reviews avoid binary "true/false" ratings and produce one of five transparent states:
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:0.8rem;">
+        <div style="background:rgba(0,0,0,0.5); padding:0.8rem; border-radius:6px; text-align:center;">
+          <strong style="color:var(--pearl); font-size:0.88rem;">Contextualized</strong>
+        </div>
+        <div style="background:rgba(0,0,0,0.5); padding:0.8rem; border-radius:6px; text-align:center;">
+          <strong style="color:var(--synaptic-cyan); font-size:0.88rem;">Partially Supported</strong>
+        </div>
+        <div style="background:rgba(0,0,0,0.5); padding:0.8rem; border-radius:6px; text-align:center;">
+          <strong style="color:var(--mnemonic-gold); font-size:0.8rem;">Contested</strong>
+        </div>
+        <div style="background:rgba(0,0,0,0.5); padding:0.8rem; border-radius:6px; text-align:center;">
+          <strong style="color:var(--memory-crimson); font-size:0.85rem;">Insufficient Evidence</strong>
+        </div>
+        <div style="background:rgba(0,0,0,0.5); padding:0.8rem; border-radius:6px; text-align:center;">
+          <strong style="color:var(--text-muted); font-size:0.88rem;">Unresolved</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Protocol Metadata Quartet -->
+    <div class="spine-glass-panel">
+      <h2 style="font-size:1.4rem; color:var(--pearl); margin-bottom:0.8rem;">3. Immutable Protocol Metadata Quartet</h2>
+      <pre style="background:rgba(0,0,0,0.6); padding:1rem; border-radius:8px; font-family:var(--font-mono); font-size:0.82rem; color:var(--synaptic-cyan); overflow-x:auto;">
+{
+  "protocolSpecificationVersion": "2.0",
+  "commitmentAlgorithm": "lps1-merkle-v1",
+  "fixtureCorpusVersion": "lps1-v1",
+  "eip712DomainVersion": "1"
+}</pre>
+    </div>
+
+  </section>
+
+  <footer style="border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; position:relative; z-index:1;">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:680px; margin:0 auto 1rem;">
+      DONK AI Protocol Charter &bull; Living Provenance Standard (LPS-1 v2.0).
+    </p>
   </footer>
+
+  <script src="js/walkthrough.js?v=2.0.0"></script>
 </body>
 </html>

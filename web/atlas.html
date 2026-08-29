@@ -9,6 +9,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .map-container {
+      position: relative;
+      width: 100%;
+      background: radial-gradient(circle at center, rgba(14, 16, 24, 0.9) 0%, rgba(5, 6, 8, 0.98) 100%);
+      border: 1px solid var(--border-hi);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+    .map-node {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--synaptic-cyan);
+      box-shadow: 0 0 16px var(--synaptic-cyan-glow);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s ease;
+    }
+    .map-node::after {
+      content: '';
+      position: absolute;
+      top: -6px; left: -6px; right: -6px; bottom: -6px;
+      border-radius: 50%;
+      border: 1px solid var(--synaptic-cyan);
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    .map-node:hover {
+      transform: translate(-50%, -50%) scale(1.4);
+      background: var(--memory-violet);
+      box-shadow: 0 0 24px var(--memory-violet-glow);
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.6); opacity: 0.9; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
   <canvas id="ambientCanvas"></canvas>
@@ -34,13 +74,51 @@
     </nav>
   </header>
 
-  <!-- Atlas Hero -->
-  <section class="hero-cinema" style="min-height:35vh; padding: 3rem 1.5rem 1.5rem;">
-    <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); letter-spacing:0.08em; text-transform:uppercase;">Decentralized Memory Drift</span>
-    <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); color:var(--pearl); margin:0.4rem 0 0.8rem; font-weight:800;">Memory Drift Atlas</h1>
-    <p style="font-size:1.05rem; color:var(--text-dim); max-width:640px; margin:0 auto;">
-      A living topology of human recollections. Trace where collective memories converge, split, and drift over time without declaring any account a settled truth.
-    </p>
+  <!-- Atlas Hero with Ambient Video -->
+  <section class="hero-cinema" style="min-height:38vh; padding: 3rem 1.5rem 1.5rem; position:relative; overflow:hidden;">
+    <video autoplay loop muted playsinline style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); min-width:100%; min-height:100%; width:auto; height:auto; z-index:-1; opacity:0.2; filter:saturate(1.1) contrast(1.1); object-fit:cover;">
+      <source src="videos/donk_vault_intro.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:radial-gradient(circle at center, rgba(5,6,8,0.4) 0%, rgba(5,6,8,0.96) 100%); z-index:0;"></div>
+
+    <div style="max-width: 720px; margin: 0 auto; position:relative; z-index:1;">
+      <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--synaptic-cyan); letter-spacing:0.08em; text-transform:uppercase;">Decentralized Memory Drift</span>
+      <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem); color:var(--pearl); margin:0.4rem 0 0.8rem; font-weight:800;">Memory Drift Atlas</h1>
+      <p style="font-size:1.05rem; color:var(--text-dim); margin:0 auto;">
+        A living topology of human recollections. Trace where collective memories converge, split, and drift over time without declaring any account a settled truth.
+      </p>
+    </div>
+  </section>
+
+  <!-- Interactive Global Signal Map -->
+  <section style="max-width:1100px; margin: 0 auto 2.5rem; padding: 0 1.5rem; position:relative; z-index:1;">
+    <div class="map-container" style="min-height:360px; padding:2rem;">
+      <div style="position:absolute; top:1.2rem; left:1.5rem; z-index:2;">
+        <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan); text-transform:uppercase;">Live Signal Nodes</span>
+        <div style="font-size:1.1rem; color:var(--pearl); font-weight:700;">Global Remembrance Topology</div>
+      </div>
+
+      <!-- SVG World Wireframe Background -->
+      <svg viewBox="0 0 1000 500" style="width:100%; height:100%; opacity:0.25; stroke:rgba(255,255,255,0.25); fill:none; stroke-width:1;">
+        <ellipse cx="500" cy="250" rx="460" ry="220" stroke-dasharray="4,4"/>
+        <line x1="500" y1="30" x2="500" y2="470" stroke="rgba(255,255,255,0.15)"/>
+        <line x1="40" y1="250" x2="960" y2="250" stroke="rgba(255,255,255,0.15)"/>
+        <!-- Continents Outline Approximation -->
+        <path d="M150,120 Q220,100 280,140 Q320,200 290,260 Q200,280 160,200 Z" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.4)"/>
+        <path d="M220,280 Q290,300 280,420 Q230,440 200,340 Z" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.4)"/>
+        <path d="M460,110 Q580,90 620,160 Q560,240 480,200 Z" fill="rgba(251,191,36,0.05)" stroke="rgba(251,191,36,0.4)"/>
+        <path d="M490,220 Q560,220 550,380 Q480,390 470,280 Z" fill="rgba(244,63,94,0.05)" stroke="rgba(244,63,94,0.4)"/>
+        <path d="M620,110 Q850,80 880,240 Q760,280 660,220 Z" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.4)"/>
+        <path d="M720,320 Q820,310 840,400 Q760,420 710,360 Z" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.4)"/>
+      </svg>
+
+      <!-- Active Pulsing Map Nodes -->
+      <div class="map-node" style="top:32%; left:22%;" title="Austin, Texas (1978 Arcade Token)" onclick="filterByNode('Austin')"></div>
+      <div class="map-node" style="top:36%; left:18%;" title="Los Angeles (1977 Cinema Marquee)" onclick="filterByNode('Los Angeles')"></div>
+      <div class="map-node" style="top:26%; left:49%;" title="London (1981 Pirate Radio)" onclick="filterByNode('London')"></div>
+      <div class="map-node" style="top:35%; left:82%;" title="Tokyo (1977 Synth Labs)" onclick="filterByNode('Tokyo')"></div>
+      <div class="map-node" style="top:42%; left:55%;" title="Cairo (Ancient Scribe Recall)" onclick="filterByNode('Cairo')"></div>
+    </div>
   </section>
 
   <!-- Control Surface: Era Slider & Blind Mode -->
@@ -88,60 +166,92 @@
     </div>
   </section>
 
-  <!-- Visual Signals Grid -->
+  <!-- Visual Signals Grid with Video Previews -->
   <section style="max-width:1100px; margin: 0 auto 6rem; padding: 0 1.5rem; position:relative; z-index:1;">
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
 
       <!-- Signal 1: Star Wars -->
-      <div class="artifact-card" style="padding:1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan);">CINEMA &bull; 1980</span>
-          <span class="badge supported">74% Split</span>
+      <div class="artifact-card">
+        <div class="artifact-img-wrap">
+          <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+            <source src="videos/donk7.mp4" type="video/mp4">
+          </video>
+          <span class="synthetic-badge">CINEMA DIVERGENCE &bull; 1980</span>
         </div>
-        <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">Darth Vader's Revelation</h3>
-        <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
-          "Luke, I am your father" vs "No, I am your father". Millions recall the explicit name prefix across global dubs.
-        </p>
-        <a href="corroborate.html?dilemma=star-wars" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        <div style="padding:1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--synaptic-cyan);">CINEMA &bull; 1980</span>
+            <span class="badge supported">74% Split</span>
+          </div>
+          <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">Darth Vader's Revelation</h3>
+          <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
+            "Luke, I am your father" vs "No, I am your father". Millions recall the explicit name prefix across global dubs.
+          </p>
+          <a href="corroborate.html?dilemma=star-wars" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        </div>
       </div>
 
       <!-- Signal 2: Fruit of the Loom -->
-      <div class="artifact-card" style="padding:1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--mnemonic-gold);">BRAND &bull; 1970s</span>
-          <span class="badge supported">82% Split</span>
+      <div class="artifact-card">
+        <div class="artifact-img-wrap">
+          <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+            <source src="videos/donk18.mp4" type="video/mp4">
+          </video>
+          <span class="synthetic-badge">BRAND DRIFT &bull; 1970s</span>
         </div>
-        <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">The Loom Cornucopia</h3>
-        <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
-          Woven horn basket behind the fruit. People report first learning the word 'cornucopia' from clothing tags.
-        </p>
-        <a href="corroborate.html?dilemma=fruit-loom" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        <div style="padding:1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--mnemonic-gold);">BRAND &bull; 1970s</span>
+            <span class="badge supported">82% Split</span>
+          </div>
+          <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">The Loom Cornucopia</h3>
+          <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
+            Woven horn basket behind the fruit. People report first learning the word 'cornucopia' from clothing tags.
+          </p>
+          <a href="corroborate.html?dilemma=fruit-loom" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        </div>
       </div>
 
       <!-- Signal 3: Monopoly Man -->
-      <div class="artifact-card" style="padding:1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-violet);">POP CULTURE &bull; 1935</span>
-          <span class="badge supported">68% Split</span>
+      <div class="artifact-card">
+        <div class="artifact-img-wrap">
+          <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+            <source src="videos/donk4.mp4" type="video/mp4">
+          </video>
+          <span class="synthetic-badge">ICON DRIFT &bull; 1935</span>
         </div>
-        <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">Rich Uncle Pennybags Monocle</h3>
-        <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
-          Top hat, cane, and monocle on his right eye. Canonical art never had an eyeglass.
-        </p>
-        <a href="corroborate.html?dilemma=monopoly-man" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        <div style="padding:1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-violet);">POP CULTURE &bull; 1935</span>
+            <span class="badge supported">68% Split</span>
+          </div>
+          <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">Rich Uncle Pennybags Monocle</h3>
+          <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
+            Top hat, cane, and monocle on his right eye. Canonical art never had an eyeglass.
+          </p>
+          <a href="corroborate.html?dilemma=monopoly-man" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        </div>
       </div>
 
       <!-- Signal 4: C-3PO -->
-      <div class="artifact-card" style="padding:1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-crimson);">CINEMA &bull; 1977</span>
-          <span class="badge supported">61% Split</span>
+      <div class="artifact-card">
+        <div class="artifact-img-wrap">
+          <video autoplay loop muted playsinline style="width:100%; height:100%; object-fit:cover;">
+            <source src="videos/donk26.mp4" type="video/mp4">
+          </video>
+          <span class="synthetic-badge">CINEMA DIVERGENCE &bull; 1977</span>
         </div>
-        <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">C-3PO's Silver Leg</h3>
-        <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
-          All-gold protocol droid vs right leg below knee in solid polished silver reflecting the desert dunes.
-        </p>
-        <a href="corroborate.html?dilemma=c3po" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        <div style="padding:1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--memory-crimson);">CINEMA &bull; 1977</span>
+            <span class="badge supported">61% Split</span>
+          </div>
+          <h3 style="font-size:1.2rem; color:var(--pearl); margin-bottom:0.4rem;">C-3PO's Silver Leg</h3>
+          <p class="signal-text" style="font-size:0.88rem; color:var(--text-dim); margin-bottom:1.2rem;">
+            All-gold protocol droid vs right leg below knee in solid polished silver reflecting the desert dunes.
+          </p>
+          <a href="corroborate.html?dilemma=c3po" class="btn btn-secondary btn-sm" style="width:100%;">Record Blind Recall &rarr;</a>
+        </div>
       </div>
 
     </div>
@@ -173,6 +283,10 @@
     function setEra(era) {
       document.querySelectorAll('[onclick^="setEra"]').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
+    }
+
+    function filterByNode(city) {
+      alert(`Filtering signal nodes for: ${city}`);
     }
 
     // Default to blind mode
