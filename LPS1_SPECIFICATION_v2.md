@@ -1,8 +1,10 @@
 # Living Provenance Standard 1 (LPS-1 v2.0): Complete Technical Specification
 
 **Document Identifier:** `LPS-1-SPEC-v2.0`  
+**Protocol Specification Version:** `2.0.0`  
+**Commitment Algorithm Version:** `lps1-merkle-v1`  
+**Shared Fixture Revision:** `lps1-v1`  
 **Governing Standard:** Antigravity Human Remembrance Protocol  
-**Revision:** `2.0.0-final`
 
 ---
 
@@ -29,27 +31,39 @@ EMPTY_LEAF_CONSTANT  = 0x0b96f989296d0d7f9adcbad65a1161244e359831749a8564280854a
 For any object type $T \in \{\text{"REMEMBRANCE"}, \text{"EVIDENCE"}, \text{"REVIEW"}, \text{"CORROBORATION"}\}$:
 $$\text{leafHash} = \text{SHA-256}(\text{"DONKAI:LPS1:LEAF:"} \parallel T \parallel \text{":v1:"} \parallel \text{canonicalUtf8Bytes})$$
 
-### 2.3 Internal Node Hashing & Odd-Leaf Balancing (Option B)
-For left child $L$ and right child $R$:
-$$\text{parentHash} = \text{SHA-256}(\text{"DONKAI:LPS1:NODE:v1:"} \parallel L \parallel R)$$
+### 2.3 Internal Node Hashing & Normative Byte Decoding
+```text
+LPS-1 Merkle parent preimage, version 1.0:
+preimage = UTF8("DONKAI:LPS1:NODE:v1:") || decodeHex32(leftChild) || decodeHex32(rightChild)
+parent   = SHA-256(preimage)
+```
 
-**Odd-Leaf Balancing Rule (Option B):**  
+**Normative Rules:**
+- `decodeHex32` strips an optional `0x` prefix and decodes exactly 64 hexadecimal characters into exactly 32 raw bytes.
+- `leftChild` and `rightChild` are positional and **MUST NOT** be re-sorted after initial leaf ordering.
+- The node prefix is UTF-8 encoded with no terminating NUL byte.
+- Hash output **MUST** be serialized in manifests as lowercase `0x`-prefixed 64-hex strings.
+
+### 2.4 Odd-Leaf Balancing Rule (Option B)
 If layer $k$ has an odd number of nodes $2m + 1$, the final node $N_{2m}$ is paired positionally with `EMPTY_LEAF_CONSTANT`:
-$$\text{parent}_{m} = \text{SHA-256}(\text{"DONKAI:LPS1:NODE:v1:"} \parallel N_{2m} \parallel \text{EMPTY\_LEAF\_CONSTANT})$$
+$$\text{parent}_{m} = \text{SHA-256}(\text{"DONKAI:LPS1:NODE:v1:"} \parallel \text{decodeHex32}(N_{2m}) \parallel \text{decodeHex32}(\text{EMPTY\_LEAF\_CONSTANT}))$$
 
-### 2.4 Evidence Sorting
-Evidence items are sorted ascending by unsigned big-endian 32-byte arrays of `(evidence_id, commitment)`. Duplicate pairs are rejected.
+### 2.5 Byte-Level Evidence Sorting
+1. `evidence_id` is fixed 32 bytes.
+2. `commitment` is fixed 32 bytes.
+3. Compared as **unsigned big-endian byte arrays** in ascending order.
+4. Duplicate `(evidence_id, commitment)` pairs are rejected with error.
 
 ---
 
-## 3. EIP-712 Structured Intent & Replay Protection
+## 3. Structured Intent & Replay Protection (EIP-712)
 
 ### 3.1 Domain Separator
 ```solidity
 keccak256(
     abi.encode(
         keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)"),
-        keccak256(bytes("DONKAI AI Human Remembrance Protocol")),
+        keccak256(bytes("DONK AI Human Remembrance Protocol")),
         keccak256(bytes("1")),
         chainId,
         verifyingContract
@@ -57,7 +71,7 @@ keccak256(
 );
 ```
 
-### 3.2 CreateRemembrance Typehash & Struct Hashing
+### 3.2 CreateRemembrance Typehash
 ```solidity
 bytes32 public constant CREATE_REMEMBRANCE_TYPEHASH = keccak256(
     "CreateRemembrance("
@@ -79,19 +93,32 @@ bytes32 public constant CREATE_REMEMBRANCE_TYPEHASH = keccak256(
 
 Private remembrance narratives are encrypted client-side using `AES-GCM-256`:
 - **Key:** Derived client-side via PBKDF2 (100,000 rounds, SHA-256) or sovereign WebAuthn PRF.
-- **IV:** Fresh, unpredictable 96-bit random IV per encryption.
+- **IV:** Fresh, unpredictable 96-bit random IV per encryption operation.
 - **AAD:** Explicitly bound to `recordId || schemaHash || recordVersion || accessPolicyHash`.
 - **Integrity Rule:** Altered ciphertext, corrupted tag, mismatched AAD, or wrong key fails closed immediately before exposing plaintext.
 
 ---
 
-## 5. Epistemic Terminology Dictionary
+## 5. Epistemic Assessment Rubric & Proof Taxonomy
 
-| Term | What It Establishes | What It Does NOT Claim |
+### 5.1 Branching Assessment Flow
+```mermaid
+flowchart TD
+    A[Human Author Remembrance] -->|Sign & Commit| B[Signed / Anchored Record]
+    B -->|Attach Evidence / Blind Recalls| C[Corroboration & Review Surface]
+    C --> D{Disclosed Review Rubric}
+    D --> E1[Contextualized]
+    D --> E2[Partially Supported]
+    D --> E3[Contested]
+    D --> E4[Insufficient Evidence]
+    D --> E5[Unresolved]
+```
+
+### 5.2 Multi-Identity Proof Pathways
+
+| Record Proof Path | Precise Cryptographic Claim | What It Does NOT Claim |
 | :--- | :--- | :--- |
-| **`LPS-1 Conformant`** | Conforms to published canonicalization, leaf hashing, and Merkle balancing rules. | Does not validate historical accuracy. |
-| **`EIP-712 Compatible`** | Generates or verifies typed structured authorization digests. | Does not imply automatic on-chain finality until anchored. |
-| **`Signed Record`** | Authorized by a specific EVM account or WebAuthn credential. | Does not verify the author's physical identity or truthfulness. |
-| **`Portable Manifest`** | Contains roots, schemas, and signatures for independent validation. | Does not guarantee eternal decentralized storage availability. |
-| **`On-Chain Anchored`** | A real transaction on a verified contract recorded the commitment. | Does not mean the blockchain validated the narrative. |
-| **`Historically Supported`** | Independent source evidence and corroboration met documented review criteria. | Does not make historical knowledge immutable or absolute. |
+| **EVM Wallet Signature** | A specific EVM account signed the EIP-712 typed-data digest. | Does not verify physical human identity or historical truth. |
+| **Passkey / WebAuthn Authorization** | A biometric WebAuthn credential authorized an action via smart account / session validator. | Not directly an EIP-712 signature unless verified through ERC-4337/ERC-1271. |
+| **Local Sovereign `did:key`** | An ephemeral or persistent DID keypair signed the portable manifest off-chain. | Does not imply an on-chain transaction or global ledger consensus. |
+| **ERC-1271 Contract Wallet** | A deployed smart-account contract validated the signature under its own validation rules. | Does not guarantee the smart account's governance rules. |

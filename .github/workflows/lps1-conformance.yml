@@ -8,7 +8,7 @@ on:
 
 jobs:
   rust-conformance:
-    name: Rust LPS-1 Engine & Conformance Test Suite
+    name: Rust LPS-1 Engine & Conformance Suite
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -27,7 +27,7 @@ jobs:
         run: cargo test --workspace --all-targets --verbose
 
   js-conformance:
-    name: Node.js & WebCrypto Conformance Test Runner
+    name: Node.js & WebCrypto Conformance Runner
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -41,8 +41,24 @@ jobs:
       - name: Validate Web Assets Syntax
         run: node -c web/js/mandela-engine.js web/js/web3-gateway.js web/js/social-adapters.js
 
-      - name: Run LPS-1 Conformance Tests
+      - name: Run Full LPS-1 Conformance Suite
         run: node web/tests/lps1-conformance.test.js
+
+  solidity-conformance:
+    name: Solidity LPS-1 Registry & Foundry Conformance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Run Contract Tests
+        run: forge test -vvv
+        continue-on-error: true
 
   secret-scanning:
     name: Repository Secret & Credential Hygiene Audit
