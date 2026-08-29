@@ -212,10 +212,31 @@
       </div>
 
       <!-- Free Writing Textarea with Realistic Model Example -->
-      <label for="journeyProseInput" style="font-weight:600; color:var(--pearl); font-size:0.95rem; display:block; margin-bottom:0.4rem;">What do you remember?</label>
-      <textarea id="journeyProseInput" class="form-textarea" style="min-height:160px; margin-bottom:0.4rem;" placeholder="Example: When I was a kid, I remember the arcade token feeling heavier than a normal coin. I think it had a spaceship on it, and I remember a sharp electronic chime when the game started. I may be mixing two different machines together."></textarea>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+        <label for="journeyProseInput" style="font-weight:600; color:var(--pearl); font-size:0.95rem;">What do you remember?</label>
+        <div style="display:flex; align-items:center; gap:0.8rem;">
+          <span id="draftSaveStatus" style="font-size:0.75rem; color:var(--synaptic-cyan); font-family:var(--font-mono);">✓ Draft saved locally on this device</span>
+          <button type="button" onclick="clearDraft()" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer; text-decoration:underline;">Clear draft</button>
+        </div>
+      </div>
+      
+      <!-- Suggestion Banner if text exists -->
+      <div id="starterSuggestionBanner" style="display:none; background:rgba(168,85,247,0.12); border:1px solid var(--memory-violet-glow); border-radius:6px; padding:0.6rem 0.9rem; margin-bottom:0.6rem; font-size:0.82rem; color:var(--pearl); justify-content:space-between; align-items:center;">
+        <span>Suggested opening: <strong id="suggestedStarterText"></strong></span>
+        <div style="display:flex; gap:0.5rem;">
+          <button type="button" class="btn btn-secondary btn-sm" style="padding:0.2rem 0.5rem; font-size:0.75rem;" onclick="applySuggestedStarter()">Insert opening</button>
+          <button type="button" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;" onclick="dismissSuggestedStarter()">Keep my words</button>
+        </div>
+      </div>
+
+      <textarea id="journeyProseInput" class="form-textarea" style="min-height:160px; margin-bottom:0.4rem;" placeholder="Example: When I was a kid, I remember the arcade token feeling heavier than a normal coin. I think it had a spaceship on it, and I remember a sharp electronic chime when the game started. I may be mixing two different machines together." oninput="handleProseInput()"></textarea>
       <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1.2rem; font-style:italic;">
         You are preserving your recollection—not trying to pass a test.
+      </div>
+
+      <!-- Controlled Pilot Boundary Notice -->
+      <div style="background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.25); border-radius:8px; padding:0.8rem 1rem; margin-bottom:1.5rem; font-size:0.82rem; color:var(--text-dim); line-height:1.5;">
+        <strong style="color:var(--memory-crimson);">Controlled Cultural Pilot:</strong> Please do not submit intimate personal details, active legal allegations, sensitive medical information, or private third-party data.
       </div>
 
       <!-- Optional Context Chips -->
@@ -225,34 +246,34 @@
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
           <div>
             <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">About when was this?</label>
-            <input type="text" id="ctxEra" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. Summer 1978, early 1980s">
+            <input type="text" id="ctxEra" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. Summer 1978, early 1980s" oninput="saveDraft()">
           </div>
           <div>
             <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">Where were you?</label>
-            <input type="text" id="ctxPlace" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. City, venue, home, arcade, online">
+            <input type="text" id="ctxPlace" class="form-input" style="padding:0.45rem 0.8rem; font-size:0.85rem;" placeholder="e.g. City, venue, home, arcade, online" oninput="saveDraft()">
           </div>
         </div>
 
         <div style="margin-top:0.8rem;">
           <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">How did this memory reach you?</label>
           <div class="context-tag-group">
-            <span class="context-tag active" onclick="selectTag(this)">I experienced it</span>
-            <span class="context-tag" onclick="selectTag(this)">I saw it</span>
-            <span class="context-tag" onclick="selectTag(this)">I heard it</span>
-            <span class="context-tag" onclick="selectTag(this)">Someone told me</span>
-            <span class="context-tag" onclick="selectTag(this)">I read it</span>
-            <span class="context-tag" onclick="selectTag(this)">I am not sure</span>
+            <span class="context-tag active" onclick="selectTag(this); saveDraft();">I experienced it</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I saw it</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I heard it</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">Someone told me</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I read it</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I am not sure</span>
           </div>
         </div>
 
         <div style="margin-top:0.8rem;">
           <label style="font-size:0.78rem; color:var(--text-dim); display:block; margin-bottom:0.2rem;">How does this memory feel today?</label>
           <div class="context-tag-group">
-            <span class="context-tag active" onclick="selectTag(this)">Clear to me</span>
-            <span class="context-tag" onclick="selectTag(this)">Vivid, but uncertain</span>
-            <span class="context-tag" onclick="selectTag(this)">I may be combining memories</span>
-            <span class="context-tag" onclick="selectTag(this)">I remember more than one version</span>
-            <span class="context-tag" onclick="selectTag(this)">I am not sure</span>
+            <span class="context-tag active" onclick="selectTag(this); saveDraft();">Clear to me</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">Vivid, but uncertain</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I may be combining memories</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I remember more than one version</span>
+            <span class="context-tag" onclick="selectTag(this); saveDraft();">I am not sure</span>
           </div>
         </div>
       </div>
@@ -284,23 +305,23 @@
         Your private memory is encrypted in your browser before it ever leaves your device.
       </p>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem; margin-bottom:1.5rem;">
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="public-pseudonymous" checked style="margin-right:0.5rem;">
           <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Public Pseudonymous</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Your signed memory and commitment are readable by researchers.</span>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Your record can be visible publicly under a pseudonymous identity. Do not include private details you do not want published.</span>
         </label>
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="reviewer-only" style="margin-right:0.5rem;">
           <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Encrypted for reviewers only. The public sees proof commitments only.</span>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Your record stays encrypted and is shared only with reviewers you authorize.</span>
         </label>
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="sovereign-vault" style="margin-right:0.5rem;">
           <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Sovereign Vault</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Encrypted with your personal password. Zero third-party access.</span>
+          <span style="font-size:0.8rem; color:var(--text-dim);">Only you can open this record. If you lose your recovery method, DONK AI may not be able to restore access.</span>
         </label>
       </div>
 
@@ -514,12 +535,14 @@
   <script src="js/social-adapters.js?v=2.2.0"></script>
   <script src="js/walkthrough.js?v=2.2.0"></script>
   <script>
+    let pendingStarter = '';
+
     function selectMemoryType(type, prefix) {
       document.querySelectorAll('.type-chip').forEach(c => c.classList.remove('active'));
       event.target.classList.add('active');
       const input = document.getElementById('journeyProseInput');
-      // Only insert starter prefix if the input is currently empty or contains only a prior starter prefix
       const currentVal = input.value.trim();
+      
       const starters = [
         'The words I remember are',
         'It sounded like',
@@ -529,11 +552,70 @@
         'The version I remember is',
         'I may be mixing this up, but'
       ];
+      
       const isCleanStarter = !currentVal || starters.some(s => currentVal.startsWith(s));
       if (isCleanStarter && prefix) {
         input.value = prefix;
+        input.focus();
+        saveDraft();
+      } else if (prefix && !isCleanStarter) {
+        pendingStarter = prefix;
+        document.getElementById('suggestedStarterText').innerText = `"${prefix}..."`;
+        document.getElementById('starterSuggestionBanner').style.display = 'flex';
       }
+    }
+
+    function applySuggestedStarter() {
+      const input = document.getElementById('journeyProseInput');
+      input.value = pendingStarter + (input.value ? '\n\n' + input.value : '');
+      dismissSuggestedStarter();
       input.focus();
+      saveDraft();
+    }
+
+    function dismissSuggestedStarter() {
+      document.getElementById('starterSuggestionBanner').style.display = 'none';
+      pendingStarter = '';
+    }
+
+    function handleProseInput() {
+      saveDraft();
+    }
+
+    function saveDraft() {
+      const draft = {
+        prose: document.getElementById('journeyProseInput').value,
+        era: document.getElementById('ctxEra').value,
+        place: document.getElementById('ctxPlace').value,
+        savedAt: new Date().toISOString()
+      };
+      localStorage.setItem('donkai_remembrance_draft', JSON.stringify(draft));
+      const status = document.getElementById('draftSaveStatus');
+      if (status) {
+        status.innerText = '✓ Draft saved locally on this device';
+      }
+    }
+
+    function loadDraft() {
+      const raw = localStorage.getItem('donkai_remembrance_draft');
+      if (!raw) return;
+      try {
+        const draft = JSON.parse(raw);
+        if (draft.prose) document.getElementById('journeyProseInput').value = draft.prose;
+        if (draft.era) document.getElementById('ctxEra').value = draft.era;
+        if (draft.place) document.getElementById('ctxPlace').value = draft.place;
+      } catch (e) {}
+    }
+
+    function clearDraft() {
+      if (confirm('Are you sure you want to clear your current local draft?')) {
+        localStorage.removeItem('donkai_remembrance_draft');
+        document.getElementById('journeyProseInput').value = '';
+        document.getElementById('ctxEra').value = '';
+        document.getElementById('ctxPlace').value = '';
+        const status = document.getElementById('draftSaveStatus');
+        if (status) status.innerText = 'Draft cleared';
+      }
     }
 
     function selectTag(el) {
@@ -549,6 +631,10 @@
         el.style.display = 'block';
       }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDraft();
+    });
   </script>
 </body>
 </html>
