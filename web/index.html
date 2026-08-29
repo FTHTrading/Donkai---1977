@@ -239,8 +239,18 @@
       </div>
 
       <!-- Controlled Pilot Boundary Notice -->
-      <div style="background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.25); border-radius:8px; padding:0.8rem 1rem; margin-bottom:1.5rem; font-size:0.82rem; color:var(--text-dim); line-height:1.5;">
-        <strong style="color:var(--memory-crimson);">Controlled Cultural Pilot:</strong> Please do not submit intimate personal details, active legal allegations, sensitive medical information, or private third-party data.
+      <div style="background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.25); border-radius:8px; padding:0.9rem 1.1rem; margin-bottom:1.5rem; font-size:0.82rem; color:var(--text-dim); line-height:1.5;">
+        <strong style="color:var(--memory-crimson); font-size:0.85rem; display:block; margin-bottom:0.4rem;">CONTROLLED CULTURAL PILOT</strong>
+        Please submit only non-sensitive cultural-memory material. Do not submit:
+        <ul style="margin:0.4rem 0 0.4rem 1.2rem; padding:0;">
+          <li>Private or intimate images</li>
+          <li>Identifying information about another person</li>
+          <li>Information about minors (under 18)</li>
+          <li>Active legal accusations</li>
+          <li>Medical or mental-health information</li>
+          <li>Crisis, emergency, or immediate-safety reports</li>
+        </ul>
+        <em style="color:var(--text-muted); font-size:0.78rem;">DONK AI is not an emergency, medical, legal, or investigative service.</em>
       </div>
 
       <!-- Optional Context Chips -->
@@ -318,13 +328,13 @@
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="reviewer-only" style="margin-right:0.5rem;">
-          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only (Controlled Pilot)</strong>
-          <span style="font-size:0.8rem; color:var(--text-dim);">Your record is intended to be shared only with authorized reviewers. Access depends on the encryption and reviewer-sharing model shown before submission.</span>
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Reviewer-Only &bull; <span style="color:var(--synaptic-cyan); font-size:0.75rem;">Controlled Pilot Preview</span></strong>
+          <span style="font-size:0.8rem; color:var(--text-dim);">This selection records your intended access policy. Do not submit sensitive material until encrypted reviewer access is active.</span>
         </label>
 
         <label class="spine-glass-panel" style="cursor:pointer; display:block;">
           <input type="radio" name="privacyPolicy" value="sovereign-vault" style="margin-right:0.5rem;">
-          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Sovereign Vault</strong>
+          <strong style="color:var(--pearl); display:block; margin:0.3rem 0;">Sovereign Vault &bull; <span style="color:var(--memory-violet); font-size:0.75rem;">Planned Mode</span></strong>
           <span style="font-size:0.8rem; color:var(--text-dim);">Only you can open this record using your chosen recovery method. If you lose your key, passkey access, or recovery material, DONK AI may not be able to restore access.</span>
         </label>
       </div>
@@ -690,6 +700,21 @@
         alert('Please review and check all 4 pre-submission consent items before authorizing this record commitment.');
         return;
       }
+
+      const policyEl = document.querySelector('input[name="privacyPolicy"]:checked');
+      const selectedPolicy = policyEl ? policyEl.value : 'public-pseudonymous';
+
+      const consentReceipt = {
+        consentVersion: "donkai-cultural-pilot-v1",
+        acknowledgedAt: new Date().toISOString(),
+        authorSelfRepresentation: true,
+        visibilityAcknowledged: true,
+        pilotScopeAcknowledged: true,
+        epistemicBoundaryAcknowledged: true,
+        selectedAccessPolicy: selectedPolicy,
+        recordVersion: 1
+      };
+      window.currentConsentReceipt = consentReceipt;
 
       openEIP712Modal();
     }
