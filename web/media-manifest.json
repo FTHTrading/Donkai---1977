@@ -1,0 +1,61 @@
+{
+  "protocol": "DONK AI (LPS-1 v2.0)",
+  "mediaCatalogVersion": "1.0.0",
+  "generatedAt": "2026-08-29",
+  "policy": {
+    "evidenceEligibilityRule": "Only participant_submitted_artifact, institutional_source_artifact, or evidence_candidate media may contribute to evidence bundles. Editorial videos and synthetic visualizations MUST NOT be evaluated as historical source evidence.",
+    "blindCorroborationRule": "Target-specific media, thumbnails, titles, and answer choices MUST NOT be rendered or preloaded during blind unprimed recall sessions."
+  },
+  "assets": [
+    {
+      "assetId": "donk_tokenize_hero",
+      "file": "videos/donk_tokenize_hero.mp4",
+      "sourceClassification": "editorial_video",
+      "rightsStatus": "authorized-for-public-web-distribution",
+      "role": "Cinematic atmosphere and protocol walkthrough illustration",
+      "historicalEvidenceEligible": false,
+      "aiDisclosure": "synthetic-visuals-mixed",
+      "consentScope": "public-web"
+    },
+    {
+      "assetId": "donk_vault_intro",
+      "file": "videos/donk_vault_intro.mp4",
+      "sourceClassification": "editorial_video",
+      "rightsStatus": "authorized-for-public-web-distribution",
+      "role": "Vault encryption concept visualization",
+      "historicalEvidenceEligible": false,
+      "aiDisclosure": "synthetic-visuals",
+      "consentScope": "public-web"
+    },
+    {
+      "assetId": "yoda_cuba",
+      "file": "videos/yoda_cuba.mp4",
+      "sourceClassification": "editorial_video",
+      "rightsStatus": "editorial-cultural-commentary",
+      "role": "Cinema memory drift retrospective demonstration",
+      "historicalEvidenceEligible": false,
+      "aiDisclosure": "mixed-cinematic-derivative",
+      "consentScope": "public-web"
+    },
+    {
+      "assetId": "unykorn_archive_signal",
+      "file": "videos/unykorn_archive_signal.mp4",
+      "sourceClassification": "distribution_derivative",
+      "rightsStatus": "cleared-for-public-web-distribution",
+      "role": "Multi-chain telemetry broadcast demo",
+      "historicalEvidenceEligible": false,
+      "aiDisclosure": "digital-signal-graphics",
+      "consentScope": "public-web"
+    },
+    {
+      "assetId": "arcade_token_1978_still",
+      "file": "images/arcade_token_1978.jpg",
+      "sourceClassification": "synthetic_editorial_visualization",
+      "rightsStatus": "cleared-for-public-web-distribution",
+      "role": "Sensory recall prompt for 1978 arcade token",
+      "historicalEvidenceEligible": false,
+      "aiDisclosure": "synthetic-archival-illustration",
+      "consentScope": "public-web"
+    }
+  ]
+}
