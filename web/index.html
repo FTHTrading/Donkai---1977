@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DONK AI — The Human Remembrance Protocol</title>
-  <meta name="description" content="A global, human-governed memory and evidence network. Preserves human testimony, proves submission provenance, and maps independent corroboration across cultures.">
+  <title>WHAT DO YOU REMEMBER? — DONK AI Human Remembrance Protocol</title>
+  <meta name="description" content="Vote on iconic Mandela Effect memory divergences. Build an on-chain cryptographic remembrance record right from your browser. Popularity != Truth.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/liquid.css">
 </head>
 <body>
   <header>
@@ -19,124 +18,198 @@
         <span class="brand-badge">LPS-1 PROTOCOL</span>
       </a>
       <ul>
-        <li><a href="index.html" class="active">Overview</a></li>
-        <li><a href="remember.html">Remembrance Studio</a></li>
+        <li><a href="index.html" class="active">What Do You Remember?</a></li>
         <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html">1977 Museum</a></li>
+        <li><a href="record.html">Record Detail</a></li>
         <li><a href="corroborate.html">Blind Corroboration</a></li>
-        <li><a href="proof.html">Proof Explorer</a></li>
-        <li><a href="assembly.html">Assembly</a></li>
+        <li><a href="remember.html">Remembrance Studio</a></li>
         <li><a href="protocol.html">Protocol Docs</a></li>
-        <li><a href="remember.html" class="nav-cta">Record a Memory</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section id="hero">
-      <div class="hero-pre">LIVING PROVENANCE STANDARD (LPS-1) &bull; EVM CHAIN 1977</div>
+    <!-- HERO RECALL SECTION -->
+    <div class="recall-hero">
+      <div style="display:flex; justify-content:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+        <span class="badge frequency">528Hz Cognitive Frequency</span>
+        <span class="badge cyan">Decentralized Recall</span>
+        <span class="badge gold">LPS-1 On-Chain Standard</span>
+      </div>
+      
       <h1>WHAT DO YOU REMEMBER?</h1>
-      <p class="hero-lead">
-        A global, human-governed memory and evidence network. Sign your account. Preserve your evidence. Discover where memory converges, conflicts, and remains unresolved.
+      
+      <p class="lead-sub">
+        Right or wrong, what you remember is real human testimony. Vote on history's most debated Mandela Effect memory divergences and seal your recollection directly into an immutable cryptographic ledger.
       </p>
-      <div class="hero-actions">
-        <a href="remember.html" class="btn btn-primary">Record Your Remembrance</a>
-        <a href="atlas.html" class="btn btn-secondary">Explore Memory Drift Atlas</a>
-        <a href="proof.html" class="btn btn-secondary">Verify LPS-1 Provenance</a>
+
+      <!-- Quick Topic Switcher Pills -->
+      <div class="topic-pills-bar" id="topicPills">
+        <!-- Injected via JavaScript -->
       </div>
 
-      <div class="principles-grid" style="text-align: left;">
-        <div class="principle-card">
-          <span class="badge provenance">Submission Integrity</span>
-          <h3 style="margin-top:0.8rem;">Canonical LPS-1 Proof</h3>
-          <p>Every recollection is normalized to deterministic canonical JSON and committed as a domain-separated SHA-256 Merkle root before anchoring.</p>
+      <!-- INTERACTIVE DILEMMA ARENA -->
+      <div class="dilemma-arena" id="dilemmaArena">
+        <div class="dilemma-header">
+          <div>
+            <span class="badge cyan" id="topicCategory">CINEMA & POP CULTURE</span>
+            <span class="badge" id="topicYear" style="margin-left:0.4rem;">1980</span>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--text-muted);" id="totalRecallsText">
+            14,280 Community Recalls
+          </div>
         </div>
-        <div class="principle-card">
-          <span class="badge unresolved">Blind Corroboration</span>
-          <h3 style="margin-top:0.8rem;">No Bandwagon Bias</h3>
-          <p>Witnesses submit sealed independent accounts against neutral discovery prompts before seeing original testimony, preventing social anchoring.</p>
+
+        <div class="dilemma-question" id="dilemmaQuestion">
+          What does Darth Vader say to Luke Skywalker in Empire Strikes Back?
         </div>
-        <div class="principle-card">
-          <span class="badge supported">Bounded Review</span>
-          <h3 style="margin-top:0.8rem;">Transparent Rubrics</h3>
-          <p>Human curators evaluate contemporaneous artifacts under open rubrics. We distinguish personal recall from historically supported claims.</p>
+
+        <!-- Option A vs Option B -->
+        <div class="options-grid">
+          <button class="option-btn opt-a" id="btnOptA" onclick="castVote('A')">
+            <div>
+              <div class="opt-badge">OPTION A</div>
+              <div class="opt-text" id="textOptA">"Luke, I am your father."</div>
+            </div>
+            <div class="opt-sub" id="subOptA">Popular Collective Recall</div>
+          </button>
+
+          <button class="option-btn opt-b" id="btnOptB" onclick="castVote('B')">
+            <div>
+              <div class="opt-badge">OPTION B</div>
+              <div class="opt-text" id="textOptB">"No, I am your father."</div>
+            </div>
+            <div class="opt-sub" id="subOptB">Documented Film Audio</div>
+          </button>
+        </div>
+
+        <!-- Live Split Bar -->
+        <div class="result-bar-wrap">
+          <div class="result-split-bar">
+            <div class="split-seg-a" id="splitSegA" style="width: 64%;">64% RECALL A</div>
+            <div class="split-seg-b" id="splitSegB" style="width: 36%;">36% RECALL B</div>
+          </div>
+        </div>
+
+        <!-- Epistemic Context Note -->
+        <div style="background:var(--bg-elev); border-left:3px solid var(--memory-violet); padding:1rem 1.2rem; border-radius:0 6px 6px 0; text-align:left; font-size:0.9rem; color:var(--text-dim); line-height:1.6;" id="topicContext">
+          Millions worldwide remember the line starting with "Luke", widely reinforced through decades of pop culture, whereas original film prints preserve "No, I am your father."
+        </div>
+
+        <!-- Cryptographic On-Chain Receipt Box (Shown after click) -->
+        <div class="receipt-anchor-box" id="receiptBox">
+          <div class="receipt-title">
+            <span>&#10003; LPS-1 MEMORY COMMITMENT GENERATED</span>
+            <span class="badge supported" style="font-size:0.7rem;">SEALED IN BROWSER</span>
+          </div>
+          <div style="font-size:0.85rem; color:var(--text); margin-bottom:0.4rem;">
+            Your vote has been cryptographically hashed with a client-side random nonce:
+          </div>
+          <div class="receipt-hash" id="receiptHash">
+            0x8fd5e8f23644ec8680b24c13eb4e44b7cc299d8ca0b1c2d3e4f506172839405a
+          </div>
+          <div style="margin-top:0.8rem; display:flex; gap:0.6rem; flex-wrap:wrap;">
+            <a href="record.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">View in 7-Tier Ledger &rarr;</a>
+            <a href="atlas.html" class="btn btn-secondary" style="font-size:0.8rem; padding:0.4rem 0.8rem;">Explore Global Drift Atlas &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Carousel Navigation -->
+        <div class="topic-nav">
+          <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="prevDilemma()">&larr; Previous Dilemma</button>
+          <span style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted);" id="topicCounter">1 of 6</span>
+          <button class="btn btn-secondary" style="font-size:0.85rem;" onclick="nextDilemma()">Next Dilemma &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CORE PROTOCOL FOUNDATION -->
+    <section style="padding-top: 1rem;">
+      <div style="text-align:center; margin-bottom:3rem;">
+        <span class="badge frequency">THE DONK AI AXIOM</span>
+        <h2 style="font-size:2.2rem; margin-top:0.6rem;">How We Preserve Human Memory</h2>
+        <p style="color:var(--text-dim); max-width:700px; margin:0.5rem auto 0 auto; font-size:1.05rem;">
+          Popularity &ne; Corroboration &ne; Evidence Integrity &ne; Historical Support. Stake &ne; Truth.
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.8rem;">
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
+          <div class="badge frequency" style="margin-bottom:1rem;">01 &bull; SUBJECTIVE VALUE</div>
+          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Every Memory Matters</h3>
+          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
+            Whether a recollection matches physical archives or diverges into collective drift, personal testimony is an authentic cognitive signal that deserves preservation.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
+          <div class="badge cyan" style="margin-bottom:1rem;">02 &bull; BLIND INDEPENDENCE</div>
+          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Zero Social Priming</h3>
+          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
+            Our 2-phase commit-reveal protocol seals witness recall before exposing underlying records, eliminating bandwagon bias and social conformity.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
+          <div class="badge gold" style="margin-bottom:1rem;">03 &bull; NO TOKENIZED TRUTH</div>
+          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">Truth Is Not For Sale</h3>
+          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
+            We ban prediction markets and token voting on human memory. Financial stake cannot author, alter, or decide historical support.
+          </p>
+        </div>
+
+        <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:2rem;">
+          <div class="badge supported" style="margin-bottom:1rem;">04 &bull; ON-CHAIN PROVENANCE</div>
+          <h3 style="color:var(--pearl); font-size:1.25rem; margin-bottom:0.6rem;">LPS-1 Merkle Roots</h3>
+          <p style="font-size:0.92rem; color:var(--text-dim); line-height:1.6;">
+            Every remembrance statement, evidence hash, and peer review assessment is cryptographically anchored to EVM contracts and content-addressed storage.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="epistemic-rules" style="border-top: 1px solid var(--border);">
-      <h2>Non-Negotiable Epistemic Rules</h2>
-      <p class="section-lead">
-        DONK AI is not an artificial-memory system or a speculative truth market. We preserve these distinctions technically and visibly:
-      </p>
-
-      <div class="principles-grid">
-        <div class="principle-card">
-          <h3>Popularity &ne; Truth</h3>
-          <p>Likes, upvotes, or token stakes never alter a historical record. A widely shared recollection is documented as a cultural convergence, not an objective historical fact.</p>
-        </div>
-        <div class="principle-card">
-          <h3>No AI Authoring</h3>
-          <p>AI may assist with transcription, translation review, or discovery metadata, but AI is strictly barred from authoring, editing, voting, or judging human testimony.</p>
-        </div>
-        <div class="principle-card">
-          <h3>Making Uncertainty Visible</h3>
-          <p>Every record displays a structured 5-panel ledger: What is Remembered, What is Recalled, What Evidence Exists, What is Supported, and What Remains Unresolved.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="launch-atlas" style="border-top: 1px solid var(--border);">
-      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 2rem;">
+    <!-- EXHIBITS PREVIEW STRIP -->
+    <section style="background:var(--bg-elev); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:4rem 2rem;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:2.5rem; flex-wrap:wrap; gap:1rem;">
         <div>
-          <h2>Featured Memory Drift Exhibits</h2>
-          <p class="section-lead" style="margin-bottom:0;">Explore collective memory divergences from the 1977 cultural foundation.</p>
+          <span class="badge gold">1977 CULTURAL ARCHIVES</span>
+          <h2 style="font-size:2rem; margin-top:0.4rem;">The 1977 Cultural Memory Museum</h2>
+          <p style="color:var(--text-dim); margin-bottom:0;">Explore physical artifact photography and oral records from the foundation era.</p>
         </div>
-        <a href="atlas.html" class="btn btn-secondary">View All Exhibits &rarr;</a>
+        <a href="museum.html" class="btn btn-primary">Enter Museum &rarr;</a>
       </div>
 
-      <div class="atlas-grid">
-        <a href="record.html?id=1" class="atlas-card">
-          <div class="atlas-card-top">
-            <div class="atlas-card-tags">
-              <span class="badge supported">Historically Supported</span>
-              <span class="badge">1977 Cultural Era</span>
-            </div>
-            <h3>Space Invaders 1978 Arcade Token & Coin Slot Sound</h3>
-            <p>Memories of the Austin downtown arcade opening with two-player coin slots. Contemporaneous artifact token cataloged and verified.</p>
-          </div>
-          <div class="atlas-card-stats">
-            <span>42 Blind Recalls</span>
-            <span>LPS-1 0xb081...d43e</span>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <img src="img/arcade_token_1978.jpg" alt="1978 Arcade Token" style="width:100%; height:180px; object-fit:cover;">
+          <div style="padding:1.2rem;">
+            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
+            <h4 style="color:var(--pearl); font-size:1.05rem;">1978 Space Invaders Token</h4>
           </div>
         </a>
 
-        <a href="record.html?id=2" class="atlas-card">
-          <div class="atlas-card-top">
-            <div class="atlas-card-tags">
-              <span class="badge conflicting">Conflicting Evidence</span>
-              <span class="badge">Media Broadcast</span>
-            </div>
-            <h3>1977 Summer Cinema Marquee "A New Hope" Subtitle</h3>
-            <p>Divergence between collective memories of opening-day marquee titles and original 1977 theatrical distribution ledger prints.</p>
-          </div>
-          <div class="atlas-card-stats">
-            <span>89 Blind Recalls</span>
-            <span>LPS-1 0x7c14...e81a</span>
+        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <img src="img/cinema_marquee_1977.jpg" alt="1977 Cinema Marquee" style="width:100%; height:180px; object-fit:cover;">
+          <div style="padding:1.2rem;">
+            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
+            <h4 style="color:var(--pearl); font-size:1.05rem;">May 1977 Theatrical Marquee</h4>
           </div>
         </a>
 
-        <a href="record.html?id=3" class="atlas-card">
-          <div class="atlas-card-top">
-            <div class="atlas-card-tags">
-              <span class="badge unresolved">Unresolved Research</span>
-              <span class="badge">Local History</span>
-            </div>
-            <h3>The Vanished Community Radio Broadcast of 1981</h3>
-            <p>Independent accounts of an unlogged pirate broadcast in London during the autumn blackout. Awaiting archival tape submission.</p>
+        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <img src="img/pirate_radio_cassette_1981.jpg" alt="1981 Pirate Radio" style="width:100%; height:180px; object-fit:cover;">
+          <div style="padding:1.2rem;">
+            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
+            <h4 style="color:var(--pearl); font-size:1.05rem;">London 1981 Pirate Radio Tape</h4>
           </div>
-          <div class="atlas-card-stats">
-            <span>18 Blind Recalls</span>
-            <span>LPS-1 0x3f9a...09bc</span>
+        </a>
+
+        <a href="museum.html" style="text-decoration:none; color:inherit; background:var(--bg-card); border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <img src="img/tokyo_synth_1977.jpg" alt="Tokyo Synth" style="width:100%; height:180px; object-fit:cover;">
+          <div style="padding:1.2rem;">
+            <span class="badge editorial-img" style="margin-bottom:0.4rem;">Study</span>
+            <h4 style="color:var(--pearl); font-size:1.05rem;">Tokyo 1977 PS-3300 Synth</h4>
           </div>
         </a>
       </div>
@@ -145,18 +218,91 @@
 
   <footer>
     <div class="footer-inner">
-      <div>
-        <strong>DONK AI</strong> &mdash; The Human Remembrance Protocol &bull; Powered by Living Provenance Standard 1
-      </div>
+      <div><strong>DONK AI</strong> &mdash; The Human Remembrance Protocol (1977.donkai.org)</div>
       <ul class="footer-links">
-        <li><a href="protocol.html">Protocol Charter</a></li>
-        <li><a href="protocol.html#privacy">Privacy & Consent</a></li>
-        <li><a href="protocol.html#ai">AI Disclosure</a></li>
-        <li><a href="assembly.html">Governance</a></li>
+        <li><a href="protocol.html">Charter & Methodology</a></li>
+        <li><a href="atlas.html">Memory Drift Atlas</a></li>
+        <li><a href="museum.html">Museum</a></li>
+        <li><a href="record.html">7-Tier Ledger</a></li>
       </ul>
     </div>
   </footer>
 
-  <script src="js/lps1.js"></script>
+  <script src="js/mandela-engine.js"></script>
+  <script>
+    function renderPills() {
+      const pillsContainer = document.getElementById('topicPills');
+      pillsContainer.innerHTML = '';
+      MANDELA_TOPICS.forEach((t, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `topic-pill ${idx === window.MandelaEngine.currentTopicIndex ? 'active' : ''}`;
+        btn.innerText = t.id.replace(/-/g, ' ').toUpperCase();
+        btn.onclick = () => {
+          window.MandelaEngine.currentTopicIndex = idx;
+          renderTopic();
+        };
+        pillsContainer.appendChild(btn);
+      });
+    }
+
+    function renderTopic() {
+      const topic = window.MandelaEngine.getCurrentTopic();
+      document.getElementById('topicCategory').innerText = topic.category.toUpperCase();
+      document.getElementById('topicYear').innerText = topic.year;
+      document.getElementById('dilemmaQuestion').innerText = topic.question;
+      
+      document.getElementById('textOptA').innerText = topic.optionA.label;
+      document.getElementById('subOptA').innerText = topic.optionA.recalledBy;
+      document.getElementById('textOptB').innerText = topic.optionB.label;
+      document.getElementById('subOptB').innerText = topic.optionB.recalledBy;
+      document.getElementById('topicContext').innerText = topic.context;
+
+      const pcts = window.MandelaEngine.getPercentages(topic);
+      document.getElementById('totalRecallsText').innerText = `${pcts.total.toLocaleString()} Community Recalls`;
+      document.getElementById('splitSegA').style.width = `${pcts.pctA}%`;
+      document.getElementById('splitSegA').innerText = `${pcts.pctA}% RECALL A`;
+      document.getElementById('splitSegB').style.width = `${pcts.pctB}%`;
+      document.getElementById('splitSegB').innerText = `${pcts.pctB}% RECALL B`;
+
+      document.getElementById('topicCounter').innerText = `${window.MandelaEngine.currentTopicIndex + 1} of ${MANDELA_TOPICS.length}`;
+
+      const userVote = window.MandelaEngine.getVote(topic.id);
+      const btnA = document.getElementById('btnOptA');
+      const btnB = document.getElementById('btnOptB');
+      const receiptBox = document.getElementById('receiptBox');
+
+      btnA.classList.toggle('selected', userVote && userVote.choice === 'A');
+      btnB.classList.toggle('selected', userVote && userVote.choice === 'B');
+
+      if (userVote) {
+        receiptBox.classList.add('active');
+        document.getElementById('receiptHash').innerText = userVote.commitmentHash;
+      } else {
+        receiptBox.classList.remove('active');
+      }
+
+      renderPills();
+    }
+
+    async function castVote(choice) {
+      const topic = window.MandelaEngine.getCurrentTopic();
+      await window.MandelaEngine.vote(topic.id, choice);
+      renderTopic();
+    }
+
+    function nextDilemma() {
+      window.MandelaEngine.nextTopic();
+      renderTopic();
+    }
+
+    function prevDilemma() {
+      window.MandelaEngine.prevTopic();
+      renderTopic();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTopic();
+    });
+  </script>
 </body>
 </html>
